@@ -70,13 +70,6 @@ always @(posedge transformer_start) begin
     round_keys[9] = round9_key;
     round_keys[10] = round10_key;
 
-    $display("Round Key 0");
-    print_matrix(round0_key);
-    $display("Round Key 1");
-    print_matrix(round1_key);
-    $display("Round Key 2");
-    print_matrix(round2_key);
-
     // pre-round key
     state_block = state_block ^ round_keys[0];
     $display("Pre-Round State:");

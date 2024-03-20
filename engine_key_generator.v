@@ -106,7 +106,6 @@ always @(posedge engine_start) begin
 	// issue round transformer start
 	transformer_start_r = 1;
 end
-//todo: add transformer_start_r = 0; on negedge engine_start
 
 // Define functions
 // -- Reset Round Keys
