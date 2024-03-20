@@ -102,14 +102,15 @@ begin:next_state_decode
 			// start engine
 			if ((p_i == 4'hF) && (k_i == 4'hF)) next_state = S_ST;
 			// return to idle
-			if (engine_done) begin
-				// encyrption engine is done, we can reset
-				p_i = 4'h0;
-				k_i = 4'h0;
-				resetplain();
-				resetkey();
-				next_state = S_ID;
-			end
+			//? this is a synchronous reset, we may want to implement asynchronous reset
+			// if (engine_done) begin
+			// 	// encyrption engine is done, we can reset
+			// 	p_i = 4'h0;
+			// 	k_i = 4'h0;
+			// 	resetplain();
+			// 	resetkey();
+			// 	next_state = S_ID;
+			// end
 			// otherwise wait in this state
 			else next_state = S_ST;
 		end
@@ -119,12 +120,24 @@ begin:next_state_decode
 	endcase
 end
 
-`ifndef TOPMODULE
-	// the "macro" to dump signals
-	initial begin
-	$dumpfile ("simulation/input_interface.vcd");
-	$dumpvars(0, input_interface);
-	end
-`endif
+//? asynchronous reset when engine is done
+always @(posedge engine_done)
+begin
+	// encyrption engine is done, we can reset
+	p_i = 4'h0;
+	k_i = 4'h0;
+	resetplain();
+	resetkey();
+	next_state = S_ID;
+	state <= next_state;
+end
+
+// `ifndef TOPMODULE
+// 	// the "macro" to dump signals
+// 	initial begin
+// 	$dumpfile ("simulation/input_interface.vcd");
+// 	$dumpvars(0, input_interface);
+// 	end
+// `endif
 
 endmodule

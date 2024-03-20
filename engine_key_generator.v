@@ -1,3 +1,4 @@
+`timescale 1ns/1ns
 // Include AES Utils, providing aes_sbox, reg_to_byte_array, byte_array_to_reg, etc
 // Define module IO
 module engine_key_generator (
@@ -64,6 +65,11 @@ always @(posedge engine_start) begin
 	w[3] = key_in[31:0];
 	// -- copy to output register
 	round_keys[0] = key_in;
+	$display("Pre-Round Key:");
+	$write("%02X %02X %02X %02X\n", round_keys[0][127:120], round_keys[0][95:88], round_keys[0][63:56], round_keys[0][31:24]);
+    $write("%02X %02X %02X %02X\n", round_keys[0][119:112], round_keys[0][87:80], round_keys[0][55:48], round_keys[0][23:16]);
+    $write("%02X %02X %02X %02X\n", round_keys[0][111:104], round_keys[0][79:72], round_keys[0][47:40], round_keys[0][15:8]);
+    $write("%02X %02X %02X %02X\n", round_keys[0][103:96],  round_keys[0][71:64], round_keys[0][39:32], round_keys[0][7:0]);
 	// -- issue transformer start
 	// transformer_start_r = transformer_start_r | 1;
 	
@@ -72,6 +78,9 @@ always @(posedge engine_start) begin
 		if ((i % 4) == 0) begin
 			// every 4th round, we need the round mixing function
 			tempword = subword(rotword(tempword)) ^ round_constant(i/4);
+
+			//? simulate delay
+    		#1;
 		end
 		
 		w[i] = w[i-4] ^ tempword;
@@ -92,9 +101,12 @@ always @(posedge engine_start) begin
 		end
 	end
 
+	$display("----------------");
+
 	// issue round transformer start
 	transformer_start_r = 1;
 end
+//todo: add transformer_start_r = 0; on negedge engine_start
 
 // Define functions
 // -- Reset Round Keys

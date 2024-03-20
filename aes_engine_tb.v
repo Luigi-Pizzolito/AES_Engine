@@ -78,9 +78,9 @@ initial begin
 	din_tb = 8'h19;
 	#2;
 
-	// Idle
-	cmd_tb = C_ID;
-	#2;
+	// // Idle
+	// cmd_tb = C_ID;
+	// #2;
 
 	// enter key
 	cmd_tb = C_SK;
@@ -117,26 +117,23 @@ initial begin
 	din_tb = 8'h87;
 	#2;
 
-	// Idle
-	cmd_tb = C_ID;
-	#2;
+	// // Idle
+	// cmd_tb = C_ID;
+	// #2;
 
 	// Start command
 	cmd_tb = C_ST;
-	#2;
-	#2;
-	#2;
-	#2;
-	#2;
-	#2;
-	#2;
-	#2;
-	#2;
-
-	// Idle
-	cmd_tb = C_ID;
-	#2;
-	$finish;
+	
+	// wait for engine done to go high
+	@(posedge done_tb)
+	begin
+		// Idle
+		cmd_tb = C_ID;
+		#2;
+		#4;
+		$finish;
+	end
+	
 end
 
 endmodule
