@@ -6,3 +6,5 @@ _info
 _lib.qdb
 *.bak
 vsim.wlf
+*.mti
+*.mpf
