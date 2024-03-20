@@ -133,7 +133,7 @@ function [31:0] rotword(input [31:0]word);
 	begin
 		// circular left shift of words
 		// b0, b1, b2, b3 ==> b1, b2, b3, b0
-		rotword = {tempword[23:0], tempword[31:24]};
+		rotword = {word[23:0], word[31:24]};
 	end
 endfunction
 // -- Function for substitute words
