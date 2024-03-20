@@ -1,7 +1,5 @@
 AES_Engine
 
-build/*
-simulation/*
 _info
 _lib.qdb
 *.bak
