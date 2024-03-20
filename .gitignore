@@ -1,10 +1,11 @@
 AES_Engine
 
-build
-simulation
+build/*
+simulation/*
 _info
 _lib.qdb
 *.bak
 vsim.wlf
 *.mti
 *.mpf
+*.do
