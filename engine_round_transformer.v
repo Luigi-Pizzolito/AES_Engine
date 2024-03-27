@@ -77,9 +77,6 @@ always @(posedge clk) begin
 		$display("Pre-Round State:");
 		print_matrix(state_block);
 
-		//? simulate delay
-		// #1;
-
 		// encryption rounds
 		for (i=1; i<10; i=i+1) begin
 			// Rijndael
@@ -97,9 +94,6 @@ always @(posedge clk) begin
 			$write("Round %0d State:", i);
 			$display("");
 			print_matrix(state_block);
-
-			//? simulate delay
-			// #1;
 		end
 
 		// last round
@@ -112,9 +106,6 @@ always @(posedge clk) begin
 		// -- Print
 		$display("Round 10 State / Ciphertext:");
 		print_matrix(state_block);
-
-		//? simulate delay
-		// #1;
 
 		// output ciphertext
 		ciphertext_r = state_block;

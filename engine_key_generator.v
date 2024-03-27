@@ -80,9 +80,6 @@ always @(posedge clk) begin
 			if ((i % 4) == 0) begin
 				// every 4th round, we need the round mixing function
 				tempword = subword(rotword(tempword)) ^ round_constant(i/4);
-
-				// //? simulate delay
-				// #1;
 			end
 			
 			w[i] = w[i-4] ^ tempword;

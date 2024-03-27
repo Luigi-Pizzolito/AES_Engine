@@ -4,6 +4,7 @@
 module engine_key_generator_tb();
 
 // define tb registers and wires
+reg clk_tb = 0;
 reg rst_tb = 0;
 
 reg[127:0] key_in_r = 0;
@@ -26,6 +27,7 @@ wire[127:0] rk10;
 // define tb->engine_key_generator connections
 engine_key_generator i_uut (
 	.rst_			(rst_tb),
+	.clk			(clk_tb),
 	.key_in			(key_in_r),
 	.engine_start		(start),
 	.transformer_done	(transformer_done_r),
@@ -42,6 +44,9 @@ engine_key_generator i_uut (
 	.round9_key		(rk9),
 	.round10_key	(rk10)
 );
+
+// set periodic clock pulse every 1ns
+always clk_tb = #1 ~clk_tb;
 
 // set testing sequence signals
 initial begin
