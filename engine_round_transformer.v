@@ -35,7 +35,8 @@ initial resetkeys;
 reg [127:0] state_block;
 initial state_block = 128'h00000000000000000000000000000000;
 // -- loop counter
-integer i;
+reg [3:0] i; // max 15 counts
+initial i = 4'h0;
 // -- round trasnformer ciphertext register
 reg [127:0] ciphertext_r;
 initial ciphertext_r = 128'h00000000000000000000000000000000;
@@ -43,42 +44,50 @@ assign ciphertext = ciphertext_r;
 
 // Main Logic
 // -- Asynchronous reset logic
-//TODO: DONT USE ANY FOR LOOPS, TAKE CLOCK IN TTO INCREMENT STEP COUNTER
 always @(negedge rst_/* or posedge transformer_done*/) begin //todo: make an extra input signal for data ouput read, then reset
 	resetcipher;
     resetkeys;
     state_block = 128'h00000000000000000000000000000000;
     transformer_done_r = 0;
+    i = 0;
 end
 // -- Transformer start logic
 always @(posedge clk) begin
     // transformer start cmd issued
 	if (transformer_start) begin
-		transformer_done_r = 0;
-		// read plaintext
-		state_block = plaintext;
-		$display("Plaintext:");
-		print_matrix(state_block);
-		// read round keys
-		round_keys[0] = round0_key;
-		round_keys[1] = round1_key;
-		round_keys[2] = round2_key;
-		round_keys[3] = round3_key;
-		round_keys[4] = round4_key;
-		round_keys[5] = round5_key;
-		round_keys[6] = round6_key;
-		round_keys[7] = round7_key;
-		round_keys[8] = round8_key;
-		round_keys[9] = round9_key;
-		round_keys[10] = round10_key;
 
-		// pre-round key
-		state_block = state_block ^ round_keys[0];
-		$display("Pre-Round State:");
-		print_matrix(state_block);
+        if (i == 0) begin
+            // for loop pre-iteration
 
-		// encryption rounds
-		for (i=1; i<10; i=i+1) begin
+            transformer_done_r = 0;
+            // read plaintext
+            state_block = plaintext;
+            $display("Plaintext:");
+            print_matrix(state_block);
+            // read round keys
+            round_keys[0] = round0_key;
+            round_keys[1] = round1_key;
+            round_keys[2] = round2_key;
+            round_keys[3] = round3_key;
+            round_keys[4] = round4_key;
+            round_keys[5] = round5_key;
+            round_keys[6] = round6_key;
+            round_keys[7] = round7_key;
+            round_keys[8] = round8_key;
+            round_keys[9] = round9_key;
+            round_keys[10] = round10_key;
+
+            // pre-round key
+            state_block = state_block ^ round_keys[0];
+            $display("Pre-Round State:");
+            print_matrix(state_block);
+        end
+
+        if ( i > 0 && i < 10) begin
+            // for loop iterations 1-9
+
+		    // encryption rounds
+		//// for (i=1; i<10; i=i+1) begin
 			// Rijndael
 			// -- SubBytes
 			// state_block = SubBytes(state_block);
@@ -94,22 +103,35 @@ always @(posedge clk) begin
 			$write("Round %0d State:", i);
 			$display("");
 			print_matrix(state_block);
-		end
+		//// end
+        end
 
-		// last round
-		// -- SubBytes
-		state_block = SubBytes(state_block);
-		// -- ShiftRow
-		state_block = ShiftRow(state_block);
-		// -- Key XOR
-		state_block = state_block ^ round_keys[10];
-		// -- Print
-		$display("Round 10 State / Ciphertext:");
-		print_matrix(state_block);
+        if (i == 10) begin
+            // for loop iteration 10
 
-		// output ciphertext
-		ciphertext_r = state_block;
-		transformer_done_r = 1;
+            // last round
+            // -- SubBytes
+            state_block = SubBytes(state_block);
+            // -- ShiftRow
+            state_block = ShiftRow(state_block);
+            // -- Key XOR
+            state_block = state_block ^ round_keys[10];
+            // -- Print
+            $display("Round 10 State / Ciphertext:");
+            print_matrix(state_block);
+        end
+
+        if (i > 10) begin
+            // for loop iteration 11+ (last iteration)
+        
+            // output ciphertext
+            ciphertext_r = state_block;
+            transformer_done_r = 1;
+        end
+
+        // update for loop i
+        i = i + 1;
+
 	end
 end
 

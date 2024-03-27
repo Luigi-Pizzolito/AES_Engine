@@ -129,8 +129,7 @@ initial begin
 	begin
 		// Idle
 		cmd_tb = C_ID;
-		#2;
-		#4;
+		#20;
 		$finish;
 	end
 	

@@ -51,7 +51,8 @@ end
 // -- Engine start logic
 //? maybe we can do the key gen per round and the encryption rounds in parallel
 // ---- loop counter
-integer i;
+reg [5:0] i; // max 64 counts
+initial i = 6'b000000;
 // ---- key byte array for calculations
 reg [31:0] w[43:0];
 // ---- temp word for each word calculation
@@ -60,50 +61,67 @@ reg [31:0] tempword;
 always @(posedge clk) begin
 	// engine start cmd issued
 	if (engine_start) begin
-		// set pre-round key
-		w[0] = key_in[127:96];
-		w[1] = key_in[95:64];
-		w[2] = key_in[63:32];
-		w[3] = key_in[31:0];
-		// -- copy to output register
-		round_keys[0] = key_in;
-		$display("Pre-Round Key:");
-		$write("%02X %02X %02X %02X\n", round_keys[0][127:120], round_keys[0][95:88], round_keys[0][63:56], round_keys[0][31:24]);
-		$write("%02X %02X %02X %02X\n", round_keys[0][119:112], round_keys[0][87:80], round_keys[0][55:48], round_keys[0][23:16]);
-		$write("%02X %02X %02X %02X\n", round_keys[0][111:104], round_keys[0][79:72], round_keys[0][47:40], round_keys[0][15:8]);
-		$write("%02X %02X %02X %02X\n", round_keys[0][103:96],  round_keys[0][71:64], round_keys[0][39:32], round_keys[0][7:0]);
-		// -- issue transformer start
-		// transformer_start_r = transformer_start_r | 1;
-		
-		for (i=4; i<44; i=i+1) begin
-			tempword = w[i-1];
-			if ((i % 4) == 0) begin
-				// every 4th round, we need the round mixing function
-				tempword = subword(rotword(tempword)) ^ round_constant(i/4);
-			end
-			
-			w[i] = w[i-4] ^ tempword;
 
-			// $display(i/4, i%4);
-			if ((i % 4) == 3) begin
-				// round done, print round keys
-				$write("Round %0d Key:", (i/4));
-				$display("");
-				$write("%02X %02X %02X %02X\n", w[((i/4)*4)][31:24], w[((i/4)*4)+1][31:24], w[((i/4)*4)+2][31:24], w[((i/4)*4)+3][31:24]);
-				$write("%02X %02X %02X %02X\n", w[((i/4)*4)][23:16], w[((i/4)*4)+1][23:16], w[((i/4)*4)+2][23:16], w[((i/4)*4)+3][23:16]);
-				$write("%02X %02X %02X %02X\n", w[((i/4)*4)][15:8] , w[((i/4)*4)+1][15:8] , w[((i/4)*4)+2][15:8] , w[((i/4)*4)+3][15:8] );
-				$write("%02X %02X %02X %02X\n", w[((i/4)*4)][7:0]  , w[((i/4)*4)+1][7:0]  , w[((i/4)*4)+2][7:0]  , w[((i/4)*4)+3][7:0]  );
-				// copy to output registers
-				round_keys[i/4] = {w[i-3], w[i-2], w[i-1], w[i]};
-				// issue round transformer start
-				// transformer_start_r = transformer_start_r | (1 << (i/4));
-			end
+		if (i == 0) begin
+			// for loop iteration 0, computes first 4 keys
+
+			// set pre-round key
+			w[0] = key_in[127:96];
+			w[1] = key_in[95:64];
+			w[2] = key_in[63:32];
+			w[3] = key_in[31:0];
+			// -- copy to output register
+			round_keys[0] = key_in;
+			$display("Pre-Round Key:");
+			$write("%02X %02X %02X %02X\n", round_keys[0][127:120], round_keys[0][95:88], round_keys[0][63:56], round_keys[0][31:24]);
+			$write("%02X %02X %02X %02X\n", round_keys[0][119:112], round_keys[0][87:80], round_keys[0][55:48], round_keys[0][23:16]);
+			$write("%02X %02X %02X %02X\n", round_keys[0][111:104], round_keys[0][79:72], round_keys[0][47:40], round_keys[0][15:8]);
+			$write("%02X %02X %02X %02X\n", round_keys[0][103:96],  round_keys[0][71:64], round_keys[0][39:32], round_keys[0][7:0]);
+
+			// update for loop with offset since this iteration counts as 4 iterations
+			i = i + 3;
+		end
+		
+		if (i > 3 && i < 44) begin
+			// for loop iterations 4-43
+
+			//// for (i=4; i<44; i=i+1) begin
+				tempword = w[i-1];
+				if ((i % 4) == 0) begin
+					// every 4th round, we need the round mixing function
+					tempword = subword(rotword(tempword)) ^ round_constant(i/4);
+				end
+				
+				w[i] = w[i-4] ^ tempword;
+
+				// $display(i/4, i%4);
+				if ((i % 4) == 3) begin
+					// round done, print round keys
+					$write("Round %0d Key:", (i/4));
+					$display("");
+					$write("%02X %02X %02X %02X\n", w[((i/4)*4)][31:24], w[((i/4)*4)+1][31:24], w[((i/4)*4)+2][31:24], w[((i/4)*4)+3][31:24]);
+					$write("%02X %02X %02X %02X\n", w[((i/4)*4)][23:16], w[((i/4)*4)+1][23:16], w[((i/4)*4)+2][23:16], w[((i/4)*4)+3][23:16]);
+					$write("%02X %02X %02X %02X\n", w[((i/4)*4)][15:8] , w[((i/4)*4)+1][15:8] , w[((i/4)*4)+2][15:8] , w[((i/4)*4)+3][15:8] );
+					$write("%02X %02X %02X %02X\n", w[((i/4)*4)][7:0]  , w[((i/4)*4)+1][7:0]  , w[((i/4)*4)+2][7:0]  , w[((i/4)*4)+3][7:0]  );
+					// copy to output registers
+					round_keys[i/4] = {w[i-3], w[i-2], w[i-1], w[i]};
+					// issue round transformer start
+					// transformer_start_r = transformer_start_r | (1 << (i/4));
+				end
+			//// end
 		end
 
-		$display("----------------");
+		if (i > 43) begin
+			// for loop iteration 44+ (last iteration)
 
-		// issue round transformer start
-		transformer_start_r = 1;
+			$display("----------------");
+			// issue round transformer start
+			transformer_start_r = 1;
+		end
+
+		// update for loop i
+        i = i + 1;
+
 	end
 end
 
@@ -112,9 +130,20 @@ end
 task reset_round_keys;
 	begin:rst_keys
 		integer i;
-		for (i = 0; i < 11; i = i + 1) begin
-    			round_keys[i] = 0;
-		end
+		//// for (i = 0; i < 11; i = i + 1) begin
+    	//// 		round_keys[i] = 0;
+		//// end
+		round_keys[0] = 0;
+		round_keys[1] = 0;
+		round_keys[2] = 0;
+		round_keys[3] = 0;
+		round_keys[4] = 0;
+		round_keys[5] = 0;
+		round_keys[6] = 0;
+		round_keys[7] = 0;
+		round_keys[8] = 0;
+		round_keys[9] = 0;
+		round_keys[10] = 0;
 		transformer_start_r = 0;
 	end
 endtask
