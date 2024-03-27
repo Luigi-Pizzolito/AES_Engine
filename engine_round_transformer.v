@@ -127,6 +127,8 @@ always @(posedge clk) begin
             // output ciphertext
             ciphertext_r = state_block;
             transformer_done_r = 1;
+
+            //TODO idle here until data output read is finished, by adding a 12+ state
         end
 
         // update for loop i
@@ -850,5 +852,13 @@ function [7:0] aes_tbox(input	[7:0]in, input integer mult);
     endcase
     end
 endfunction
+
+`ifndef TOPMODULE
+	// the "macro" to dump signals
+	initial begin
+	$dumpfile ("simulation/engine_round_transformer.vcd");
+	$dumpvars(0, engine_round_transformer);
+	end
+`endif
 
 endmodule
