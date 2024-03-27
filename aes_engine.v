@@ -6,6 +6,9 @@ module aes_engine(
     input[1:0] cmd,
     output interface_ready,
 
+	//!temp
+	input output_read,
+
     // -- output interface
 	output[127:0] ciphertext_o,
 
@@ -13,7 +16,9 @@ module aes_engine(
 );
 
 // control signals
-wire key_start, transformer_start_w, engine_done_w;
+wire key_start, transformer_start_w, engine_done_w, output_read_w;
+//!temp
+assign output_read_w = output_read;
 assign engine_done = engine_done_w;
 
 wire [127:0] plain, key;
@@ -79,6 +84,7 @@ engine_round_transformer transformer_module (
 	// inputs
 	.plaintext			(plain),
 	.transformer_start	(transformer_start_w),
+	.output_read        (output_read_w),
 	// -- keys
 	.round0_key			(round0_key_w),
 	.round1_key			(round1_key_w),

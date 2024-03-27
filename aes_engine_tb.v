@@ -10,6 +10,10 @@ reg rst_tb = 0;
 reg[7:0] din_tb = 0;
 reg[1:0] cmd_tb = 0;
 
+//!temp
+reg output_read_tb;
+initial output_read_tb = 0;
+
 wire ready_tb, done_tb;
 
 // define tb->aes_engine connections
@@ -20,6 +24,9 @@ aes_engine i_uut
 
     .din(din_tb),
     .cmd(cmd_tb),
+
+	//!temp
+	.output_read(output_read_tb),
 
     .interface_ready(ready_tb),
     .engine_done(done_tb)
@@ -127,9 +134,17 @@ initial begin
 	// wait for engine done to go high
 	@(posedge done_tb)
 	begin
-		// Idle
+		// Idle input interface
 		cmd_tb = C_ID;
-		#20;
+		#10;
+
+		// Read output ciphertext
+
+		// Signal read finished
+		output_read_tb = 1;
+
+		#10;
+		output_read_tb = 0;
 		$finish;
 	end
 	

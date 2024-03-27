@@ -17,6 +17,8 @@ module engine_round_transformer (
 	input[127:0] round8_key,
 	input[127:0] round9_key,
 	input[127:0] round10_key,
+    // input from output_interface
+    input output_read,
     // output to output_interface
     output[127:0] ciphertext,
     // control signal output to engine_key_generator, input_interface, output_interface
@@ -44,7 +46,7 @@ assign ciphertext = ciphertext_r;
 
 // Main Logic
 // -- Asynchronous reset logic
-always @(negedge rst_/* or posedge transformer_done*/) begin //todo: make an extra input signal for data ouput read, then reset
+always @(negedge rst_ or posedge output_read) begin
 	resetcipher;
     resetkeys;
     state_block = 128'h00000000000000000000000000000000;
@@ -121,18 +123,26 @@ always @(posedge clk) begin
             print_matrix(state_block);
         end
 
-        if (i > 10) begin
-            // for loop iteration 11+ (last iteration)
+        if (i == 10) begin
+            // for loop iteration 10 (last iteration)
         
             // output ciphertext
             ciphertext_r = state_block;
             transformer_done_r = 1;
-
-            //TODO idle here until data output read is finished, by adding a 12+ state
         end
 
-        // update for loop i
-        i = i + 1;
+        // if output is ready, but has not been read yet
+        // just idle; by not incrementing i
+        if (i > 10) begin
+            // for loop iteration 11+
+            // idle waiting for output_read to go high
+            // posedge check on output_read in code above
+        end
+        else begin
+            // 0 <= i <= 10, increment normally
+            // update for loop i
+            i = i + 1;
+        end
 
 	end
 end
@@ -853,12 +863,12 @@ function [7:0] aes_tbox(input	[7:0]in, input integer mult);
     end
 endfunction
 
-`ifndef TOPMODULE
-	// the "macro" to dump signals
-	initial begin
-	$dumpfile ("simulation/engine_round_transformer.vcd");
-	$dumpvars(0, engine_round_transformer);
-	end
-`endif
+// `ifndef TOPMODULE
+// 	// the "macro" to dump signals
+// 	initial begin
+// 	$dumpfile ("simulation/engine_round_transformer.vcd");
+// 	$dumpvars(0, engine_round_transformer);
+// 	end
+// `endif
 
 endmodule
