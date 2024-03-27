@@ -1,7 +1,7 @@
 `timescale 1ns/1ns
 // Define module IO
 module engine_round_transformer (
-    input rst_,
+    input rst_, clk,
     // input from input_interface
     input[127:0] plaintext,
     // input from engine_key_generator
@@ -50,73 +50,75 @@ always @(negedge rst_/* or posedge transformer_done*/) begin //todo: make an ext
     transformer_done_r = 0;
 end
 // -- Transformer start logic
-always @(posedge transformer_start) begin
+always @(posedge clk) begin
     // transformer start cmd issued
-    transformer_done_r = 0;
-    // read plaintext
-    state_block = plaintext;
-    $display("Plaintext:");
-    print_matrix(state_block);
-    // read round keys
-    round_keys[0] = round0_key;
-    round_keys[1] = round1_key;
-    round_keys[2] = round2_key;
-    round_keys[3] = round3_key;
-    round_keys[4] = round4_key;
-    round_keys[5] = round5_key;
-    round_keys[6] = round6_key;
-    round_keys[7] = round7_key;
-    round_keys[8] = round8_key;
-    round_keys[9] = round9_key;
-    round_keys[10] = round10_key;
+	if (transformer_start) begin
+		transformer_done_r = 0;
+		// read plaintext
+		state_block = plaintext;
+		$display("Plaintext:");
+		print_matrix(state_block);
+		// read round keys
+		round_keys[0] = round0_key;
+		round_keys[1] = round1_key;
+		round_keys[2] = round2_key;
+		round_keys[3] = round3_key;
+		round_keys[4] = round4_key;
+		round_keys[5] = round5_key;
+		round_keys[6] = round6_key;
+		round_keys[7] = round7_key;
+		round_keys[8] = round8_key;
+		round_keys[9] = round9_key;
+		round_keys[10] = round10_key;
 
-    // pre-round key
-    state_block = state_block ^ round_keys[0];
-    $display("Pre-Round State:");
-    print_matrix(state_block);
+		// pre-round key
+		state_block = state_block ^ round_keys[0];
+		$display("Pre-Round State:");
+		print_matrix(state_block);
 
-    //? simulate delay
-    #1;
+		//? simulate delay
+		// #1;
 
-    // encryption rounds
-    for (i=1; i<10; i=i+1) begin
-        // Rijndael
-        // -- SubBytes
-        // state_block = SubBytes(state_block);
-        // // actually, using TBOX already does SubBytes (aes_tbox(byte,1) == aes_sbox(byte))
-        // -- ShiftRow
-        state_block = ShiftRow(state_block);
-        // -- MixCol
-    	state_block = MixCol(state_block);
-        // -- Key XOR
-        state_block = state_block ^ round_keys[i];
+		// encryption rounds
+		for (i=1; i<10; i=i+1) begin
+			// Rijndael
+			// -- SubBytes
+			// state_block = SubBytes(state_block);
+			// actually, using TBOX already does SubBytes (aes_tbox(byte,1) == aes_sbox(byte))
+			// -- ShiftRow
+			state_block = ShiftRow(state_block);
+			// -- MixCol
+			state_block = MixCol(state_block);
+			// -- Key XOR
+			state_block = state_block ^ round_keys[i];
 
-        // -- Print
-        $write("Round %0d State:", i);
-		$display("");
-        print_matrix(state_block);
+			// -- Print
+			$write("Round %0d State:", i);
+			$display("");
+			print_matrix(state_block);
 
-        //? simulate delay
-        #1;
-    end
+			//? simulate delay
+			// #1;
+		end
 
-    // last round
-    // -- SubBytes
-    state_block = SubBytes(state_block);
-    // -- ShiftRow
-    state_block = ShiftRow(state_block);
-    // -- Key XOR
-    state_block = state_block ^ round_keys[10];
-    // -- Print
-    $display("Round 10 State / Ciphertext:");
-    print_matrix(state_block);
+		// last round
+		// -- SubBytes
+		state_block = SubBytes(state_block);
+		// -- ShiftRow
+		state_block = ShiftRow(state_block);
+		// -- Key XOR
+		state_block = state_block ^ round_keys[10];
+		// -- Print
+		$display("Round 10 State / Ciphertext:");
+		print_matrix(state_block);
 
-    //? simulate delay
-    #1;
+		//? simulate delay
+		// #1;
 
-    // output ciphertext
-    ciphertext_r = state_block;
-    transformer_done_r = 1;
+		// output ciphertext
+		ciphertext_r = state_block;
+		transformer_done_r = 1;
+	end
 end
 
 // Define functions
@@ -159,7 +161,7 @@ function [127:0] SubBytes(input [127:0] input_block);
     //? since aes_tbox(byte,1) == aes_sbox(byte)
     //? we could just do aes_tbox(byte,1)
     //? to avoid importing aes_sbox
-    //TODO: remove aes_sbox
+	//? but actually, last round needs SubBytes without MixCol, so AES_SBOX still needed!
     begin
         SubBytes = {
             aes_sbox(input_block[127:120]), aes_sbox(input_block[119:112]),
@@ -217,63 +219,9 @@ function [31:0] rotword(input [31:0]word);
 	end
 endfunction
 // -- AES MixCol on state block
-function [7:0] mul3(input [7:0] b);
-    reg [7:0] two;
-    begin
-        two=mul2(b);
-        mul3=two^b;
-    end
-endfunction
-
-function [7:0] mul2(input [7:0] b);
-    begin
-        mul2={b[6:0],1'b0}^(8'h1b&{8{b[7]}});
-    end
-endfunction
-
-function [31:0] MixSingleCol(input [31:0]in);
-    begin
-        // Constant matrix:
-        // 02 03 01 01
-        // 01 02 03 01
-        // 01 01 02 03
-        // 03 01 01 02
-        MixSingleCol = {
-            ( mul2(in[31:24]) ^ mul3(in[23:16]) ^ in[15:8]       ^ in[7:0]       ),
-            ( in[31:24]       ^ mul2(in[23:16]) ^ mul3(in[15:8]) ^ in[7:0]       ),
-            ( in[31:24]       ^ in[23:16]       ^ mul2(in[15:8]) ^ mul3(in[7:0]) ),
-            ( mul3(in[31:24]) ^ in[23:16]       ^ in[15:8]       ^ mul2(in[7:0]) )
-        };
-    end
-endfunction
 function [127:0] MixCol(input [127:0] input_block);
-	reg [127:0]roworder;
-	reg [127:0]mixroworder;
-    begin
-        // //! just mix
-        // MixCol = {
-        //     MixSingleCol(input_block[127:96]),
-        //     MixSingleCol(input_block[95:64]),
-        //     MixSingleCol(input_block[63:32]),
-        //     MixSingleCol(input_block[31:0])
-        // };
-        
-        //! BROKEN IMPLEMENTATION USING AES_TBOX
-
-		$write("Round %0d State (After ShiftRow):", i);
-		$display("");
-        $write("%02X %02X %02X %02X\n", input_block[127:120], input_block[95:88], input_block[63:56], input_block[31:24]);
-		$write("%02X %02X %02X %02X\n", input_block[119:112], input_block[87:80], input_block[55:48], input_block[23:16]);
-		$write("%02X %02X %02X %02X\n", input_block[111:104], input_block[79:72], input_block[47:40], input_block[15:8]);
-		$write("%02X %02X %02X %02X\n", input_block[103:96],  input_block[71:64], input_block[39:32], input_block[7:0]);
-
-		$display("Column 1 Input");
-		$write("%02X %02X %02X %02X\n", input_block[127:120], input_block[119:112], input_block[111:104], input_block[103:96]);
-		$display("Column 1, Row 1, 4 terms");
-		$write("%02X %02X %02X %02X\n", aes_tbox(input_block[127:120], 2), aes_tbox(input_block[119:112], 3), aes_tbox(input_block[111:104], 1), aes_tbox(input_block[103:96], 1));
-		$display("Working Method");
-		$write("%02X %02X %02X %02X\n", mul2(aes_sbox(input_block[127:120])), mul3(aes_sbox(input_block[119:112])), aes_sbox(input_block[111:104]), aes_sbox(input_block[103:96]));
-
+    begin        
+        // IMPLEMENTATION USING AES_TBOX
         MixCol = {
             // if column = {a, b, c, d}
             // then AES TBOX is

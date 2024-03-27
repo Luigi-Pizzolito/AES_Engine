@@ -48,6 +48,7 @@ input_interface input_module (
 
 engine_key_generator key_gen_module (
     .rst_               (rst_),
+	.clk				(clk),
 
 	// inputs
     .key_in             (key),
@@ -73,6 +74,7 @@ engine_key_generator key_gen_module (
 
 engine_round_transformer transformer_module (
 	.rst_				(rst_),
+	.clk				(clk),
 
 	// inputs
 	.plaintext			(plain),
