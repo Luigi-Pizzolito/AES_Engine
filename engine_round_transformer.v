@@ -43,6 +43,7 @@ assign ciphertext = ciphertext_r;
 
 // Main Logic
 // -- Asynchronous reset logic
+//TODO: DONT USE ANY FOR LOOPS, TAKE CLOCK IN TTO INCREMENT STEP COUNTER
 always @(negedge rst_/* or posedge transformer_done*/) begin //todo: make an extra input signal for data ouput read, then reset
 	resetcipher;
     resetkeys;

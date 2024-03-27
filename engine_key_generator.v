@@ -56,6 +56,7 @@ integer i;
 reg [31:0] w[43:0];
 // ---- temp word for each word calculation
 reg [31:0] tempword;
+//TODO: DONT USE ANY FOR LOOPS, TAKE CLOCK IN TTO INCREMENT STEP COUNTER
 always @(posedge clk) begin
 	// engine start cmd issued
 	if (engine_start) begin
