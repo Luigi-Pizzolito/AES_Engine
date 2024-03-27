@@ -82,7 +82,7 @@ always @(posedge transformer_start) begin
     for (i=1; i<10; i=i+1) begin
         // Rijndael
         // -- SubBytes
-        state_block = SubBytes(state_block);
+        // state_block = SubBytes(state_block);
         // // actually, using TBOX already does SubBytes (aes_tbox(byte,1) == aes_sbox(byte))
         // -- ShiftRow
         state_block = ShiftRow(state_block);
@@ -247,80 +247,99 @@ function [31:0] MixSingleCol(input [31:0]in);
     end
 endfunction
 function [127:0] MixCol(input [127:0] input_block);
+	reg [127:0]roworder;
+	reg [127:0]mixroworder;
     begin
         // //! just mix
-        MixCol = {
-            MixSingleCol(input_block[127:96]),
-            MixSingleCol(input_block[95:64]),
-            MixSingleCol(input_block[63:32]),
-            MixSingleCol(input_block[31:0])
-        };
+        // MixCol = {
+        //     MixSingleCol(input_block[127:96]),
+        //     MixSingleCol(input_block[95:64]),
+        //     MixSingleCol(input_block[63:32]),
+        //     MixSingleCol(input_block[31:0])
+        // };
         
         //! BROKEN IMPLEMENTATION USING AES_TBOX
-        // MixCol = {
-        //     // if column = {a, b, c, d}
-        //     // then AES TBOX is
-        //     // a = TBOX(a)[02] ^ TBOX(b)[03] ^ TBOX(c)[01] ^ TBOX(d)[01]
-        //     // b = TBOX(a)[01] ^ TBOX(b)[02] ^ TBOX(c)[03] ^ TBOX(d)[01]
-        //     // c = TBOX(a)[01] ^ TBOX(b)[01] ^ TBOX(c)[02] ^ TBOX(d)[03]
-        //     // d = TBOX(a)[03] ^ TBOX(b)[01] ^ TBOX(c)[01] ^ TBOX(d)[02]
-        //     // using our TBOX implementation
-        //     // a = aes_tbox(a,2) ^ aes_tbox(b,3) ^ aes_tbox(c,1) ^ aes_tbox(d,1)
-        //     // b = aes_tbox(a,1) ^ aes_tbox(b,2) ^ aes_tbox(c,3) ^ aes_tbox(d,1)
-        //     // c = aes_tbox(a,1) ^ aes_tbox(b,1) ^ aes_tbox(c,2) ^ aes_tbox(d,3)
-        //     // d = aes_tbox(a,3) ^ aes_tbox(b,1) ^ aes_tbox(c,1) ^ aes_tbox(d,2)
-        //     // but our {a,b,c,d} columns are:
-        //     // Column 1: a=input_block[127:120], b=input_block[119:112], c=input_block[111:104], d=input_block[103:96]
-        //     // Column 2: a=input_block[95:88],   b=input_block[87:80],   c=input_block[79:72],   d=input_block[71:64]
-        //     // Column 3: a=input_block[63:56],   b=input_block[55:48],   c=input_block[47:40],   d=input_block[39:32]
-        //     // Column 4: a=input_block[31:24],   b=input_block[23:16],   c=input_block[15:8],    d=input_block[7:0]
-        //     // so we have to substitute each a,b,c,d value for each column with the index references above:
 
-        //     // Column 1
-        //     {
-        //         /*CM Row 1*/
-        //         {aes_tbox(input_block[127:120], 2) ^ aes_tbox(input_block[119:112], 3) ^ aes_tbox(input_block[111:104], 1) ^ aes_tbox(input_block[103:96], 1)},
-        //         /*CM Row 2*/
-        //         {aes_tbox(input_block[127:120], 1) ^ aes_tbox(input_block[119:112], 2) ^ aes_tbox(input_block[111:104], 3) ^ aes_tbox(input_block[103:96], 1)},
-        //         /*CM Row3*/
-        //         {aes_tbox(input_block[127:120], 1) ^ aes_tbox(input_block[119:112], 1) ^ aes_tbox(input_block[111:104], 2) ^ aes_tbox(input_block[103:96], 3)},
-        //         /*CM Row4*/
-        //         {aes_tbox(input_block[127:120], 3) ^ aes_tbox(input_block[119:112], 1) ^ aes_tbox(input_block[111:104], 1) ^ aes_tbox(input_block[103:96], 2)}
-        //     },
-        //     // Column 2
-        //     {
-        //         /*CM Row 1*/
-        //         {aes_tbox(input_block[95:88], 2) ^ aes_tbox(input_block[87:80], 3) ^ aes_tbox(input_block[79:72], 1) ^ aes_tbox(input_block[71:64], 1)},
-        //         /*CM Row 2*/
-        //         {aes_tbox(input_block[95:88], 1) ^ aes_tbox(input_block[87:80], 2) ^ aes_tbox(input_block[79:72], 3) ^ aes_tbox(input_block[71:64], 1)},
-        //         /*CM Row3*/
-        //         {aes_tbox(input_block[95:88], 1) ^ aes_tbox(input_block[87:80], 1) ^ aes_tbox(input_block[79:72], 2) ^ aes_tbox(input_block[71:64], 3)},
-        //         /*CM Row4*/
-        //         {aes_tbox(input_block[95:88], 3) ^ aes_tbox(input_block[87:80], 1) ^ aes_tbox(input_block[79:72], 1) ^ aes_tbox(input_block[71:64], 2)}
-        //     },
-        //     // Column 3
-        //     {
-        //         /*CM Row 1*/
-        //         {aes_tbox(input_block[63:56], 2) ^ aes_tbox(input_block[55:48], 3) ^ aes_tbox(input_block[47:40], 1) ^ aes_tbox(input_block[39:32], 1)},
-        //         /*CM Row 2*/
-        //         {aes_tbox(input_block[63:56], 1) ^ aes_tbox(input_block[55:48], 2) ^ aes_tbox(input_block[47:40], 3) ^ aes_tbox(input_block[39:32], 1)},
-        //         /*CM Row3*/
-        //         {aes_tbox(input_block[63:56], 1) ^ aes_tbox(input_block[55:48], 1) ^ aes_tbox(input_block[47:40], 2) ^ aes_tbox(input_block[39:32], 3)},
-        //         /*CM Row4*/
-        //         {aes_tbox(input_block[63:56], 3) ^ aes_tbox(input_block[55:48], 1) ^ aes_tbox(input_block[47:40], 1) ^ aes_tbox(input_block[39:32], 2)}
-        //     },
-        //     // Column 4
-        //     {
-        //         /*CM Row 1*/
-        //         {aes_tbox(input_block[31:24], 2) ^ aes_tbox(input_block[23:16], 3) ^ aes_tbox(input_block[15:8], 1) ^ aes_tbox(input_block[7:0], 1)},
-        //         /*CM Row 2*/
-        //         {aes_tbox(input_block[31:24], 1) ^ aes_tbox(input_block[23:16], 2) ^ aes_tbox(input_block[15:8], 3) ^ aes_tbox(input_block[7:0], 1)},
-        //         /*CM Row3*/
-        //         {aes_tbox(input_block[31:24], 1) ^ aes_tbox(input_block[23:16], 1) ^ aes_tbox(input_block[15:8], 2) ^ aes_tbox(input_block[7:0], 3)},
-        //         /*CM Row4*/
-        //         {aes_tbox(input_block[31:24], 3) ^ aes_tbox(input_block[23:16], 1) ^ aes_tbox(input_block[15:8], 1) ^ aes_tbox(input_block[7:0], 2)}
-        //     }
-        // };
+		$write("Round %0d State (After ShiftRow):", i);
+		$display("");
+        $write("%02X %02X %02X %02X\n", input_block[127:120], input_block[95:88], input_block[63:56], input_block[31:24]);
+		$write("%02X %02X %02X %02X\n", input_block[119:112], input_block[87:80], input_block[55:48], input_block[23:16]);
+		$write("%02X %02X %02X %02X\n", input_block[111:104], input_block[79:72], input_block[47:40], input_block[15:8]);
+		$write("%02X %02X %02X %02X\n", input_block[103:96],  input_block[71:64], input_block[39:32], input_block[7:0]);
+
+		$display("Column 1 Input");
+		$write("%02X %02X %02X %02X\n", input_block[127:120], input_block[119:112], input_block[111:104], input_block[103:96]);
+		$display("Column 1, Row 1, 4 terms");
+		$write("%02X %02X %02X %02X\n", aes_tbox(input_block[127:120], 2), aes_tbox(input_block[119:112], 3), aes_tbox(input_block[111:104], 1), aes_tbox(input_block[103:96], 1));
+		$display("Working Method");
+		$write("%02X %02X %02X %02X\n", mul2(aes_sbox(input_block[127:120])), mul3(aes_sbox(input_block[119:112])), aes_sbox(input_block[111:104]), aes_sbox(input_block[103:96]));
+
+        MixCol = {
+            // if column = {a, b, c, d}
+            // then AES TBOX is
+            // a = TBOX(a)[02] ^ TBOX(b)[03] ^ TBOX(c)[01] ^ TBOX(d)[01]
+            // b = TBOX(a)[01] ^ TBOX(b)[02] ^ TBOX(c)[03] ^ TBOX(d)[01]
+            // c = TBOX(a)[01] ^ TBOX(b)[01] ^ TBOX(c)[02] ^ TBOX(d)[03]
+            // d = TBOX(a)[03] ^ TBOX(b)[01] ^ TBOX(c)[01] ^ TBOX(d)[02]
+            // using our TBOX implementation
+            // a = aes_tbox(a,2) ^ aes_tbox(b,3) ^ aes_tbox(c,1) ^ aes_tbox(d,1)
+            // b = aes_tbox(a,1) ^ aes_tbox(b,2) ^ aes_tbox(c,3) ^ aes_tbox(d,1)
+            // c = aes_tbox(a,1) ^ aes_tbox(b,1) ^ aes_tbox(c,2) ^ aes_tbox(d,3)
+            // d = aes_tbox(a,3) ^ aes_tbox(b,1) ^ aes_tbox(c,1) ^ aes_tbox(d,2)
+            // but our {a,b,c,d} columns are:
+            // Column 1: a=input_block[127:120], b=input_block[119:112], c=input_block[111:104], d=input_block[103:96]
+            // Column 2: a=input_block[95:88],   b=input_block[87:80],   c=input_block[79:72],   d=input_block[71:64]
+            // Column 3: a=input_block[63:56],   b=input_block[55:48],   c=input_block[47:40],   d=input_block[39:32]
+            // Column 4: a=input_block[31:24],   b=input_block[23:16],   c=input_block[15:8],    d=input_block[7:0]
+            // so we have to substitute each a,b,c,d value for each column with the index references above:
+
+
+            // Column 1
+            {
+                /*CM Row 1*/
+                {aes_tbox(input_block[127:120], 2) ^ aes_tbox(input_block[119:112], 3) ^ aes_tbox(input_block[111:104], 1) ^ aes_tbox(input_block[103:96], 1)},
+                /*CM Row 2*/
+                {aes_tbox(input_block[127:120], 1) ^ aes_tbox(input_block[119:112], 2) ^ aes_tbox(input_block[111:104], 3) ^ aes_tbox(input_block[103:96], 1)},
+                /*CM Row3*/
+                {aes_tbox(input_block[127:120], 1) ^ aes_tbox(input_block[119:112], 1) ^ aes_tbox(input_block[111:104], 2) ^ aes_tbox(input_block[103:96], 3)},
+                /*CM Row4*/
+                {aes_tbox(input_block[127:120], 3) ^ aes_tbox(input_block[119:112], 1) ^ aes_tbox(input_block[111:104], 1) ^ aes_tbox(input_block[103:96], 2)}
+            },
+            // Column 2
+            {
+                /*CM Row 1*/
+                {aes_tbox(input_block[95:88], 2) ^ aes_tbox(input_block[87:80], 3) ^ aes_tbox(input_block[79:72], 1) ^ aes_tbox(input_block[71:64], 1)},
+                /*CM Row 2*/
+                {aes_tbox(input_block[95:88], 1) ^ aes_tbox(input_block[87:80], 2) ^ aes_tbox(input_block[79:72], 3) ^ aes_tbox(input_block[71:64], 1)},
+                /*CM Row3*/
+                {aes_tbox(input_block[95:88], 1) ^ aes_tbox(input_block[87:80], 1) ^ aes_tbox(input_block[79:72], 2) ^ aes_tbox(input_block[71:64], 3)},
+                /*CM Row4*/
+                {aes_tbox(input_block[95:88], 3) ^ aes_tbox(input_block[87:80], 1) ^ aes_tbox(input_block[79:72], 1) ^ aes_tbox(input_block[71:64], 2)}
+            },
+            // Column 3
+            {
+                /*CM Row 1*/
+                {aes_tbox(input_block[63:56], 2) ^ aes_tbox(input_block[55:48], 3) ^ aes_tbox(input_block[47:40], 1) ^ aes_tbox(input_block[39:32], 1)},
+                /*CM Row 2*/
+                {aes_tbox(input_block[63:56], 1) ^ aes_tbox(input_block[55:48], 2) ^ aes_tbox(input_block[47:40], 3) ^ aes_tbox(input_block[39:32], 1)},
+                /*CM Row3*/
+                {aes_tbox(input_block[63:56], 1) ^ aes_tbox(input_block[55:48], 1) ^ aes_tbox(input_block[47:40], 2) ^ aes_tbox(input_block[39:32], 3)},
+                /*CM Row4*/
+                {aes_tbox(input_block[63:56], 3) ^ aes_tbox(input_block[55:48], 1) ^ aes_tbox(input_block[47:40], 1) ^ aes_tbox(input_block[39:32], 2)}
+            },
+            // Column 4
+            {
+                /*CM Row 1*/
+                {aes_tbox(input_block[31:24], 2) ^ aes_tbox(input_block[23:16], 3) ^ aes_tbox(input_block[15:8], 1) ^ aes_tbox(input_block[7:0], 1)},
+                /*CM Row 2*/
+                {aes_tbox(input_block[31:24], 1) ^ aes_tbox(input_block[23:16], 2) ^ aes_tbox(input_block[15:8], 3) ^ aes_tbox(input_block[7:0], 1)},
+                /*CM Row3*/
+                {aes_tbox(input_block[31:24], 1) ^ aes_tbox(input_block[23:16], 1) ^ aes_tbox(input_block[15:8], 2) ^ aes_tbox(input_block[7:0], 3)},
+                /*CM Row4*/
+                {aes_tbox(input_block[31:24], 3) ^ aes_tbox(input_block[23:16], 1) ^ aes_tbox(input_block[15:8], 1) ^ aes_tbox(input_block[7:0], 2)}
+            }
+        };
+		
         
     end
 endfunction
@@ -590,284 +609,284 @@ function [7:0] aes_sbox(input [7:0]in);
 	end
 endfunction
 // -- Function for AES SBOX
-// function [23:0] aes_tbox(input	[7:0]in, input integer mult);
-//     // full_tbox maps to {Srd, 2*Srd, 3*Srd}
-//     reg [23:0] full_tbox;
-//     begin
-// 	case(in)		// synopsys full_case parallel_case
-// 		8'h00: full_tbox=24'b101001011100011001100011;
-//         8'h01: full_tbox=24'b100001001111100001111100;
-//         8'h02: full_tbox=24'b100110011110111001110111;
-//         8'h03: full_tbox=24'b100011011111011001111011;
-//         8'h04: full_tbox=24'b000011011111111111110010;
-//         8'h05: full_tbox=24'b101111011101011001101011;
-//         8'h06: full_tbox=24'b101100011101111001101111;
-//         8'h07: full_tbox=24'b010101001001000111000101;
-//         8'h08: full_tbox=24'b010100000110000000110000;
-//         8'h09: full_tbox=24'b000000110000001000000001;
-//         8'h0a: full_tbox=24'b101010011100111001100111;
-//         8'h0b: full_tbox=24'b011111010101011000101011;
-//         8'h0c: full_tbox=24'b000110011110011111111110;
-//         8'h0d: full_tbox=24'b011000101011010111010111;
-//         8'h0e: full_tbox=24'b111001100100110110101011;
-//         8'h0f: full_tbox=24'b100110101110110001110110;
-//         8'h10: full_tbox=24'b010001011000111111001010;
-//         8'h11: full_tbox=24'b100111010001111110000010;
-//         8'h12: full_tbox=24'b010000001000100111001001;
-//         8'h13: full_tbox=24'b100001111111101001111101;
-//         8'h14: full_tbox=24'b000101011110111111111010;
-//         8'h15: full_tbox=24'b111010111011001001011001;
-//         8'h16: full_tbox=24'b110010011000111001000111;
-//         8'h17: full_tbox=24'b000010111111101111110000;
-//         8'h18: full_tbox=24'b111011000100000110101101;
-//         8'h19: full_tbox=24'b011001111011001111010100;
-//         8'h1a: full_tbox=24'b111111010101111110100010;
-//         8'h1b: full_tbox=24'b111010100100010110101111;
-//         8'h1c: full_tbox=24'b101111110010001110011100;
-//         8'h1d: full_tbox=24'b111101110101001110100100;
-//         8'h1e: full_tbox=24'b100101101110010001110010;
-//         8'h1f: full_tbox=24'b010110111001101111000000;
-//         8'h20: full_tbox=24'b110000100111010110110111;
-//         8'h21: full_tbox=24'b000111001110000111111101;
-//         8'h22: full_tbox=24'b101011100011110110010011;
-//         8'h23: full_tbox=24'b011010100100110000100110;
-//         8'h24: full_tbox=24'b010110100110110000110110;
-//         8'h25: full_tbox=24'b010000010111111000111111;
-//         8'h26: full_tbox=24'b000000101111010111110111;
-//         8'h27: full_tbox=24'b010011111000001111001100;
-//         8'h28: full_tbox=24'b010111000110100000110100;
-//         8'h29: full_tbox=24'b111101000101000110100101;
-//         8'h2a: full_tbox=24'b001101001101000111100101;
-//         8'h2b: full_tbox=24'b000010001111100111110001;
-//         8'h2c: full_tbox=24'b100100111110001001110001;
-//         8'h2d: full_tbox=24'b011100111010101111011000;
-//         8'h2e: full_tbox=24'b010100110110001000110001;
-//         8'h2f: full_tbox=24'b001111110010101000010101;
-//         8'h30: full_tbox=24'b000011000000100000000100;
-//         8'h31: full_tbox=24'b010100101001010111000111;
-//         8'h32: full_tbox=24'b011001010100011000100011;
-//         8'h33: full_tbox=24'b010111101001110111000011;
-//         8'h34: full_tbox=24'b001010000011000000011000;
-//         8'h35: full_tbox=24'b101000010011011110010110;
-//         8'h36: full_tbox=24'b000011110000101000000101;
-//         8'h37: full_tbox=24'b101101010010111110011010;
-//         8'h38: full_tbox=24'b000010010000111000000111;
-//         8'h39: full_tbox=24'b001101100010010000010010;
-//         8'h3a: full_tbox=24'b100110110001101110000000;
-//         8'h3b: full_tbox=24'b001111011101111111100010;
-//         8'h3c: full_tbox=24'b001001101100110111101011;
-//         8'h3d: full_tbox=24'b011010010100111000100111;
-//         8'h3e: full_tbox=24'b110011010111111110110010;
-//         8'h3f: full_tbox=24'b100111111110101001110101;
-//         8'h40: full_tbox=24'b000110110001001000001001;
-//         8'h41: full_tbox=24'b100111100001110110000011;
-//         8'h42: full_tbox=24'b011101000101100000101100;
-//         8'h43: full_tbox=24'b001011100011010000011010;
-//         8'h44: full_tbox=24'b001011010011011000011011;
-//         8'h45: full_tbox=24'b101100101101110001101110;
-//         8'h46: full_tbox=24'b111011101011010001011010;
-//         8'h47: full_tbox=24'b111110110101101110100000;
-//         8'h48: full_tbox=24'b111101101010010001010010;
-//         8'h49: full_tbox=24'b010011010111011000111011;
-//         8'h4a: full_tbox=24'b011000011011011111010110;
-//         8'h4b: full_tbox=24'b110011100111110110110011;
-//         8'h4c: full_tbox=24'b011110110101001000101001;
-//         8'h4d: full_tbox=24'b001111101101110111100011;
-//         8'h4e: full_tbox=24'b011100010101111000101111;
-//         8'h4f: full_tbox=24'b100101110001001110000100;
-//         8'h50: full_tbox=24'b111101011010011001010011;
-//         8'h51: full_tbox=24'b011010001011100111010001;
-//         8'h52: full_tbox=24'b000000000000000000000000;
-//         8'h53: full_tbox=24'b001011001100000111101101;
-//         8'h54: full_tbox=24'b011000000100000000100000;
-//         8'h55: full_tbox=24'b000111111110001111111100;
-//         8'h56: full_tbox=24'b110010000111100110110001;
-//         8'h57: full_tbox=24'b111011011011011001011011;
-//         8'h58: full_tbox=24'b101111101101010001101010;
-//         8'h59: full_tbox=24'b010001101000110111001011;
-//         8'h5a: full_tbox=24'b110110010110011110111110;
-//         8'h5b: full_tbox=24'b010010110111001000111001;
-//         8'h5c: full_tbox=24'b110111101001010001001010;
-//         8'h5d: full_tbox=24'b110101001001100001001100;
-//         8'h5e: full_tbox=24'b111010001011000001011000;
-//         8'h5f: full_tbox=24'b010010101000010111001111;
-//         8'h60: full_tbox=24'b011010111011101111010000;
-//         8'h61: full_tbox=24'b001010101100010111101111;
-//         8'h62: full_tbox=24'b111001010100111110101010;
-//         8'h63: full_tbox=24'b000101101110110111111011;
-//         8'h64: full_tbox=24'b110001011000011001000011;
-//         8'h65: full_tbox=24'b110101111001101001001101;
-//         8'h66: full_tbox=24'b010101010110011000110011;
-//         8'h67: full_tbox=24'b100101000001000110000101;
-//         8'h68: full_tbox=24'b110011111000101001000101;
-//         8'h69: full_tbox=24'b000100001110100111111001;
-//         8'h6a: full_tbox=24'b000001100000010000000010;
-//         8'h6b: full_tbox=24'b100000011111111001111111;
-//         8'h6c: full_tbox=24'b111100001010000001010000;
-//         8'h6d: full_tbox=24'b010001000111100000111100;
-//         8'h6e: full_tbox=24'b101110100010010110011111;
-//         8'h6f: full_tbox=24'b111000110100101110101000;
-//         8'h70: full_tbox=24'b111100111010001001010001;
-//         8'h71: full_tbox=24'b111111100101110110100011;
-//         8'h72: full_tbox=24'b110000001000000001000000;
-//         8'h73: full_tbox=24'b100010100000010110001111;
-//         8'h74: full_tbox=24'b101011010011111110010010;
-//         8'h75: full_tbox=24'b101111000010000110011101;
-//         8'h76: full_tbox=24'b010010000111000000111000;
-//         8'h77: full_tbox=24'b000001001111000111110101;
-//         8'h78: full_tbox=24'b110111110110001110111100;
-//         8'h79: full_tbox=24'b110000010111011110110110;
-//         8'h7a: full_tbox=24'b011101011010111111011010;
-//         8'h7b: full_tbox=24'b011000110100001000100001;
-//         8'h7c: full_tbox=24'b001100000010000000010000;
-//         8'h7d: full_tbox=24'b000110101110010111111111;
-//         8'h7e: full_tbox=24'b000011101111110111110011;
-//         8'h7f: full_tbox=24'b011011011011111111010010;
-//         8'h80: full_tbox=24'b010011001000000111001101;
-//         8'h81: full_tbox=24'b000101000001100000001100;
-//         8'h82: full_tbox=24'b001101010010011000010011;
-//         8'h83: full_tbox=24'b001011111100001111101100;
-//         8'h84: full_tbox=24'b111000011011111001011111;
-//         8'h85: full_tbox=24'b101000100011010110010111;
-//         8'h86: full_tbox=24'b110011001000100001000100;
-//         8'h87: full_tbox=24'b001110010010111000010111;
-//         8'h88: full_tbox=24'b010101111001001111000100;
-//         8'h89: full_tbox=24'b111100100101010110100111;
-//         8'h8a: full_tbox=24'b100000101111110001111110;
-//         8'h8b: full_tbox=24'b010001110111101000111101;
-//         8'h8c: full_tbox=24'b101011001100100001100100;
-//         8'h8d: full_tbox=24'b111001111011101001011101;
-//         8'h8e: full_tbox=24'b001010110011001000011001;
-//         8'h8f: full_tbox=24'b100101011110011001110011;
-//         8'h90: full_tbox=24'b101000001100000001100000;
-//         8'h91: full_tbox=24'b100110000001100110000001;
-//         8'h92: full_tbox=24'b110100011001111001001111;
-//         8'h93: full_tbox=24'b011111111010001111011100;
-//         8'h94: full_tbox=24'b011001100100010000100010;
-//         8'h95: full_tbox=24'b011111100101010000101010;
-//         8'h96: full_tbox=24'b101010110011101110010000;
-//         8'h97: full_tbox=24'b100000110000101110001000;
-//         8'h98: full_tbox=24'b110010101000110001000110;
-//         8'h99: full_tbox=24'b001010011100011111101110;
-//         8'h9a: full_tbox=24'b110100110110101110111000;
-//         8'h9b: full_tbox=24'b001111000010100000010100;
-//         8'h9c: full_tbox=24'b011110011010011111011110;
-//         8'h9d: full_tbox=24'b111000101011110001011110;
-//         8'h9e: full_tbox=24'b000111010001011000001011;
-//         8'h9f: full_tbox=24'b011101101010110111011011;
-//         8'ha0: full_tbox=24'b001110111101101111100000;
-//         8'ha1: full_tbox=24'b010101100110010000110010;
-//         8'ha2: full_tbox=24'b010011100111010000111010;
-//         8'ha3: full_tbox=24'b000111100001010000001010;
-//         8'ha4: full_tbox=24'b110110111001001001001001;
-//         8'ha5: full_tbox=24'b000010100000110000000110;
-//         8'ha6: full_tbox=24'b011011000100100000100100;
-//         8'ha7: full_tbox=24'b111001001011100001011100;
-//         8'ha8: full_tbox=24'b010111011001111111000010;
-//         8'ha9: full_tbox=24'b011011101011110111010011;
-//         8'haa: full_tbox=24'b111011110100001110101100;
-//         8'hab: full_tbox=24'b101001101100010001100010;
-//         8'hac: full_tbox=24'b101010000011100110010001;
-//         8'had: full_tbox=24'b101001000011000110010101;
-//         8'hae: full_tbox=24'b001101111101001111100100;
-//         8'haf: full_tbox=24'b100010111111001001111001;
-//         8'hb0: full_tbox=24'b001100101101010111100111;
-//         8'hb1: full_tbox=24'b010000111000101111001000;
-//         8'hb2: full_tbox=24'b010110010110111000110111;
-//         8'hb3: full_tbox=24'b101101111101101001101101;
-//         8'hb4: full_tbox=24'b100011000000000110001101;
-//         8'hb5: full_tbox=24'b011001001011000111010101;
-//         8'hb6: full_tbox=24'b110100101001110001001110;
-//         8'hb7: full_tbox=24'b111000000100100110101001;
-//         8'hb8: full_tbox=24'b101101001101100001101100;
-//         8'hb9: full_tbox=24'b111110101010110001010110;
-//         8'hba: full_tbox=24'b000001111111001111110100;
-//         8'hbb: full_tbox=24'b001001011100111111101010;
-//         8'hbc: full_tbox=24'b101011111100101001100101;
-//         8'hbd: full_tbox=24'b100011101111010001111010;
-//         8'hbe: full_tbox=24'b111010010100011110101110;
-//         8'hbf: full_tbox=24'b000110000001000000001000;
-//         8'hc0: full_tbox=24'b110101010110111110111010;
-//         8'hc1: full_tbox=24'b100010001111000001111000;
-//         8'hc2: full_tbox=24'b011011110100101000100101;
-//         8'hc3: full_tbox=24'b011100100101110000101110;
-//         8'hc4: full_tbox=24'b001001000011100000011100;
-//         8'hc5: full_tbox=24'b111100010101011110100110;
-//         8'hc6: full_tbox=24'b110001110111001110110100;
-//         8'hc7: full_tbox=24'b010100011001011111000110;
-//         8'hc8: full_tbox=24'b001000111100101111101000;
-//         8'hc9: full_tbox=24'b011111001010000111011101;
-//         8'hca: full_tbox=24'b100111001110100001110100;
-//         8'hcb: full_tbox=24'b001000010011111000011111;
-//         8'hcc: full_tbox=24'b110111011001011001001011;
-//         8'hcd: full_tbox=24'b110111000110000110111101;
-//         8'hce: full_tbox=24'b100001100000110110001011;
-//         8'hcf: full_tbox=24'b100001010000111110001010;
-//         8'hd0: full_tbox=24'b100100001110000001110000;
-//         8'hd1: full_tbox=24'b010000100111110000111110;
-//         8'hd2: full_tbox=24'b110001000111000110110101;
-//         8'hd3: full_tbox=24'b101010101100110001100110;
-//         8'hd4: full_tbox=24'b110110001001000001001000;
-//         8'hd5: full_tbox=24'b000001010000011000000011;
-//         8'hd6: full_tbox=24'b000000011111011111110110;
-//         8'hd7: full_tbox=24'b000100100001110000001110;
-//         8'hd8: full_tbox=24'b101000111100001001100001;
-//         8'hd9: full_tbox=24'b010111110110101000110101;
-//         8'hda: full_tbox=24'b111110011010111001010111;
-//         8'hdb: full_tbox=24'b110100000110100110111001;
-//         8'hdc: full_tbox=24'b100100010001011110000110;
-//         8'hdd: full_tbox=24'b010110001001100111000001;
-//         8'hde: full_tbox=24'b001001110011101000011101;
-//         8'hdf: full_tbox=24'b101110010010011110011110;
-//         8'he0: full_tbox=24'b001110001101100111100001;
-//         8'he1: full_tbox=24'b000100111110101111111000;
-//         8'he2: full_tbox=24'b101100110010101110011000;
-//         8'he3: full_tbox=24'b001100110010001000010001;
-//         8'he4: full_tbox=24'b101110111101001001101001;
-//         8'he5: full_tbox=24'b011100001010100111011001;
-//         8'he6: full_tbox=24'b100010010000011110001110;
-//         8'he7: full_tbox=24'b101001110011001110010100;
-//         8'he8: full_tbox=24'b101101100010110110011011;
-//         8'he9: full_tbox=24'b001000100011110000011110;
-//         8'hea: full_tbox=24'b100100100001010110000111;
-//         8'heb: full_tbox=24'b001000001100100111101001;
-//         8'hec: full_tbox=24'b010010011000011111001110;
-//         8'hed: full_tbox=24'b111111111010101001010101;
-//         8'hee: full_tbox=24'b011110000101000000101000;
-//         8'hef: full_tbox=24'b011110101010010111011111;
-//         8'hf0: full_tbox=24'b100011110000001110001100;
-//         8'hf1: full_tbox=24'b111110000101100110100001;
-//         8'hf2: full_tbox=24'b100000000000100110001001;
-//         8'hf3: full_tbox=24'b000101110001101000001101;
-//         8'hf4: full_tbox=24'b110110100110010110111111;
-//         8'hf5: full_tbox=24'b001100011101011111100110;
-//         8'hf6: full_tbox=24'b110001101000010001000010;
-//         8'hf7: full_tbox=24'b101110001101000001101000;
-//         8'hf8: full_tbox=24'b110000111000001001000001;
-//         8'hf9: full_tbox=24'b101100000010100110011001;
-//         8'hfa: full_tbox=24'b011101110101101000101101;
-//         8'hfb: full_tbox=24'b000100010001111000001111;
-//         8'hfc: full_tbox=24'b110010110111101110110000;
-//         8'hfd: full_tbox=24'b111111001010100001010100;
-//         8'hfe: full_tbox=24'b110101100110110110111011;
-//         8'hff: full_tbox=24'b001110100010110000010110;
-//     endcase
-//     // split for required mult
-//     // Constant matrix:
-//     // 02 03 01 01
-//     // 01 02 03 01
-//     // 01 01 02 03
-//     // 03 01 01 02
-//     // where, for AES TBOX
-//     // 01 = [23:16]
-//     // 02 = [15:8]
-//     // 03 = [7:0]
-//     case (mult)
-//         1: aes_tbox = full_tbox[23:16];
-//         2: aes_tbox = full_tbox[15:8];
-//         3: aes_tbox = full_tbox[7:0];
-//     endcase
-//     end
-// endfunction
+function [7:0] aes_tbox(input	[7:0]in, input integer mult);
+    // full_tbox maps to {Srd, 2*Srd, 3*Srd}
+    reg [23:0] full_tbox;
+    begin
+	case(in)		// synopsys full_case parallel_case
+		8'h00: full_tbox=24'b101001011100011001100011;
+        8'h01: full_tbox=24'b100001001111100001111100;
+        8'h02: full_tbox=24'b100110011110111001110111;
+        8'h03: full_tbox=24'b100011011111011001111011;
+        8'h04: full_tbox=24'b000011011111111111110010;
+        8'h05: full_tbox=24'b101111011101011001101011;
+        8'h06: full_tbox=24'b101100011101111001101111;
+        8'h07: full_tbox=24'b010101001001000111000101;
+        8'h08: full_tbox=24'b010100000110000000110000;
+        8'h09: full_tbox=24'b000000110000001000000001;
+        8'h0a: full_tbox=24'b101010011100111001100111;
+        8'h0b: full_tbox=24'b011111010101011000101011;
+        8'h0c: full_tbox=24'b000110011110011111111110;
+        8'h0d: full_tbox=24'b011000101011010111010111;
+        8'h0e: full_tbox=24'b111001100100110110101011;
+        8'h0f: full_tbox=24'b100110101110110001110110;
+        8'h10: full_tbox=24'b010001011000111111001010;
+        8'h11: full_tbox=24'b100111010001111110000010;
+        8'h12: full_tbox=24'b010000001000100111001001;
+        8'h13: full_tbox=24'b100001111111101001111101;
+        8'h14: full_tbox=24'b000101011110111111111010;
+        8'h15: full_tbox=24'b111010111011001001011001;
+        8'h16: full_tbox=24'b110010011000111001000111;
+        8'h17: full_tbox=24'b000010111111101111110000;
+        8'h18: full_tbox=24'b111011000100000110101101;
+        8'h19: full_tbox=24'b011001111011001111010100;
+        8'h1a: full_tbox=24'b111111010101111110100010;
+        8'h1b: full_tbox=24'b111010100100010110101111;
+        8'h1c: full_tbox=24'b101111110010001110011100;
+        8'h1d: full_tbox=24'b111101110101001110100100;
+        8'h1e: full_tbox=24'b100101101110010001110010;
+        8'h1f: full_tbox=24'b010110111001101111000000;
+        8'h20: full_tbox=24'b110000100111010110110111;
+        8'h21: full_tbox=24'b000111001110000111111101;
+        8'h22: full_tbox=24'b101011100011110110010011;
+        8'h23: full_tbox=24'b011010100100110000100110;
+        8'h24: full_tbox=24'b010110100110110000110110;
+        8'h25: full_tbox=24'b010000010111111000111111;
+        8'h26: full_tbox=24'b000000101111010111110111;
+        8'h27: full_tbox=24'b010011111000001111001100;
+        8'h28: full_tbox=24'b010111000110100000110100;
+        8'h29: full_tbox=24'b111101000101000110100101;
+        8'h2a: full_tbox=24'b001101001101000111100101;
+        8'h2b: full_tbox=24'b000010001111100111110001;
+        8'h2c: full_tbox=24'b100100111110001001110001;
+        8'h2d: full_tbox=24'b011100111010101111011000;
+        8'h2e: full_tbox=24'b010100110110001000110001;
+        8'h2f: full_tbox=24'b001111110010101000010101;
+        8'h30: full_tbox=24'b000011000000100000000100;
+        8'h31: full_tbox=24'b010100101001010111000111;
+        8'h32: full_tbox=24'b011001010100011000100011;
+        8'h33: full_tbox=24'b010111101001110111000011;
+        8'h34: full_tbox=24'b001010000011000000011000;
+        8'h35: full_tbox=24'b101000010011011110010110;
+        8'h36: full_tbox=24'b000011110000101000000101;
+        8'h37: full_tbox=24'b101101010010111110011010;
+        8'h38: full_tbox=24'b000010010000111000000111;
+        8'h39: full_tbox=24'b001101100010010000010010;
+        8'h3a: full_tbox=24'b100110110001101110000000;
+        8'h3b: full_tbox=24'b001111011101111111100010;
+        8'h3c: full_tbox=24'b001001101100110111101011;
+        8'h3d: full_tbox=24'b011010010100111000100111;
+        8'h3e: full_tbox=24'b110011010111111110110010;
+        8'h3f: full_tbox=24'b100111111110101001110101;
+        8'h40: full_tbox=24'b000110110001001000001001;
+        8'h41: full_tbox=24'b100111100001110110000011;
+        8'h42: full_tbox=24'b011101000101100000101100;
+        8'h43: full_tbox=24'b001011100011010000011010;
+        8'h44: full_tbox=24'b001011010011011000011011;
+        8'h45: full_tbox=24'b101100101101110001101110;
+        8'h46: full_tbox=24'b111011101011010001011010;
+        8'h47: full_tbox=24'b111110110101101110100000;
+        8'h48: full_tbox=24'b111101101010010001010010;
+        8'h49: full_tbox=24'b010011010111011000111011;
+        8'h4a: full_tbox=24'b011000011011011111010110;
+        8'h4b: full_tbox=24'b110011100111110110110011;
+        8'h4c: full_tbox=24'b011110110101001000101001;
+        8'h4d: full_tbox=24'b001111101101110111100011;
+        8'h4e: full_tbox=24'b011100010101111000101111;
+        8'h4f: full_tbox=24'b100101110001001110000100;
+        8'h50: full_tbox=24'b111101011010011001010011;
+        8'h51: full_tbox=24'b011010001011100111010001;
+        8'h52: full_tbox=24'b000000000000000000000000;
+        8'h53: full_tbox=24'b001011001100000111101101;
+        8'h54: full_tbox=24'b011000000100000000100000;
+        8'h55: full_tbox=24'b000111111110001111111100;
+        8'h56: full_tbox=24'b110010000111100110110001;
+        8'h57: full_tbox=24'b111011011011011001011011;
+        8'h58: full_tbox=24'b101111101101010001101010;
+        8'h59: full_tbox=24'b010001101000110111001011;
+        8'h5a: full_tbox=24'b110110010110011110111110;
+        8'h5b: full_tbox=24'b010010110111001000111001;
+        8'h5c: full_tbox=24'b110111101001010001001010;
+        8'h5d: full_tbox=24'b110101001001100001001100;
+        8'h5e: full_tbox=24'b111010001011000001011000;
+        8'h5f: full_tbox=24'b010010101000010111001111;
+        8'h60: full_tbox=24'b011010111011101111010000;
+        8'h61: full_tbox=24'b001010101100010111101111;
+        8'h62: full_tbox=24'b111001010100111110101010;
+        8'h63: full_tbox=24'b000101101110110111111011;
+        8'h64: full_tbox=24'b110001011000011001000011;
+        8'h65: full_tbox=24'b110101111001101001001101;
+        8'h66: full_tbox=24'b010101010110011000110011;
+        8'h67: full_tbox=24'b100101000001000110000101;
+        8'h68: full_tbox=24'b110011111000101001000101;
+        8'h69: full_tbox=24'b000100001110100111111001;
+        8'h6a: full_tbox=24'b000001100000010000000010;
+        8'h6b: full_tbox=24'b100000011111111001111111;
+        8'h6c: full_tbox=24'b111100001010000001010000;
+        8'h6d: full_tbox=24'b010001000111100000111100;
+        8'h6e: full_tbox=24'b101110100010010110011111;
+        8'h6f: full_tbox=24'b111000110100101110101000;
+        8'h70: full_tbox=24'b111100111010001001010001;
+        8'h71: full_tbox=24'b111111100101110110100011;
+        8'h72: full_tbox=24'b110000001000000001000000;
+        8'h73: full_tbox=24'b100010100000010110001111;
+        8'h74: full_tbox=24'b101011010011111110010010;
+        8'h75: full_tbox=24'b101111000010000110011101;
+        8'h76: full_tbox=24'b010010000111000000111000;
+        8'h77: full_tbox=24'b000001001111000111110101;
+        8'h78: full_tbox=24'b110111110110001110111100;
+        8'h79: full_tbox=24'b110000010111011110110110;
+        8'h7a: full_tbox=24'b011101011010111111011010;
+        8'h7b: full_tbox=24'b011000110100001000100001;
+        8'h7c: full_tbox=24'b001100000010000000010000;
+        8'h7d: full_tbox=24'b000110101110010111111111;
+        8'h7e: full_tbox=24'b000011101111110111110011;
+        8'h7f: full_tbox=24'b011011011011111111010010;
+        8'h80: full_tbox=24'b010011001000000111001101;
+        8'h81: full_tbox=24'b000101000001100000001100;
+        8'h82: full_tbox=24'b001101010010011000010011;
+        8'h83: full_tbox=24'b001011111100001111101100;
+        8'h84: full_tbox=24'b111000011011111001011111;
+        8'h85: full_tbox=24'b101000100011010110010111;
+        8'h86: full_tbox=24'b110011001000100001000100;
+        8'h87: full_tbox=24'b001110010010111000010111;
+        8'h88: full_tbox=24'b010101111001001111000100;
+        8'h89: full_tbox=24'b111100100101010110100111;
+        8'h8a: full_tbox=24'b100000101111110001111110;
+        8'h8b: full_tbox=24'b010001110111101000111101;
+        8'h8c: full_tbox=24'b101011001100100001100100;
+        8'h8d: full_tbox=24'b111001111011101001011101;
+        8'h8e: full_tbox=24'b001010110011001000011001;
+        8'h8f: full_tbox=24'b100101011110011001110011;
+        8'h90: full_tbox=24'b101000001100000001100000;
+        8'h91: full_tbox=24'b100110000001100110000001;
+        8'h92: full_tbox=24'b110100011001111001001111;
+        8'h93: full_tbox=24'b011111111010001111011100;
+        8'h94: full_tbox=24'b011001100100010000100010;
+        8'h95: full_tbox=24'b011111100101010000101010;
+        8'h96: full_tbox=24'b101010110011101110010000;
+        8'h97: full_tbox=24'b100000110000101110001000;
+        8'h98: full_tbox=24'b110010101000110001000110;
+        8'h99: full_tbox=24'b001010011100011111101110;
+        8'h9a: full_tbox=24'b110100110110101110111000;
+        8'h9b: full_tbox=24'b001111000010100000010100;
+        8'h9c: full_tbox=24'b011110011010011111011110;
+        8'h9d: full_tbox=24'b111000101011110001011110;
+        8'h9e: full_tbox=24'b000111010001011000001011;
+        8'h9f: full_tbox=24'b011101101010110111011011;
+        8'ha0: full_tbox=24'b001110111101101111100000;
+        8'ha1: full_tbox=24'b010101100110010000110010;
+        8'ha2: full_tbox=24'b010011100111010000111010;
+        8'ha3: full_tbox=24'b000111100001010000001010;
+        8'ha4: full_tbox=24'b110110111001001001001001;
+        8'ha5: full_tbox=24'b000010100000110000000110;
+        8'ha6: full_tbox=24'b011011000100100000100100;
+        8'ha7: full_tbox=24'b111001001011100001011100;
+        8'ha8: full_tbox=24'b010111011001111111000010;
+        8'ha9: full_tbox=24'b011011101011110111010011;
+        8'haa: full_tbox=24'b111011110100001110101100;
+        8'hab: full_tbox=24'b101001101100010001100010;
+        8'hac: full_tbox=24'b101010000011100110010001;
+        8'had: full_tbox=24'b101001000011000110010101;
+        8'hae: full_tbox=24'b001101111101001111100100;
+        8'haf: full_tbox=24'b100010111111001001111001;
+        8'hb0: full_tbox=24'b001100101101010111100111;
+        8'hb1: full_tbox=24'b010000111000101111001000;
+        8'hb2: full_tbox=24'b010110010110111000110111;
+        8'hb3: full_tbox=24'b101101111101101001101101;
+        8'hb4: full_tbox=24'b100011000000000110001101;
+        8'hb5: full_tbox=24'b011001001011000111010101;
+        8'hb6: full_tbox=24'b110100101001110001001110;
+        8'hb7: full_tbox=24'b111000000100100110101001;
+        8'hb8: full_tbox=24'b101101001101100001101100;
+        8'hb9: full_tbox=24'b111110101010110001010110;
+        8'hba: full_tbox=24'b000001111111001111110100;
+        8'hbb: full_tbox=24'b001001011100111111101010;
+        8'hbc: full_tbox=24'b101011111100101001100101;
+        8'hbd: full_tbox=24'b100011101111010001111010;
+        8'hbe: full_tbox=24'b111010010100011110101110;
+        8'hbf: full_tbox=24'b000110000001000000001000;
+        8'hc0: full_tbox=24'b110101010110111110111010;
+        8'hc1: full_tbox=24'b100010001111000001111000;
+        8'hc2: full_tbox=24'b011011110100101000100101;
+        8'hc3: full_tbox=24'b011100100101110000101110;
+        8'hc4: full_tbox=24'b001001000011100000011100;
+        8'hc5: full_tbox=24'b111100010101011110100110;
+        8'hc6: full_tbox=24'b110001110111001110110100;
+        8'hc7: full_tbox=24'b010100011001011111000110;
+        8'hc8: full_tbox=24'b001000111100101111101000;
+        8'hc9: full_tbox=24'b011111001010000111011101;
+        8'hca: full_tbox=24'b100111001110100001110100;
+        8'hcb: full_tbox=24'b001000010011111000011111;
+        8'hcc: full_tbox=24'b110111011001011001001011;
+        8'hcd: full_tbox=24'b110111000110000110111101;
+        8'hce: full_tbox=24'b100001100000110110001011;
+        8'hcf: full_tbox=24'b100001010000111110001010;
+        8'hd0: full_tbox=24'b100100001110000001110000;
+        8'hd1: full_tbox=24'b010000100111110000111110;
+        8'hd2: full_tbox=24'b110001000111000110110101;
+        8'hd3: full_tbox=24'b101010101100110001100110;
+        8'hd4: full_tbox=24'b110110001001000001001000;
+        8'hd5: full_tbox=24'b000001010000011000000011;
+        8'hd6: full_tbox=24'b000000011111011111110110;
+        8'hd7: full_tbox=24'b000100100001110000001110;
+        8'hd8: full_tbox=24'b101000111100001001100001;
+        8'hd9: full_tbox=24'b010111110110101000110101;
+        8'hda: full_tbox=24'b111110011010111001010111;
+        8'hdb: full_tbox=24'b110100000110100110111001;
+        8'hdc: full_tbox=24'b100100010001011110000110;
+        8'hdd: full_tbox=24'b010110001001100111000001;
+        8'hde: full_tbox=24'b001001110011101000011101;
+        8'hdf: full_tbox=24'b101110010010011110011110;
+        8'he0: full_tbox=24'b001110001101100111100001;
+        8'he1: full_tbox=24'b000100111110101111111000;
+        8'he2: full_tbox=24'b101100110010101110011000;
+        8'he3: full_tbox=24'b001100110010001000010001;
+        8'he4: full_tbox=24'b101110111101001001101001;
+        8'he5: full_tbox=24'b011100001010100111011001;
+        8'he6: full_tbox=24'b100010010000011110001110;
+        8'he7: full_tbox=24'b101001110011001110010100;
+        8'he8: full_tbox=24'b101101100010110110011011;
+        8'he9: full_tbox=24'b001000100011110000011110;
+        8'hea: full_tbox=24'b100100100001010110000111;
+        8'heb: full_tbox=24'b001000001100100111101001;
+        8'hec: full_tbox=24'b010010011000011111001110;
+        8'hed: full_tbox=24'b111111111010101001010101;
+        8'hee: full_tbox=24'b011110000101000000101000;
+        8'hef: full_tbox=24'b011110101010010111011111;
+        8'hf0: full_tbox=24'b100011110000001110001100;
+        8'hf1: full_tbox=24'b111110000101100110100001;
+        8'hf2: full_tbox=24'b100000000000100110001001;
+        8'hf3: full_tbox=24'b000101110001101000001101;
+        8'hf4: full_tbox=24'b110110100110010110111111;
+        8'hf5: full_tbox=24'b001100011101011111100110;
+        8'hf6: full_tbox=24'b110001101000010001000010;
+        8'hf7: full_tbox=24'b101110001101000001101000;
+        8'hf8: full_tbox=24'b110000111000001001000001;
+        8'hf9: full_tbox=24'b101100000010100110011001;
+        8'hfa: full_tbox=24'b011101110101101000101101;
+        8'hfb: full_tbox=24'b000100010001111000001111;
+        8'hfc: full_tbox=24'b110010110111101110110000;
+        8'hfd: full_tbox=24'b111111001010100001010100;
+        8'hfe: full_tbox=24'b110101100110110110111011;
+        8'hff: full_tbox=24'b001110100010110000010110;
+    endcase
+    // split for required mult
+    // Constant matrix:
+    // 02 03 01 01
+    // 01 02 03 01
+    // 01 01 02 03
+    // 03 01 01 02
+    // where, for AES TBOX
+    // 01 = [23:16]
+    // 02 = [15:8]
+    // 03 = [7:0]
+    case (mult)
+        3: aes_tbox = full_tbox[23:16];
+        2: aes_tbox = full_tbox[15:8];
+        1: aes_tbox = full_tbox[7:0];
+    endcase
+    end
+endfunction
 
 endmodule
