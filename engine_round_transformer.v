@@ -1,4 +1,3 @@
-`timescale 1ns/1ns
 // Define module IO
 module engine_round_transformer (
     input rst_, clk,

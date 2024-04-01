@@ -6,4 +6,4 @@ clear && iverilog -o build/engine_key_generator_tb.out engine_key_generator.v en
 clear && iverilog -o build/engine_round_transformer_tb.out engine_round_transformer.v engine_round_transformer_tb.v && vvp build/engine_round_transformer_tb.out && gtkwave simulation/engine_round_transformer.vcd
 
 # simulate aes_engine
-clear && iverilog -o build/aes_engine_tb.out input_interface.v engine_key_generator.v engine_round_transformer.v aes_engine.v aes_engine_tb.v && vvp build/aes_engine_tb.out && gtkwave simulation/aes_engine.vcd
+clear && iverilog -o build/aes_engine_tb.out input_interface.v engine_key_generator.v engine_round_transformer.v output_interface.v aes_engine.v aes_engine_tb.v && vvp build/aes_engine_tb.out && gtkwave simulation/aes_engine.vcd

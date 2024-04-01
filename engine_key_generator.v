@@ -1,5 +1,3 @@
-`timescale 1ns/1ns
-// Include AES Utils, providing aes_sbox, reg_to_byte_array, byte_array_to_reg, etc
 // Define module IO
 module engine_key_generator (
 	input rst_, clk,

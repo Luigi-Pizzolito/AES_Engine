@@ -6,22 +6,15 @@ module aes_engine(
     input[1:0] cmd,
     output interface_ready,
 
-	//!temp
-	input output_read,
-
     // -- output interface
-	output[127:0] ciphertext_o,
-
-    output engine_done
+	output[7:0] dout,
+	output data_ok
 );
 
 // control signals
-wire key_start, transformer_start_w, engine_done_w, output_read_w;
-//!temp
-assign output_read_w = output_read;
-assign engine_done = engine_done_w;
+wire key_start, transformer_start_w, output_read_w, engine_done_w;
 
-wire [127:0] plain, key;
+wire [127:0] plain, key, cipher;
 
 wire[127:0] round0_key_w; // pre-round key
 wire[127:0] round1_key_w;
@@ -99,8 +92,22 @@ engine_round_transformer transformer_module (
 	.round10_key		(round10_key_w),
 
 	// output
-	.ciphertext			(ciphertext_o),
+	.ciphertext			(cipher),
 	.transformer_done	(engine_done_w)
+);
+
+output_interface output_module (
+	.rst_				(rst_),
+	.clk				(clk),
+
+	// inputs
+	.transformer_done	(engine_done_w),
+	.ciphertext			(cipher),
+
+	// outputs
+	.data_out			(dout),
+	.data_ok			(data_ok),
+	.output_read		(output_read_w)
 );
 
 `define TOPMODULE
