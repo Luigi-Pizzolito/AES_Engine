@@ -205,13 +205,7 @@ function [127:0] ShiftRow(input [127:0] input_block);
     reg [127:0]roworder;
     reg [127:0]shiftedroworder;
     begin
-    //! rotword on logical rows! not collums
-        // ShiftRow = {
-        //     input_block[127:96],                          // First row (unchanged)
-        //     rotword(input_block[95:64]),                  // Circular left-shift the second row by 1
-        //     rotword(rotword(input_block[63:32])),         // Circular left-shift the third row  by 2
-        //     rotword(rotword(rotword(input_block[31:0])))  // Circular left-shift the fourth row by 3
-        // };
+        //! rotword on logical rows! not collums
         // column order to row order
         roworder = {
             input_block[127:120], input_block[95:88], input_block[63:56], input_block[31:24],
@@ -313,7 +307,6 @@ function [127:0] MixCol(input [127:0] input_block);
             }
         };
 		
-        
     end
 endfunction
 
@@ -851,9 +844,9 @@ function [7:0] aes_tbox(input	[7:0]in, input integer mult);
     // 01 01 02 03
     // 03 01 01 02
     // where, for AES TBOX
-    // 01 = [23:16]
+    // 03 = [23:16]
     // 02 = [15:8]
-    // 03 = [7:0]
+    // 01 = [7:0]
     case (mult)
         3: aes_tbox = full_tbox[23:16];
         2: aes_tbox = full_tbox[15:8];
