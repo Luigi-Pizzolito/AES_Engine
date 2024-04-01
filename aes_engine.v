@@ -110,11 +110,11 @@ output_interface output_module (
 	.output_read		(output_read_w)
 );
 
-`define TOPMODULE
-// the "macro" to dump signals
-initial begin
-$dumpfile ("simulation/aes_engine.vcd");
-$dumpvars(0, aes_engine);
-end
+// `define TOPMODULE
+// // the "macro" to dump signals
+// initial begin
+// $dumpfile ("simulation/aes_engine.vcd");
+// $dumpvars(0, aes_engine);
+// end
 
 endmodule

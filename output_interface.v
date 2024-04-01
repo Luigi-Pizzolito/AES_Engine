@@ -66,9 +66,17 @@ always @(posedge clk) begin
         // idling
         output_read_r = 0;
     end
+    // increment i counter to next byte
     if (i >= 1) begin
         i = i + 1;
     end
+end
+
+`define TOPMODULE
+// the "macro" to dump signals
+initial begin
+$dumpfile ("simulation/output_interface.vcd");
+$dumpvars(0, output_interface);
 end
 
 endmodule
