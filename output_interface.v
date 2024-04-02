@@ -72,11 +72,11 @@ always @(posedge clk) begin
     end
 end
 
-// `define TOPMODULE
-// // the "macro" to dump signals
-// initial begin
-// $dumpfile ("simulation/output_interface.vcd");
-// $dumpvars(0, output_interface);
-// end
+`define TOPMODULE
+// the "macro" to dump signals
+initial begin
+$dumpfile ("simulation/output_interface.vcd");
+$dumpvars(0, output_interface);
+end
 
 endmodule
