@@ -1,4 +1,3 @@
-//TODO: clarify and rename ready signals
 // Define module IO
 module input_interface (
 	// -- input interface

@@ -6,7 +6,6 @@ module engine_key_generator (
 	input engine_start,
 	// output to round transformer
 	output transformer_start, // start transformer signal
-	// output[10:1]  transformer_start, // start transformer signal
 	output[127:0] round0_key, // pre-round key
 	output[127:0] round1_key,
 	output[127:0] round2_key,
@@ -102,8 +101,6 @@ always @(posedge clk) begin
 					$write("%02X %02X %02X %02X\n", w[((i/4)*4)][7:0]  , w[((i/4)*4)+1][7:0]  , w[((i/4)*4)+2][7:0]  , w[((i/4)*4)+3][7:0]  );
 					// copy to output registers
 					round_keys[i/4] = {w[i-3], w[i-2], w[i-1], w[i]};
-					// issue round transformer start
-					// transformer_start_r = transformer_start_r | (1 << (i/4));
 				end
 			//// end
 		end
