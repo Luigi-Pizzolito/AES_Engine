@@ -6,7 +6,6 @@ module engine_key_generator (
 	input engine_start,
 	// output to round transformer
 	output transformer_start, // start transformer signal
-	input transformer_done,
 	// output[10:1]  transformer_start, // start transformer signal
 	output[127:0] round0_key, // pre-round key
 	output[127:0] round1_key,
@@ -43,7 +42,7 @@ assign round10_key = round_keys[10];
 
 // Main Logic
 // -- Asynchronous reset logic
-always @(negedge rst_ or posedge transformer_done) begin
+always @(negedge rst_) begin
 	reset_round_keys();
 end
 // -- Engine start logic
@@ -55,7 +54,7 @@ initial i = 6'b000000;
 reg [31:0] w[43:0];
 // ---- temp word for each word calculation
 reg [31:0] tempword;
-//TODO: DONT USE ANY FOR LOOPS, TAKE CLOCK IN TTO INCREMENT STEP COUNTER
+
 always @(posedge clk) begin
 	// engine start cmd issued
 	if (engine_start) begin

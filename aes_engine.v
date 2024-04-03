@@ -12,7 +12,7 @@ module aes_engine(
 );
 
 // control signals
-wire key_start, transformer_start_w, output_read_w, engine_done_w;
+wire key_start, transformer_start_w,  transformer_done_w, output_read_w;
 
 wire [127:0] plain, key, cipher;
 
@@ -35,7 +35,7 @@ input_interface input_module (
 	// inputs
 	.din            (din),
 	.cmd            (cmd),
-	.engine_done    (engine_done_w),
+	.transformer_done    (transformer_done_w),
 
 	// outputs
 	.engine_start   (key_start),
@@ -51,8 +51,6 @@ engine_key_generator key_gen_module (
 	// inputs
 	.key_in             (key),
 	.engine_start       (key_start), //rename input wire to key_gen_start
-	
-	.transformer_done	(engine_done_w),
 
 	// outputs
 	.transformer_start  (transformer_start_w),
@@ -93,7 +91,7 @@ engine_round_transformer transformer_module (
 
 	// output
 	.ciphertext			(cipher),
-	.transformer_done	(engine_done_w)
+	.transformer_done	(transformer_done_w)
 );
 
 output_interface output_module (
@@ -101,7 +99,7 @@ output_interface output_module (
 	.clk				(clk),
 
 	// inputs
-	.transformer_done	(engine_done_w),
+	.transformer_done	(transformer_done_w),
 	.ciphertext			(cipher),
 
 	// outputs
@@ -110,11 +108,11 @@ output_interface output_module (
 	.output_read		(output_read_w)
 );
 
-// `define TOPMODULE
-// // the "macro" to dump signals
-// initial begin
-// $dumpfile ("simulation/aes_engine.vcd");
-// $dumpvars(0, aes_engine);
-// end
+`define TOPMODULE
+// the "macro" to dump signals
+initial begin
+$dumpfile ("simulation/aes_engine.vcd");
+$dumpvars(0, aes_engine);
+end
 
 endmodule

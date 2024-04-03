@@ -38,6 +38,11 @@ always @(negedge rst_) begin
 end
 // -- Output latch logic
 always @(posedge transformer_done) begin
+	// ? add check here to see if output_read is finished
+	// ? not needed; it takes 8 clock cycles to output the ciphertext
+	// ? and 8 clock cycles to input the new plaintext
+	// ? therefore these two tasks may be done independently and simultaneously
+	// ? without any conflicts
 	// copy ciphertext
 	output_hold = ciphertext;
 	// set in to begin
@@ -72,11 +77,11 @@ always @(posedge clk) begin
 	end
 end
 
-`define TOPMODULE
-// the "macro" to dump signals
-initial begin
-$dumpfile ("simulation/output_interface.vcd");
-$dumpvars(0, output_interface);
-end
+// `define TOPMODULE
+// // the "macro" to dump signals
+// initial begin
+// $dumpfile ("simulation/output_interface.vcd");
+// $dumpvars(0, output_interface);
+// end
 
 endmodule

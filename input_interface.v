@@ -6,7 +6,7 @@ module input_interface (
 	input[7:0] din,
 	input[1:0] cmd,
 	output ready,
-	input engine_done,
+	input transformer_done,
 	// -- to engine
 	output engine_start,
 	output[127:0] plain_out,
@@ -102,15 +102,14 @@ begin:next_state_decode
 			// start engine
 			if ((p_i == 4'hF) && (k_i == 4'hF)) next_state = S_ST;
 			// return to idle
-			//? this is a synchronous reset, we may want to implement asynchronous reset
-			// if (engine_done) begin
-			// 	// encyrption engine is done, we can reset
-			// 	p_i = 4'h0;
-			// 	k_i = 4'h0;
-			// 	resetplain();
-			// 	resetkey();
-			// 	next_state = S_ID;
-			// end
+			//? this is a synchronous reset of plain text after encryption is complete
+			//! reset only the plain text, in case we want to encrypt more plaintext with the same key
+			if (transformer_done) begin
+				// encyrption engine is done, we can reset
+				resetplain();
+				// resetkey();
+				next_state = S_ID;
+			end
 			// otherwise wait in this state
 			else next_state = S_ST;
 		end
@@ -118,18 +117,6 @@ begin:next_state_decode
 		// stay idle
 		default: next_state = S_ID;
 	endcase
-end
-
-//? asynchronous reset when engine is done
-always @(posedge engine_done)
-begin
-	// encyrption engine is done, we can reset
-	p_i = 4'h0;
-	k_i = 4'h0;
-	resetplain();
-	resetkey();
-	next_state = S_ID;
-	state <= next_state;
 end
 
 // `ifndef TOPMODULE

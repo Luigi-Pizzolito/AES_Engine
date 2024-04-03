@@ -2,8 +2,8 @@
 [*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
 [*] Wed Apr 03 07:54:31 2024
 [*]
-[dumpfile] "D:\School\BIT\Y3S2\Engineering Innovation Design 6\Verilog-RTLDesign-AESEngine\gtkwave\simulation\aes_engine.vcd"
-[savefile] "D:\School\BIT\Y3S2\Engineering Innovation Design 6\Verilog-RTLDesign-AESEngine\gtkwave\aes_engine_testbench.gtkw"
+[dumpfile] "..\simulation\aes_engine.vcd"
+[savefile] "aes_engine_testbench.gtkw"
 [timestart] 3
 [size] 1707 1013
 [pos] -87 -87
@@ -24,7 +24,7 @@ aes_engine_tb.i_uut.clk
 -Input Interface
 @100002028
 [color] 3
-^1 D:\School\BIT\Y3S2\Engineering Innovation Design 6\Verilog-RTLDesign-AESEngine\gtkwave\input_interface_states.gtkw
+^1 .\gtkwave\input_interface_states.gtkw
 aes_engine_tb.i_uut.cmd[1:0]
 @22
 [color] 2
@@ -86,7 +86,7 @@ aes_engine_tb.i_uut.transformer_module.i[3:0]
 aes_engine_tb.i_uut.cipher[127:0]
 @28
 [color] 7
-aes_engine_tb.i_uut.engine_done_w
+aes_engine_tb.i_uut.transformer_done_w
 @200
 -Output Interface
 @28

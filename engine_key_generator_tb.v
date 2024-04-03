@@ -9,7 +9,6 @@ reg rst_tb = 0;
 
 reg[127:0] key_in_r = 0;
 reg start = 0;
-reg transformer_done_r = 0;
 
 wire transformer_start_w;
 wire[127:0] rk0; // pre-round key
@@ -30,7 +29,6 @@ engine_key_generator i_uut (
 	.clk			(clk_tb),
 	.key_in			(key_in_r),
 	.engine_start		(start),
-	.transformer_done	(transformer_done_r),
 	.transformer_start	(transformer_start_w),
 	.round0_key		(rk0),
 	.round1_key		(rk1),
@@ -63,8 +61,6 @@ initial begin
 	#2;
 	//start
 	start = 1;
-	#2;
-	transformer_done_r = 1;
 	#500;
 	$finish;
 end
