@@ -1,12 +1,12 @@
 // define testbench module for input interface + engine_key_generator
 module aes_engine(
-    // -- input interface
-    input clk, input rst_,
-    input[7:0] din,
-    input[1:0] cmd,
-    output interface_ready,
+	// -- input interface
+	input clk, input rst_,
+	input[7:0] din,
+	input[1:0] cmd,
+	output interface_ready,
 
-    // -- output interface
+	// -- output interface
 	output[7:0] dout,
 	output data_ok
 );
@@ -29,35 +29,35 @@ wire[127:0] round9_key_w;
 wire[127:0] round10_key_w;
 
 input_interface input_module (
-    .clk            (clk),
-    .rst_           (rst_),
+	.clk            (clk),
+	.rst_           (rst_),
 
 	// inputs
-    .din            (din),
-    .cmd            (cmd),
-    .engine_done    (engine_done_w),
+	.din            (din),
+	.cmd            (cmd),
+	.engine_done    (engine_done_w),
 
 	// outputs
-    .engine_start   (key_start),
-    .plain_out      (plain),
-    .key_out        (key),
+	.engine_start   (key_start),
+	.plain_out      (plain),
+	.key_out        (key),
 	.ready          (interface_ready)
 );
 
 engine_key_generator key_gen_module (
-    .rst_               (rst_),
+	.rst_               (rst_),
 	.clk				(clk),
 
 	// inputs
-    .key_in             (key),
-    .engine_start       (key_start), //rename input wire to key_gen_start
-    
+	.key_in             (key),
+	.engine_start       (key_start), //rename input wire to key_gen_start
+	
 	.transformer_done	(engine_done_w),
 
 	// outputs
 	.transformer_start  (transformer_start_w),
 	// -- keys
-    .round0_key			(round0_key_w),
+	.round0_key			(round0_key_w),
 	.round1_key			(round1_key_w),
 	.round2_key			(round2_key_w),
 	.round3_key			(round3_key_w),

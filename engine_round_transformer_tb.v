@@ -31,29 +31,29 @@ wire transformer_done_tb;
 // define tb->engine_round_transformer connections
 engine_round_transformer i_uut
 (
-    .clk(clk_tb),
-    .rst_(rst_tb),
+	.clk(clk_tb),
+	.rst_(rst_tb),
 
-    // inputs
-    .plaintext          (plain_tb),
-    .transformer_start  (transformer_start_tb),
-    .output_read        (output_read_tb),
-    // -- keys
-    .round0_key         (round0_key_tb),
-    .round1_key         (round1_key_tb),
-    .round2_key         (round2_key_tb),
-    .round3_key         (round3_key_tb),
-    .round4_key         (round4_key_tb),
-    .round5_key         (round5_key_tb),
-    .round6_key         (round6_key_tb),
-    .round7_key         (round7_key_tb),
-    .round8_key         (round8_key_tb),
-    .round9_key         (round9_key_tb),
-    .round10_key        (round10_key_tb),
+	// inputs
+	.plaintext          (plain_tb),
+	.transformer_start  (transformer_start_tb),
+	.output_read        (output_read_tb),
+	// -- keys
+	.round0_key         (round0_key_tb),
+	.round1_key         (round1_key_tb),
+	.round2_key         (round2_key_tb),
+	.round3_key         (round3_key_tb),
+	.round4_key         (round4_key_tb),
+	.round5_key         (round5_key_tb),
+	.round6_key         (round6_key_tb),
+	.round7_key         (round7_key_tb),
+	.round8_key         (round8_key_tb),
+	.round9_key         (round9_key_tb),
+	.round10_key        (round10_key_tb),
 
-    // outputs
-    .ciphertext          (ciphertext_tb),
-    .transformer_done    (transformer_done_tb)
+	// outputs
+	.ciphertext          (ciphertext_tb),
+	.transformer_done    (transformer_done_tb)
 );
 
 // set periodic clock pulse every 1ns
@@ -67,24 +67,24 @@ initial begin
 	rst_tb = 1;
 	#2;
 
-    // inputs set at the beggining of program
+	// inputs set at the beggining of program
 
-    // start encryption rounds
-    transformer_start_tb = 1;
+	// start encryption rounds
+	transformer_start_tb = 1;
 
-    // wait for finish
-    // wait for transofrmer done to go high
+	// wait for finish
+	// wait for transofrmer done to go high
 	@(posedge transformer_done_tb)
 	begin
 		// Idle
 		#20;
-        // Signal that ouput has been read
-        // (simulating output_interface input signal)
-        transformer_start_tb = 0;
-        output_read_tb = 1;
-        #10;
-        output_read_tb = 0;
-        #10;
+		// Signal that ouput has been read
+		// (simulating output_interface input signal)
+		transformer_start_tb = 0;
+		output_read_tb = 1;
+		#10;
+		output_read_tb = 0;
+		#10;
 		$finish;
 	end
 

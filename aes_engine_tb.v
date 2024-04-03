@@ -15,13 +15,13 @@ wire ready_tb, dok_tb;
 // define tb->aes_engine connections
 aes_engine i_uut
 (
-    .clk(clk_tb),
-    .rst_(rst_tb),
+	.clk(clk_tb),
+	.rst_(rst_tb),
 
-    .din(din_tb),
-    .cmd(cmd_tb),
+	.din(din_tb),
+	.cmd(cmd_tb),
 
-    .interface_ready(ready_tb),
+	.interface_ready(ready_tb),
 	.data_ok(dok_tb)
 );
 

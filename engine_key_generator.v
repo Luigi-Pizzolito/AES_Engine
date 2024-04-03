@@ -118,7 +118,7 @@ always @(posedge clk) begin
 		end
 
 		// update for loop i
-        i = i + 1;
+		i = i + 1;
 
 	end
 end
@@ -129,7 +129,7 @@ task reset_round_keys;
 	begin:rst_keys
 		integer i;
 		//// for (i = 0; i < 11; i = i + 1) begin
-    	//// 		round_keys[i] = 0;
+		//// 		round_keys[i] = 0;
 		//// end
 		round_keys[0] = 0;
 		round_keys[1] = 0;
