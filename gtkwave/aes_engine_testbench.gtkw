@@ -1,13 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
-[*] Wed Apr 03 07:54:31 2024
+[*] Thu Apr 04 05:04:51 2024
 [*]
 [dumpfile] "..\simulation\aes_engine.vcd"
 [savefile] "aes_engine_testbench.gtkw"
 [timestart] 3
 [size] 1707 1013
-[pos] -87 -87
-*-5.063437 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[pos] -1 -1
+*-5.063437 0 175 209 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[markername] Anext_plain_input
+[markername] Bnext_encrypt
 [treeopen] aes_engine_tb.
 [treeopen] aes_engine_tb.i_uut.
 [sst_width] 197
@@ -32,9 +34,16 @@ aes_engine_tb.i_uut.din[7:0]
 @28
 [color] 3
 aes_engine_tb.i_uut.interface_ready
+@24
+[color] 5
+aes_engine_tb.i_uut.input_module.p_i[3:0]
 @22
 [color] 2
 aes_engine_tb.i_uut.plain[127:0]
+@24
+[color] 5
+aes_engine_tb.i_uut.input_module.k_i[3:0]
+@22
 [color] 2
 aes_engine_tb.i_uut.key[127:0]
 @200
@@ -92,10 +101,13 @@ aes_engine_tb.i_uut.transformer_done_w
 @28
 [color] 3
 aes_engine_tb.i_uut.data_ok
+@24
+[color] 5
+aes_engine_tb.i_uut.output_module.i[4:0]
 @22
 [color] 2
 aes_engine_tb.i_uut.dout[7:0]
-@29
+@28
 [color] 7
 aes_engine_tb.i_uut.output_read_w
 [pattern_trace] 1

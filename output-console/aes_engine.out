@@ -1,0 +1,135 @@
+----------------
+Generating round keys for key 2475a2b33475568831e2120013aa5487
+Pre-Round Key:
+24 34 31 13
+75 75 e2 aa
+a2 56 12 54
+b3 88 00 87
+Round 1 Key:
+89 bd 8c 9f
+55 20 c2 68
+b5 e3 f1 a5
+ce 46 46 c1
+Round 2 Key:
+ce 73 ff 60
+53 73 b1 d9
+cd 2e df 7a
+15 53 15 d4
+Round 3 Key:
+ff 8c 73 13
+89 fa 4b 92
+85 ab 74 0e
+c5 96 83 57
+Round 4 Key:
+b8 34 47 54
+22 d8 93 01
+de 75 01 0f
+b8 2e ad fa
+Round 5 Key:
+d4 e0 a7 f3
+54 8c 1f 1e
+f3 86 87 88
+98 b6 1b e1
+Round 6 Key:
+86 66 c1 32
+90 1c 03 1d
+0b 8d 0a 82
+95 23 38 d9
+Round 7 Key:
+62 04 c5 f7
+83 9f 9c 81
+3e b3 b9 3b
+b6 95 ad 74
+Round 8 Key:
+ee ea 2f d8
+61 fe 62 e3
+ac 1f a6 9d
+de 4b e6 92
+Round 9 Key:
+e4 0e 21 f9
+3f c1 a3 40
+e3 fc 5a c7
+bf f4 12 80
+Round 10 Key:
+db d5 f4 0d
+f9 38 9b db
+2e d2 88 4f
+26 d2 c0 40
+----------------
+----------------
+Plaintext:
+00 12 0c 08
+04 04 00 23
+12 12 13 19
+14 00 11 19
+Pre-Round State:
+24 26 3d 1b
+71 71 e2 89
+b0 44 01 4d
+a7 88 11 9e
+Round 1 State:
+----------------
+6c 44 13 bd
+b1 9e 46 35
+c5 b5 f3 02
+5d 87 fc 8c
+Round 2 State:
+----------------
+1a 90 15 b2
+66 09 1d fc
+20 55 5a b2
+2b cb 8c 3c
+Round 3 State:
+----------------
+f6 7d a2 b0
+1b 61 b4 b8
+67 09 c9 45
+4a 5c 51 09
+Round 4 State:
+----------------
+ca e5 48 bb
+d8 42 af 71
+d1 ba 98 2d
+4e 60 9e df
+Round 5 State:
+----------------
+90 35 13 60
+2c fb 82 3a
+9e fc 61 ed
+49 39 cb 47
+Round 6 State:
+----------------
+18 0a b9 b5
+64 68 6a fb
+5a ef d7 79
+8e b2 10 4d
+Round 7 State:
+----------------
+01 63 f1 96
+55 24 3a 62
+f4 8a de 4d
+cc ba 88 03
+Round 8 State:
+----------------
+2a 34 d8 46
+2d 6b a2 d6
+51 64 cf 5a
+87 a8 f8 28
+Round 9 State:
+----------------
+0a d9 f1 3c
+95 63 9f 35
+2a 80 29 00
+16 76 09 77
+Round 10 State / Ciphertext:
+----------------
+bc e0 55 e6
+02 e3 0d f1
+8b b1 6d 82
+d3 95 f8 41
+----------------
+Recieved ciphertext from output_interface:
+bc e0 55 e6
+02 e3 0d f1
+8b b1 6d 82
+d3 95 f8 41

@@ -467,12 +467,12 @@ function [7:0] aes_sbox(input [7:0]in);
 	end
 endfunction
 
-`ifndef TOPMODULE
-	// the "macro" to dump signals
-	initial begin
-	$dumpfile ("simulation/engine_key_generator.vcd");
-	$dumpvars(0, engine_key_generator);
-	end
-`endif
+// `ifndef TOPMODULE
+// 	// the "macro" to dump signals
+// 	initial begin
+// 	$dumpfile ("simulation/engine_key_generator.vcd");
+// 	$dumpvars(0, engine_key_generator);
+// 	end
+// `endif
 
 endmodule
