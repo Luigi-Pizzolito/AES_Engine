@@ -28,7 +28,7 @@ engine_key_generator i_uut (
 	.rst_			(rst_tb),
 	.clk			(clk_tb),
 	.key_in			(key_in_r),
-	.engine_start		(start),
+	.key_start		(start),
 	.transformer_start	(transformer_start_w),
 	.round0_key		(rk0),
 	.round1_key		(rk1),

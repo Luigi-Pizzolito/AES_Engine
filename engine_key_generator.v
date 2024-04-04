@@ -3,7 +3,7 @@ module engine_key_generator (
 	input rst_, clk,
 	// input from input_interface
 	input[127:0] key_in,
-	input engine_start,
+	input key_start,
 	// output to round transformer
 	output transformer_start, // start transformer signal
 	output[127:0] round0_key, // pre-round key
@@ -56,7 +56,7 @@ reg [31:0] tempword;
 
 always @(posedge clk) begin
 	// engine start cmd issued
-	if (engine_start) begin
+	if (key_start) begin
 
 		if (i == 0) begin
 			// for loop iteration 0, computes first 4 keys
@@ -117,6 +117,11 @@ always @(posedge clk) begin
 		i = i + 1;
 
 	end
+end
+
+// when key generator is finished, reset the transformer_start signal
+always @(negedge key_start) begin
+	transformer_start_r = 0;
 end
 
 // Define functions
