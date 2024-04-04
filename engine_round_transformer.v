@@ -38,6 +38,9 @@ initial state_block = 128'h00000000000000000000000000000000;
 // -- loop counter
 reg [3:0] i; // max 15 counts
 initial i = 4'h0;
+// -- sub-loop counter
+reg [1:0] i_i;
+initial i_i = 2'b00;
 // -- round trasnformer ciphertext register
 reg [127:0] ciphertext_r;
 initial ciphertext_r = 128'h00000000000000000000000000000000;
@@ -62,28 +65,45 @@ always @(posedge clk) begin
 			if (i == 0) begin
 				// for loop pre-iteration
 
-				transformer_done_r <= 0;
-				// read plaintext
-				state_block <= plaintext;
-				$display("Plaintext:");
-				print_matrix(state_block);
-				// read round keys
-				round_keys[0] <= round0_key;
-				round_keys[1] <= round1_key;
-				round_keys[2] <= round2_key;
-				round_keys[3] <= round3_key;
-				round_keys[4] <= round4_key;
-				round_keys[5] <= round5_key;
-				round_keys[6] <= round6_key;
-				round_keys[7] <= round7_key;
-				round_keys[8] <= round8_key;
-				round_keys[9] <= round9_key;
-				round_keys[10] <= round10_key;
+				// sub-loop step 0
+				if (i_i == 0) begin
+					transformer_done_r <= 0;
+					// read plaintext
+					state_block <= plaintext;
 
-				// pre-round key
-				state_block <= state_block ^ round_keys[0];
-				$display("Pre-Round State:");
-				print_matrix(state_block);
+					i_i <= i_i + 1;
+				end
+				// sub-loop step 1
+				else if (i_i == 1) begin
+					$display("Plaintext:");
+					print_matrix(state_block);
+					// read round keys
+					round_keys[0] <= round0_key;
+					round_keys[1] <= round1_key;
+					round_keys[2] <= round2_key;
+					round_keys[3] <= round3_key;
+					round_keys[4] <= round4_key;
+					round_keys[5] <= round5_key;
+					round_keys[6] <= round6_key;
+					round_keys[7] <= round7_key;
+					round_keys[8] <= round8_key;
+					round_keys[9] <= round9_key;
+					round_keys[10] <= round10_key;
+
+					i_i <= i_i + 1;
+				end
+				// sub-loop step 2
+				else if (i_i == 2) begin
+					// pre-round key
+					state_block <= state_block ^ round_keys[0];
+
+					i_i <= i_i + 1;
+				end
+				// sub-loop step 3
+				else if (i_i == 3) begin
+					$display("Pre-Round State:");
+					print_matrix(state_block);
+				end
 			end
 
 			if ( i > 0 && i < 10) begin
@@ -95,54 +115,66 @@ always @(posedge clk) begin
 				// -- SubBytes
 				// state_block <= SubBytes(state_block);
 				// actually, using TBOX already does SubBytes (aes_tbox(byte,1) == aes_sbox(byte))
-				// -- ShiftRow
-				state_block <= ShiftRow(state_block);
-				// -- MixCol
-				state_block <= MixCol(state_block);
-				// -- Key XOR
-				state_block <= state_block ^ round_keys[i];
-
-				// -- Print
-				$write("Round %0d State:", i);
-				$display("");
-				print_matrix(state_block);
+				if (i_i == 0) begin
+					// -- ShiftRow
+					state_block <= ShiftRow(state_block);
+					i_i <= i_i + 1;
+				end
+				else if (i_i == 1) begin
+					// -- MixCol
+					state_block <= MixCol(state_block);
+					i_i <= i_i + 1;
+				end
+				else if (i_i == 2) begin
+					// -- Key XOR
+					state_block <= state_block ^ round_keys[i];
+					i_i <= i_i + 1;
+				end
+				else if (i_i == 3) begin
+					// -- Print
+					$write("Round %0d State:", i);
+					$display("");
+					print_matrix(state_block);
+				end
 			//// end
 			end
 
 			if (i == 10) begin
-				// for loop iteration 10
+				// for loop iteration 10 (last iteration)
 
 				// last round
-				// -- SubBytes
-				state_block <= SubBytes(state_block);
-				// -- ShiftRow
-				state_block <= ShiftRow(state_block);
-				// -- Key XOR
-				state_block <= state_block ^ round_keys[10];
-				// -- Print
-				$display("Round 10 State / Ciphertext:");
-				print_matrix(state_block);
-			end
-
-			if (i == 10) begin
-				// for loop iteration 10 (last iteration)
-			
-				// output ciphertext
-				ciphertext_r <= state_block;
-				transformer_done_r <= 1;
+				if (i_i == 0) begin
+					// -- SubBytes
+					state_block <= SubBytes(state_block);
+					i_i <= i_i + 1;
+				end
+				else if (i_i == 1) begin
+					// -- ShiftRow
+					state_block <= ShiftRow(state_block);
+					i_i <= i_i + 1;
+				end
+				else if (i_i == 2) begin
+					// -- Key XOR
+					state_block <= state_block ^ round_keys[10];
+					i_i <= i_i + 1;
+				end
+				else if (i_i == 3) begin
+					// -- Print
+					$display("Round 10 State / Ciphertext:");
+					print_matrix(state_block);
+					// output ciphertext
+					ciphertext_r <= state_block;
+					transformer_done_r <= 1;
+				end
 			end
 
 			// if output is ready, but has not been read yet
 			// just idle; by not incrementing i
-			if (i > 10) begin
-				// for loop iteration 11+
-				// idle waiting for output_read to go high
-				// posedge check on output_read in code above
-			end
-			else begin
+			if (i < 10 && i_i == 3) begin
 				// 0 <= i <= 10, increment normally
 				// update for loop i
 				i <= i + 1;
+				i_i <= 0;
 			end
 
 		end

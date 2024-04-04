@@ -36,6 +36,7 @@ always @(posedge clk) begin
 		output_hold <= 128'h00000000000000000000000000000000;
 		output_port <= 8'h00;
 		i <= 5'b00000;
+		output_read_r <= 0;
 	end
 	// output latch logic
 	else if (transformer_done && i==0) begin
@@ -46,24 +47,35 @@ always @(posedge clk) begin
 		// ? without any conflicts
 		// copy ciphertext
 		output_hold <= ciphertext;
-		// set in to begin
+		// set i to begin
 		i <= 1;
 	end
-	// normal clocl
+	// normal clock
 	else begin
 		if (i == 0) begin
 			// idling
 			output_read_r <= 0;
 		end
-		if (i == 1) begin
+		else if (i == 1) begin
 			// read first byte and set output data ok
 			output_port <= output_hold[127:120];
 			data_ok_r <= 1;
+
+			output_hold <= output_hold << 8;
 		end
 		else if (i <= 16) begin
 			// sequentially shift and output bytes 2-16
-			output_hold <= output_hold << 8;
+			// output_hold <= output_hold << 8;
 			output_port <= output_hold[127:120];
+			output_hold <= output_hold << 8;
+		end
+		if (i == 16) begin
+			output_read_r <= 1;
+			// ? this needs to be done earlier due to asynchronous assign
+		end
+		// increment i counter to next byte
+		if (i >= 1 && i < 17) begin
+			i <= i + 1;
 		end
 		else if (i == 17) begin
 			// finished outputing reset
@@ -71,11 +83,7 @@ always @(posedge clk) begin
 			output_hold <= 128'h00000000000000000000000000000000;
 			output_port <= 8'h00;
 			i <= 5'b00000;
-			output_read_r <= 1;
-		end
-		// increment i counter to next byte
-		if (i >= 1) begin
-			i <= i + 1;
+			output_read_r <= 0;
 		end
 	end
 end
