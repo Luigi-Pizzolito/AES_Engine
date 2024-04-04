@@ -49,6 +49,10 @@ always @(posedge transformer_done) begin
 	i = 1;
 end
 always @(posedge clk) begin
+	if (i == 0) begin
+		// idling
+		output_read_r = 0;
+	end
 	if (i == 1) begin
 		// read first byte and set output data ok
 		output_port = output_hold[127:120];
@@ -66,10 +70,6 @@ always @(posedge clk) begin
 		output_port = 8'h00;
 		i = 5'b00000;
 		output_read_r = 1;
-	end
-	else if (i == 0) begin
-		// idling
-		output_read_r = 0;
 	end
 	// increment i counter to next byte
 	if (i >= 1) begin

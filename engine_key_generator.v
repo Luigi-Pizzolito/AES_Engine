@@ -119,6 +119,23 @@ always @(posedge clk) begin
 	end
 end
 
+// handling when new key is requested
+always @(posedge key_start) begin
+	// ? if the key is the same as the last computed key, dont recompute
+	// ? just issue transformer start
+	if (i > 43 && round_keys[0] == key_in) begin
+		// keys already computed
+		i = 44;
+		$display("----------------");
+		$display("Same key requested, skipping computation.");
+	end
+	else if (i == 0 || i>43) begin
+		// new key requested
+		i = 0;
+		$display("----------------");
+		$write("Generating round keys for key %032X\n", key_in);
+	end
+end
 // when key generator is finished, reset the transformer_start signal
 always @(negedge key_start) begin
 	transformer_start_r = 0;

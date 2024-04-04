@@ -153,12 +153,13 @@ initial begin
 	// Signal read finished
 	// wait for data_ok to go low again
 	@(negedge dok_tb) begin
+		$display("----------------");
 		$display("Recieved ciphertext from output_interface: ");
 		$write("%02X %02X %02X %02X\n", cipher_out[127:120], cipher_out[95:88], cipher_out[63:56], cipher_out[31:24]);
 		$write("%02X %02X %02X %02X\n", cipher_out[119:112], cipher_out[87:80], cipher_out[55:48], cipher_out[23:16]);
 		$write("%02X %02X %02X %02X\n", cipher_out[111:104], cipher_out[79:72], cipher_out[47:40], cipher_out[15:8]);
 		$write("%02X %02X %02X %02X\n", cipher_out[103:96],  cipher_out[71:64], cipher_out[39:32], cipher_out[7:0]);
-		#2;
+		#10;
 		$finish;
 	end
 	

@@ -7,7 +7,7 @@ module input_interface (
 	output ready,
 	input transformer_done,
 	// -- to engine
-	output engine_start,
+	output key_start,
 	output[127:0] plain_out,
 	output[127:0] key_out
 );
@@ -32,8 +32,8 @@ assign key_out = key;
 reg[3:0] p_i, k_i;
 initial p_i=0;
 initial k_i=0;
-// output engine_start if plain and key ready and start cmd
-assign engine_start = (p_i == 4'hF) && (k_i == 4'hF) && (state == S_ST);
+// output key_start if plain and key ready and start cmd
+assign key_start = (p_i == 4'hF) && (k_i == 4'hF) && (state == S_ST);
 // input interface ready if state is idle
 assign ready = (state == S_ID);
 

@@ -38,7 +38,7 @@ input_interface input_module (
 	.transformer_done    (transformer_done_w),
 
 	// outputs
-	.engine_start   (key_start),
+	.key_start   	(key_start),
 	.plain_out      (plain),
 	.key_out        (key),
 	.ready          (interface_ready)

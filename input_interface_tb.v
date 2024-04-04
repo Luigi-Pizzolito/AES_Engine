@@ -25,7 +25,7 @@ input_interface i_uut
 	.cmd		(cmd_tb),
 	.ready		(ready_w),
 	.transformer_done	(engind),	// AES engine OK signal return
-	.engine_start	(enginC_w),	// AES engine START signal send
+	.key_start	(enginC_w),	// AES key START signal send
 	.plain_out	(plain_tb),	// -> AES engine PLAINTEXT
 	.key_out	(key_tb)	// -> AES engine KEY
 );
