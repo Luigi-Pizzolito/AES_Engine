@@ -40,10 +40,6 @@ assign round9_key = round_keys[9];
 assign round10_key = round_keys[10];
 
 // Main Logic
-// -- Asynchronous reset logic
-always @(negedge rst_) begin
-	reset_round_keys();
-end
 // -- Engine start logic
 //? maybe we can do the key gen per round and the encryption rounds in parallel
 // ---- loop counter
@@ -54,93 +50,106 @@ reg [31:0] w[43:0];
 // ---- temp word for each word calculation
 reg [31:0] tempword;
 
+reg edgedetect_keystart;
+initial edgedetect_keystart = 0;
+
 always @(posedge clk) begin
-	// engine start cmd issued
-	if (key_start) begin
-
-		if (i == 0) begin
-			// for loop iteration 0, computes first 4 keys
-
-			// set pre-round key
-			w[0] = key_in[127:96];
-			w[1] = key_in[95:64];
-			w[2] = key_in[63:32];
-			w[3] = key_in[31:0];
-			// -- copy to output register
-			round_keys[0] = key_in;
-			$display("Pre-Round Key:");
-			$write("%02X %02X %02X %02X\n", round_keys[0][127:120], round_keys[0][95:88], round_keys[0][63:56], round_keys[0][31:24]);
-			$write("%02X %02X %02X %02X\n", round_keys[0][119:112], round_keys[0][87:80], round_keys[0][55:48], round_keys[0][23:16]);
-			$write("%02X %02X %02X %02X\n", round_keys[0][111:104], round_keys[0][79:72], round_keys[0][47:40], round_keys[0][15:8]);
-			$write("%02X %02X %02X %02X\n", round_keys[0][103:96],  round_keys[0][71:64], round_keys[0][39:32], round_keys[0][7:0]);
-
-			// update for loop with offset since this iteration counts as 4 iterations
-			i = i + 3;
-		end
-		
-		if (i > 3 && i < 44) begin
-			// for loop iterations 4-43
-
-			//// for (i=4; i<44; i=i+1) begin
-				tempword = w[i-1];
-				if ((i % 4) == 0) begin
-					// every 4th round, we need the round mixing function
-					tempword = subword(rotword(tempword)) ^ round_constant(i/4);
-				end
-				
-				w[i] = w[i-4] ^ tempword;
-
-				// $display(i/4, i%4);
-				if ((i % 4) == 3) begin
-					// round done, print round keys
-					$write("Round %0d Key:", (i/4));
-					$display("");
-					$write("%02X %02X %02X %02X\n", w[((i/4)*4)][31:24], w[((i/4)*4)+1][31:24], w[((i/4)*4)+2][31:24], w[((i/4)*4)+3][31:24]);
-					$write("%02X %02X %02X %02X\n", w[((i/4)*4)][23:16], w[((i/4)*4)+1][23:16], w[((i/4)*4)+2][23:16], w[((i/4)*4)+3][23:16]);
-					$write("%02X %02X %02X %02X\n", w[((i/4)*4)][15:8] , w[((i/4)*4)+1][15:8] , w[((i/4)*4)+2][15:8] , w[((i/4)*4)+3][15:8] );
-					$write("%02X %02X %02X %02X\n", w[((i/4)*4)][7:0]  , w[((i/4)*4)+1][7:0]  , w[((i/4)*4)+2][7:0]  , w[((i/4)*4)+3][7:0]  );
-					// copy to output registers
-					round_keys[i/4] = {w[i-3], w[i-2], w[i-1], w[i]};
-				end
-			//// end
-		end
-
-		if (i > 43) begin
-			// for loop iteration 44+ (last iteration)
-
-			$display("----------------");
-			// issue round transformer start
-			transformer_start_r = 1;
-		end
-
-		// update for loop i
-		if (i < 44) begin
-			i = i + 1;
-		end
-
+	// reset
+	if (!rst_) begin
+		reset_round_keys();
 	end
-end
+	// on negedge key_start
+	if (!key_start && edgedetect_keystart) begin
+		// when key generator is finished, reset the transformer_start signal
+		transformer_start_r <= 0;
+	end
+	else begin
+		// on posedge key_start
+		// handling when new key is requested
+		if (key_start && !edgedetect_keystart) begin
+			// ? if the key is the same as the last computed key, dont recompute
+			// ? just issue transformer start
+			if (i > 43 && round_keys[0] == key_in) begin
+				// keys already computed
+				i <= 44;
+				$display("----------------");
+				$display("Same key requested, skipping computation.");
+			end
+			else if (i == 0 || i>43) begin
+				// new key requested
+				i <= 0;
+				$display("----------------");
+				$write("Generating round keys for key %032X\n", key_in);
+			end
+		end
+		// normal clock
+		// engine start cmd issued
+		if (key_start) begin
 
-// handling when new key is requested
-always @(posedge key_start) begin
-	// ? if the key is the same as the last computed key, dont recompute
-	// ? just issue transformer start
-	if (i > 43 && round_keys[0] == key_in) begin
-		// keys already computed
-		i = 44;
-		$display("----------------");
-		$display("Same key requested, skipping computation.");
+			if (i == 0) begin
+				// for loop iteration 0, computes first 4 keys
+
+				// set pre-round key
+				w[0] <= key_in[127:96];
+				w[1] <= key_in[95:64];
+				w[2] <= key_in[63:32];
+				w[3] <= key_in[31:0];
+				// -- copy to output register
+				round_keys[0] <= key_in;
+				$display("Pre-Round Key:");
+				$write("%02X %02X %02X %02X\n", round_keys[0][127:120], round_keys[0][95:88], round_keys[0][63:56], round_keys[0][31:24]);
+				$write("%02X %02X %02X %02X\n", round_keys[0][119:112], round_keys[0][87:80], round_keys[0][55:48], round_keys[0][23:16]);
+				$write("%02X %02X %02X %02X\n", round_keys[0][111:104], round_keys[0][79:72], round_keys[0][47:40], round_keys[0][15:8]);
+				$write("%02X %02X %02X %02X\n", round_keys[0][103:96],  round_keys[0][71:64], round_keys[0][39:32], round_keys[0][7:0]);
+
+				// update for loop with offset since this iteration counts as 4 iterations
+				i <= i + 3;
+			end
+			
+			if (i > 3 && i < 44) begin
+				// for loop iterations 4-43
+
+				//// for (i=4; i<44; i=i+1) begin
+					tempword <= w[i-1];
+					if ((i % 4) == 0) begin
+						// every 4th round, we need the round mixing function
+						tempword <= subword(rotword(tempword)) ^ round_constant(i/4);
+					end
+					
+					w[i] <= w[i-4] ^ tempword;
+
+					// $display(i/4, i%4);
+					if ((i % 4) == 3) begin
+						// round done, print round keys
+						$write("Round %0d Key:", (i/4));
+						$display("");
+						$write("%02X %02X %02X %02X\n", w[((i/4)*4)][31:24], w[((i/4)*4)+1][31:24], w[((i/4)*4)+2][31:24], w[((i/4)*4)+3][31:24]);
+						$write("%02X %02X %02X %02X\n", w[((i/4)*4)][23:16], w[((i/4)*4)+1][23:16], w[((i/4)*4)+2][23:16], w[((i/4)*4)+3][23:16]);
+						$write("%02X %02X %02X %02X\n", w[((i/4)*4)][15:8] , w[((i/4)*4)+1][15:8] , w[((i/4)*4)+2][15:8] , w[((i/4)*4)+3][15:8] );
+						$write("%02X %02X %02X %02X\n", w[((i/4)*4)][7:0]  , w[((i/4)*4)+1][7:0]  , w[((i/4)*4)+2][7:0]  , w[((i/4)*4)+3][7:0]  );
+						// copy to output registers
+						round_keys[i/4] <= {w[i-3], w[i-2], w[i-1], w[i]};
+					end
+				//// end
+			end
+
+			if (i > 43) begin
+				// for loop iteration 44+ (last iteration)
+
+				$display("----------------");
+				// issue round transformer start
+				transformer_start_r <= 1;
+			end
+
+			// update for loop i
+			if (i < 44) begin
+				i <= i + 1;
+			end
+
+		end
 	end
-	else if (i == 0 || i>43) begin
-		// new key requested
-		i = 0;
-		$display("----------------");
-		$write("Generating round keys for key %032X\n", key_in);
-	end
-end
-// when key generator is finished, reset the transformer_start signal
-always @(negedge key_start) begin
-	transformer_start_r = 0;
+	// edge detector set
+	edgedetect_keystart <= key_start;
 end
 
 // Define functions
@@ -151,18 +160,18 @@ task reset_round_keys;
 		//// for (i = 0; i < 11; i = i + 1) begin
 		//// 		round_keys[i] = 0;
 		//// end
-		round_keys[0] = 0;
-		round_keys[1] = 0;
-		round_keys[2] = 0;
-		round_keys[3] = 0;
-		round_keys[4] = 0;
-		round_keys[5] = 0;
-		round_keys[6] = 0;
-		round_keys[7] = 0;
-		round_keys[8] = 0;
-		round_keys[9] = 0;
-		round_keys[10] = 0;
-		transformer_start_r = 0;
+		round_keys[0] <= 0;
+		round_keys[1] <= 0;
+		round_keys[2] <= 0;
+		round_keys[3] <= 0;
+		round_keys[4] <= 0;
+		round_keys[5] <= 0;
+		round_keys[6] <= 0;
+		round_keys[7] <= 0;
+		round_keys[8] <= 0;
+		round_keys[9] <= 0;
+		round_keys[10] <= 0;
+		transformer_start_r <= 0;
 	end
 endtask
 // -- Round Constant (RCon)

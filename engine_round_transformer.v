@@ -44,105 +44,108 @@ initial ciphertext_r = 128'h00000000000000000000000000000000;
 assign ciphertext = ciphertext_r;
 
 // Main Logic
-// -- Asynchronous reset logic
-always @(negedge rst_ or posedge output_read) begin
-	resetcipher;
-	resetkeys;
-	state_block = 128'h00000000000000000000000000000000;
-	transformer_done_r = 0;
-	i = 0;
-end
-// -- Transformer start logic
 always @(posedge clk) begin
-	// transformer start cmd issued
-	if (transformer_start) begin
+	// negedge rst_ or posedge output_read
+	if (!rst_ || output_read) begin
+		//reset logic
+		resetcipher;
+		resetkeys;
+		state_block <= 128'h00000000000000000000000000000000;
+		transformer_done_r <= 0;
+		i <= 0;
+	end
+	else begin
+	// normal clock
+		// transformer start cmd issued
+		if (transformer_start) begin
 
-		if (i == 0) begin
-			// for loop pre-iteration
+			if (i == 0) begin
+				// for loop pre-iteration
 
-			transformer_done_r = 0;
-			// read plaintext
-			state_block = plaintext;
-			$display("Plaintext:");
-			print_matrix(state_block);
-			// read round keys
-			round_keys[0] = round0_key;
-			round_keys[1] = round1_key;
-			round_keys[2] = round2_key;
-			round_keys[3] = round3_key;
-			round_keys[4] = round4_key;
-			round_keys[5] = round5_key;
-			round_keys[6] = round6_key;
-			round_keys[7] = round7_key;
-			round_keys[8] = round8_key;
-			round_keys[9] = round9_key;
-			round_keys[10] = round10_key;
+				transformer_done_r <= 0;
+				// read plaintext
+				state_block <= plaintext;
+				$display("Plaintext:");
+				print_matrix(state_block);
+				// read round keys
+				round_keys[0] <= round0_key;
+				round_keys[1] <= round1_key;
+				round_keys[2] <= round2_key;
+				round_keys[3] <= round3_key;
+				round_keys[4] <= round4_key;
+				round_keys[5] <= round5_key;
+				round_keys[6] <= round6_key;
+				round_keys[7] <= round7_key;
+				round_keys[8] <= round8_key;
+				round_keys[9] <= round9_key;
+				round_keys[10] <= round10_key;
 
-			// pre-round key
-			state_block = state_block ^ round_keys[0];
-			$display("Pre-Round State:");
-			print_matrix(state_block);
+				// pre-round key
+				state_block <= state_block ^ round_keys[0];
+				$display("Pre-Round State:");
+				print_matrix(state_block);
+			end
+
+			if ( i > 0 && i < 10) begin
+				// for loop iterations 1-9
+
+				// encryption rounds
+			//// for (i=1; i<10; i=i+1) begin
+				// Rijndael
+				// -- SubBytes
+				// state_block <= SubBytes(state_block);
+				// actually, using TBOX already does SubBytes (aes_tbox(byte,1) == aes_sbox(byte))
+				// -- ShiftRow
+				state_block <= ShiftRow(state_block);
+				// -- MixCol
+				state_block <= MixCol(state_block);
+				// -- Key XOR
+				state_block <= state_block ^ round_keys[i];
+
+				// -- Print
+				$write("Round %0d State:", i);
+				$display("");
+				print_matrix(state_block);
+			//// end
+			end
+
+			if (i == 10) begin
+				// for loop iteration 10
+
+				// last round
+				// -- SubBytes
+				state_block <= SubBytes(state_block);
+				// -- ShiftRow
+				state_block <= ShiftRow(state_block);
+				// -- Key XOR
+				state_block <= state_block ^ round_keys[10];
+				// -- Print
+				$display("Round 10 State / Ciphertext:");
+				print_matrix(state_block);
+			end
+
+			if (i == 10) begin
+				// for loop iteration 10 (last iteration)
+			
+				// output ciphertext
+				ciphertext_r <= state_block;
+				transformer_done_r <= 1;
+			end
+
+			// if output is ready, but has not been read yet
+			// just idle; by not incrementing i
+			if (i > 10) begin
+				// for loop iteration 11+
+				// idle waiting for output_read to go high
+				// posedge check on output_read in code above
+			end
+			else begin
+				// 0 <= i <= 10, increment normally
+				// update for loop i
+				i <= i + 1;
+			end
+
 		end
-
-		if ( i > 0 && i < 10) begin
-			// for loop iterations 1-9
-
-			// encryption rounds
-		//// for (i=1; i<10; i=i+1) begin
-			// Rijndael
-			// -- SubBytes
-			// state_block = SubBytes(state_block);
-			// actually, using TBOX already does SubBytes (aes_tbox(byte,1) == aes_sbox(byte))
-			// -- ShiftRow
-			state_block = ShiftRow(state_block);
-			// -- MixCol
-			state_block = MixCol(state_block);
-			// -- Key XOR
-			state_block = state_block ^ round_keys[i];
-
-			// -- Print
-			$write("Round %0d State:", i);
-			$display("");
-			print_matrix(state_block);
-		//// end
-		end
-
-		if (i == 10) begin
-			// for loop iteration 10
-
-			// last round
-			// -- SubBytes
-			state_block = SubBytes(state_block);
-			// -- ShiftRow
-			state_block = ShiftRow(state_block);
-			// -- Key XOR
-			state_block = state_block ^ round_keys[10];
-			// -- Print
-			$display("Round 10 State / Ciphertext:");
-			print_matrix(state_block);
-		end
-
-		if (i == 10) begin
-			// for loop iteration 10 (last iteration)
-		
-			// output ciphertext
-			ciphertext_r = state_block;
-			transformer_done_r = 1;
-		end
-
-		// if output is ready, but has not been read yet
-		// just idle; by not incrementing i
-		if (i > 10) begin
-			// for loop iteration 11+
-			// idle waiting for output_read to go high
-			// posedge check on output_read in code above
-		end
-		else begin
-			// 0 <= i <= 10, increment normally
-			// update for loop i
-			i = i + 1;
-		end
-
 	end
 end
 
@@ -150,22 +153,22 @@ end
 // -- Reset functions
 task resetcipher;
 	begin
-		ciphertext_r = 128'h00000000000000000000000000000000;
+		ciphertext_r <= 128'h00000000000000000000000000000000;
 	end
 endtask
 task resetkeys;
 begin
-	round_keys[0] =  128'h00000000000000000000000000000000;
-	round_keys[1] =  128'h00000000000000000000000000000000;
-	round_keys[2] =  128'h00000000000000000000000000000000;
-	round_keys[3] =  128'h00000000000000000000000000000000;
-	round_keys[4] =  128'h00000000000000000000000000000000;
-	round_keys[5] =  128'h00000000000000000000000000000000;
-	round_keys[6] =  128'h00000000000000000000000000000000;
-	round_keys[7] =  128'h00000000000000000000000000000000;
-	round_keys[8] =  128'h00000000000000000000000000000000;
-	round_keys[9] =  128'h00000000000000000000000000000000;
-	round_keys[10] = 128'h00000000000000000000000000000000;
+	round_keys[0] <=  128'h00000000000000000000000000000000;
+	round_keys[1] <=  128'h00000000000000000000000000000000;
+	round_keys[2] <=  128'h00000000000000000000000000000000;
+	round_keys[3] <=  128'h00000000000000000000000000000000;
+	round_keys[4] <=  128'h00000000000000000000000000000000;
+	round_keys[5] <=  128'h00000000000000000000000000000000;
+	round_keys[6] <=  128'h00000000000000000000000000000000;
+	round_keys[7] <=  128'h00000000000000000000000000000000;
+	round_keys[8] <=  128'h00000000000000000000000000000000;
+	round_keys[9] <=  128'h00000000000000000000000000000000;
+	round_keys[10] <= 128'h00000000000000000000000000000000;
 end
 endtask
 // -- Print functions

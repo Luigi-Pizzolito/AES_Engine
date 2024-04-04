@@ -30,50 +30,53 @@ reg[4:0] i;
 initial i = 5'b00000;
 
 // Main Logic
-// -- Asynchronous reset logic
-always @(negedge rst_) begin
-	output_hold = 128'h00000000000000000000000000000000;
-	output_port = 8'h00;
-	i = 5'b00000;
-end
-// -- Output latch logic
-always @(posedge transformer_done) begin
-	// ? add check here to see if output_read is finished
-	// ? not needed; it takes 8 clock cycles to output the ciphertext
-	// ? and 8 clock cycles to input the new plaintext
-	// ? therefore these two tasks may be done independently and simultaneously
-	// ? without any conflicts
-	// copy ciphertext
-	output_hold = ciphertext;
-	// set in to begin
-	i = 1;
-end
 always @(posedge clk) begin
-	if (i == 0) begin
-		// idling
-		output_read_r = 0;
+	// reset
+	if (!rst_) begin
+		output_hold <= 128'h00000000000000000000000000000000;
+		output_port <= 8'h00;
+		i <= 5'b00000;
 	end
-	if (i == 1) begin
-		// read first byte and set output data ok
-		output_port = output_hold[127:120];
-		data_ok_r = 1;
+	// output latch logic
+	else if (transformer_done && i==0) begin
+		// ? add check here to see if output_read is finished
+		// ? not needed; it takes 8 clock cycles to output the ciphertext
+		// ? and 8 clock cycles to input the new plaintext
+		// ? therefore these two tasks may be done independently and simultaneously
+		// ? without any conflicts
+		// copy ciphertext
+		output_hold <= ciphertext;
+		// set in to begin
+		i <= 1;
 	end
-	else if (i <= 16) begin
-		// sequentially shift and output bytes 2-16
-		output_hold = output_hold << 8;
-		output_port = output_hold[127:120];
-	end
-	else if (i == 17) begin
-		// finished outputing reset
-		data_ok_r = 0;
-		output_hold = 128'h00000000000000000000000000000000;
-		output_port = 8'h00;
-		i = 5'b00000;
-		output_read_r = 1;
-	end
-	// increment i counter to next byte
-	if (i >= 1) begin
-		i = i + 1;
+	// normal clocl
+	else begin
+		if (i == 0) begin
+			// idling
+			output_read_r <= 0;
+		end
+		if (i == 1) begin
+			// read first byte and set output data ok
+			output_port <= output_hold[127:120];
+			data_ok_r <= 1;
+		end
+		else if (i <= 16) begin
+			// sequentially shift and output bytes 2-16
+			output_hold <= output_hold << 8;
+			output_port <= output_hold[127:120];
+		end
+		else if (i == 17) begin
+			// finished outputing reset
+			data_ok_r <= 0;
+			output_hold <= 128'h00000000000000000000000000000000;
+			output_port <= 8'h00;
+			i <= 5'b00000;
+			output_read_r <= 1;
+		end
+		// increment i counter to next byte
+		if (i >= 1) begin
+			i <= i + 1;
+		end
 	end
 end
 

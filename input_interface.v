@@ -40,14 +40,14 @@ assign ready = (state == S_ID);
 // Reset functions
 task resetkey;
 	begin
-		key = 128'h00000000000000000000000000000000;
-		k_i = 4'h0;
+		key <= 128'h00000000000000000000000000000000;
+		k_i <= 4'h0;
 	end
 endtask
 task resetplain;
 	begin
-		plain = 128'h00000000000000000000000000000000;
-		p_i = 4'h0;
+		plain <= 128'h00000000000000000000000000000000;
+		p_i <= 4'h0;
 	end
 endtask
 
@@ -59,7 +59,7 @@ begin:next_state_decode
 	if (!rst_) begin
 		resetplain();
 		resetkey();		
-		next_state = S_ID;	
+		next_state <= S_ID;	
 	end
 	// command parse
 	else case (cmd)
@@ -69,13 +69,13 @@ begin:next_state_decode
 			if (state != S_SP) resetplain();
 			else p_i <= p_i+1;
 			// return to idle or keep state
-			if (p_i == 4'hF) next_state = S_ID; // recieved 16 bytes, return to idle
+			if (p_i == 4'hF) next_state <= S_ID; // recieved 16 bytes, return to idle
 			else
 			begin
 				// still reciving bytes
 				// read plain from din
-				plain = {plain[119:0], din}; // Left shift and insert
-				next_state = S_SP;
+				plain <= {plain[119:0], din}; // Left shift and insert
+				next_state <= S_SP;
 			end
 		end
 
@@ -86,20 +86,20 @@ begin:next_state_decode
 			else k_i <= k_i+1;
 
 			// return to idle or keep state
-			if (k_i == 4'hF) next_state = S_ID; // recieved 16 bytes, return to idle
+			if (k_i == 4'hF) next_state <= S_ID; // recieved 16 bytes, return to idle
 			else
 			begin
 				// still recieving bytes
 				// read key from din
-				key = {key[119:0], din}; // Left shift and insert
-				next_state = S_SK;
+				key <= {key[119:0], din}; // Left shift and insert
+				next_state <= S_SK;
 			end
 		end
 
 		// Start encryption state
 		S_ST: begin
 			// start engine
-			if ((p_i == 4'hF) && (k_i == 4'hF)) next_state = S_ST;
+			if ((p_i == 4'hF) && (k_i == 4'hF)) next_state <= S_ST;
 			// return to idle
 			//? this is a synchronous reset of plain text after encryption is complete
 			//! reset only the plain text, in case we want to encrypt more plaintext with the same key
@@ -107,14 +107,14 @@ begin:next_state_decode
 				// encyrption engine is done, we can reset
 				resetplain();
 				// resetkey();
-				next_state = S_ID;
+				next_state <= S_ID;
 			end
 			// otherwise wait in this state
-			else next_state = S_ST;
+			else next_state <= S_ST;
 		end
 
 		// stay idle
-		default: next_state = S_ID;
+		default: next_state <= S_ID;
 	endcase
 end
 
