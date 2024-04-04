@@ -50,7 +50,7 @@ engine_key_generator key_gen_module (
 
 	// inputs
 	.key_in             (key),
-	.engine_start       (key_start), //rename input wire to key_gen_start
+	.key_start       (key_start), //rename input wire to key_gen_start
 
 	// outputs
 	.transformer_start  (transformer_start_w),
