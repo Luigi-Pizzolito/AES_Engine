@@ -7,9 +7,13 @@
 [timestart] 3
 [size] 1707 1013
 [pos] -1 -1
-*-5.063437 0 487 519 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
-[markername] Anext_plain_input
+*-5.063437 0 487 519 6 36 68 397 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[markername] Anext_plain_input + output
 [markername] Bnext_encrypt
+[markername] Cset_plain
+[markername] Dset_key
+[markername] Estart_keys
+[markername] Fstart_rounds
 [treeopen] aes_engine_tb.
 [treeopen] aes_engine_tb.i_uut.
 [sst_width] 197
@@ -57,6 +61,8 @@ aes_engine_tb.i_uut.key_gen_module.tempword[31:0]
 @24
 [color] 5
 aes_engine_tb.i_uut.key_gen_module.i[5:0]
+[color] 5
+aes_engine_tb.i_uut.key_gen_module.i_i[1:0]
 @22
 [color] 4
 aes_engine_tb.i_uut.round0_key_w[127:0]
@@ -91,6 +97,8 @@ aes_engine_tb.i_uut.transformer_module.state_block[127:0]
 @24
 [color] 5
 aes_engine_tb.i_uut.transformer_module.i[3:0]
+[color] 5
+aes_engine_tb.i_uut.transformer_module.i_i[1:0]
 @22
 aes_engine_tb.i_uut.cipher[127:0]
 @28
