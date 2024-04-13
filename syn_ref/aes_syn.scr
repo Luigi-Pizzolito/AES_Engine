@@ -1,0 +1,39 @@
+#import design
+remove_design -all
+#read_ddc ./unmapped/TOP_PAD.ddc
+read_verilog {input_interface.v output_interface.v engine_key_generator.v engine_round_transformer.v aes_engine.v AES_PAD.v}
+current_design TOP_PAD_opt
+#set constraints
+reset_design
+source -e ./top_level.con
+set_operating_conditions slow
+set_ideal_network [get_ports RST_]
+set_dont_touch [get_cells P*]
+#compile
+compile -map_effort high
+compile -incr -map high 
+sh mkdir ./result
+write -format ddc -h -o ./result/TOP_PAD.ddc
+report_constraint
+sh mkdir ./rpt
+report_timing -nworst 10 > ./rpt/timing.rpt
+report_area > ./rpt/area.rpt
+report_power > ./rpt/power.rpt
+# fix hold
+set_fix_hold clk
+compile -incr -only_design_rule
+remove_attribute [current_design] max_area
+report_constraint -all
+# finishing and save
+set verilogout_no_tri true
+change_names -rules verilog -hierarchy
+remove_unconnected_ports [get_cells -hier {*}]
+write -f ddc -hierarchy -output ./result/TOP_PAD.ddc
+write -f verilog -hierarchy -output ./result/TOP_PAD.v
+
+# Write out the constraints-only sdc file
+write_sdc ./result/TOP_PAD.sdc
+write_sdf ./result/TOP_PAD.sdf
+ 
+
+

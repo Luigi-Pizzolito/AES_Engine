@@ -1,0 +1,31 @@
+ 
+****************************************
+Report : area
+Design : TOP_PAD_opt
+Version: O-2018.06-SP1
+Date   : Fri Apr  5 01:05:05 2024
+****************************************
+
+Library(s) Used:
+
+    slow (File: /opt/tech_lib/smic180/digital/sc/synopsys/slow.db)
+    SP018N_V1p0_typ (File: /opt/tech_lib/smic180/digital/io/synopsys/SP018N_V1p0_typ.db)
+
+Number of ports:                         3928
+Number of nets:                         36252
+Number of cells:                        31980
+Number of combinational cells:          27033
+Number of sequential cells:              4941
+Number of macros/black boxes:               0
+Number of buf/inv:                       4075
+Number of references:                       3
+
+Combinational area:             613029.406203
+Buf/Inv area:                   213821.485530
+Noncombinational area:          271304.514019
+Macro/Black Box area:                0.000000
+Net Interconnect area:        21161345.245010
+
+Total cell area:                884333.920222
+Total area:                   22045679.165233
+1

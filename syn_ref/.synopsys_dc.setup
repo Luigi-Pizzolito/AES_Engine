@@ -1,0 +1,28 @@
+
+set search_path [list   /opt/tech_lib/smic180/digital/sc/synopsys \
+			/opt/tech_lib/smic180/digital/sc/symbols/synopsys \
+			/opt/tech_lib/smic180/digital/io/synopsys \
+			../rtl_ref
+			]
+
+set target_library {slow.db}
+
+set link_library [list {*} $target_library SP018N_V1p0_typ.db]
+
+set symbol_library {smic18.sdb}
+
+#set synthetic_library
+
+set hdlin_translate_off_skip_text "TRUE"
+
+set edifout_netlist_only "TRUE"
+
+set verilogout_no_tri true
+
+set sh_enable_line_editing true
+
+
+history keep 10000
+
+alias h history
+

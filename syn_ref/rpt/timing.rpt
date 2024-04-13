@@ -1,0 +1,608 @@
+ 
+****************************************
+Report : timing
+        -path full
+        -delay max
+        -nworst 10
+        -max_paths 10
+Design : TOP_PAD_opt
+Version: O-2018.06-SP1
+Date   : Fri Apr  5 01:05:05 2024
+****************************************
+
+ # A fanout number of 1000 was used for high fanout net computations.
+
+Operating Conditions: slow   Library: slow
+Wire Load Model Mode: top
+
+  Startpoint: chip_core/transformer_module/i_reg[1]
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: chip_core/transformer_module/state_block_reg[25]
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  TOP_PAD_opt        smic18_wl50           slow
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             3.00       3.00
+  chip_core/transformer_module/i_reg[1]/CK (DFFHQX1)      0.00 #     3.00 r
+  chip_core/transformer_module/i_reg[1]/Q (DFFHQX1)       2.11       5.11 r
+  chip_core/transformer_module/U273/Y (OR3XL)             1.37       6.48 r
+  chip_core/transformer_module/U9848/Y (INVX1)            0.87       7.35 f
+  chip_core/transformer_module/U3923/Y (INVX1)            1.02       8.37 r
+  chip_core/transformer_module/U1039/Y (CLKINVX3)         1.61       9.99 f
+  chip_core/transformer_module/U14882/Y (NAND2X1)         1.65      11.64 r
+  chip_core/transformer_module/U9846/Y (NAND2X1)          1.18      12.82 f
+  chip_core/transformer_module/U3921/Y (INVX1)            1.51      14.33 r
+  chip_core/transformer_module/U9845/Y (NAND2X1)          0.88      15.21 f
+  chip_core/transformer_module/U3922/Y (INVX1)            1.49      16.70 r
+  chip_core/transformer_module/U1037/Y (CLKINVX3)         2.26      18.95 f
+  chip_core/transformer_module/U3920/Y (OAI21XL)          1.86      20.81 r
+  chip_core/transformer_module/U941/Y (OAI21X1)           0.65      21.46 f
+  chip_core/transformer_module/U9837/Y (OAI211X1)         1.62      23.08 r
+  chip_core/transformer_module/U9836/Y (INVX1)            1.78      24.86 f
+  chip_core/transformer_module/U1014/Y (INVX1)            1.57      26.42 r
+  chip_core/transformer_module/U3907/Y (AND2X2)           0.77      27.20 r
+  chip_core/transformer_module/U9835/Y (NAND2X1)          1.63      28.83 f
+  chip_core/transformer_module/U3911/Y (INVX1)            2.40      31.23 r
+  chip_core/transformer_module/U1016/Y (INVX1)            1.85      33.08 f
+  chip_core/transformer_module/U631/Y (INVX1)             2.29      35.37 r
+  chip_core/transformer_module/U630/Y (INVX1)             1.86      37.24 f
+  chip_core/transformer_module/U609/Y (INVX1)             2.30      39.54 r
+  chip_core/transformer_module/U11727/Y (AOI32X1)         0.90      40.44 f
+  chip_core/transformer_module/U11725/Y (OAI221XL)        0.84      41.28 r
+  chip_core/transformer_module/state_block_reg[25]/D (DFFHQX1)
+                                                          0.00      41.28 r
+  data arrival time                                                 41.28
+
+  clock clk (rise edge)                                  40.00      40.00
+  clock network delay (ideal)                             3.00      43.00
+  clock uncertainty                                      -1.30      41.70
+  chip_core/transformer_module/state_block_reg[25]/CK (DFFHQX1)
+                                                          0.00      41.70 r
+  library setup time                                     -0.23      41.47
+  data required time                                                41.47
+  --------------------------------------------------------------------------
+  data required time                                                41.47
+  data arrival time                                                -41.28
+  --------------------------------------------------------------------------
+  slack (MET)                                                        0.19
+
+
+  Startpoint: chip_core/transformer_module/i_reg[1]
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: chip_core/transformer_module/state_block_reg[123]
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  TOP_PAD_opt        smic18_wl50           slow
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             3.00       3.00
+  chip_core/transformer_module/i_reg[1]/CK (DFFHQX1)      0.00 #     3.00 r
+  chip_core/transformer_module/i_reg[1]/Q (DFFHQX1)       2.11       5.11 r
+  chip_core/transformer_module/U273/Y (OR3XL)             1.37       6.48 r
+  chip_core/transformer_module/U9848/Y (INVX1)            0.87       7.35 f
+  chip_core/transformer_module/U3923/Y (INVX1)            1.02       8.37 r
+  chip_core/transformer_module/U1039/Y (CLKINVX3)         1.61       9.99 f
+  chip_core/transformer_module/U14882/Y (NAND2X1)         1.65      11.64 r
+  chip_core/transformer_module/U9846/Y (NAND2X1)          1.18      12.82 f
+  chip_core/transformer_module/U3921/Y (INVX1)            1.51      14.33 r
+  chip_core/transformer_module/U9845/Y (NAND2X1)          0.88      15.21 f
+  chip_core/transformer_module/U3922/Y (INVX1)            1.49      16.70 r
+  chip_core/transformer_module/U1037/Y (CLKINVX3)         2.26      18.95 f
+  chip_core/transformer_module/U3920/Y (OAI21XL)          1.86      20.81 r
+  chip_core/transformer_module/U941/Y (OAI21X1)           0.65      21.46 f
+  chip_core/transformer_module/U9837/Y (OAI211X1)         1.62      23.08 r
+  chip_core/transformer_module/U9836/Y (INVX1)            1.78      24.86 f
+  chip_core/transformer_module/U1014/Y (INVX1)            1.57      26.42 r
+  chip_core/transformer_module/U3907/Y (AND2X2)           0.77      27.20 r
+  chip_core/transformer_module/U9835/Y (NAND2X1)          1.63      28.83 f
+  chip_core/transformer_module/U3911/Y (INVX1)            2.40      31.23 r
+  chip_core/transformer_module/U1016/Y (INVX1)            1.85      33.08 f
+  chip_core/transformer_module/U631/Y (INVX1)             2.29      35.37 r
+  chip_core/transformer_module/U630/Y (INVX1)             1.86      37.24 f
+  chip_core/transformer_module/U609/Y (INVX1)             2.30      39.54 r
+  chip_core/transformer_module/U11771/Y (AOI32X1)         0.90      40.44 f
+  chip_core/transformer_module/U11769/Y (OAI221XL)        0.84      41.28 r
+  chip_core/transformer_module/state_block_reg[123]/D (DFFHQX1)
+                                                          0.00      41.28 r
+  data arrival time                                                 41.28
+
+  clock clk (rise edge)                                  40.00      40.00
+  clock network delay (ideal)                             3.00      43.00
+  clock uncertainty                                      -1.30      41.70
+  chip_core/transformer_module/state_block_reg[123]/CK (DFFHQX1)
+                                                          0.00      41.70 r
+  library setup time                                     -0.23      41.47
+  data required time                                                41.47
+  --------------------------------------------------------------------------
+  data required time                                                41.47
+  data arrival time                                                -41.28
+  --------------------------------------------------------------------------
+  slack (MET)                                                        0.19
+
+
+  Startpoint: chip_core/transformer_module/i_reg[1]
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: chip_core/transformer_module/state_block_reg[124]
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  TOP_PAD_opt        smic18_wl50           slow
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             3.00       3.00
+  chip_core/transformer_module/i_reg[1]/CK (DFFHQX1)      0.00 #     3.00 r
+  chip_core/transformer_module/i_reg[1]/Q (DFFHQX1)       2.11       5.11 r
+  chip_core/transformer_module/U273/Y (OR3XL)             1.37       6.48 r
+  chip_core/transformer_module/U9848/Y (INVX1)            0.87       7.35 f
+  chip_core/transformer_module/U3923/Y (INVX1)            1.02       8.37 r
+  chip_core/transformer_module/U1039/Y (CLKINVX3)         1.61       9.99 f
+  chip_core/transformer_module/U14882/Y (NAND2X1)         1.65      11.64 r
+  chip_core/transformer_module/U9846/Y (NAND2X1)          1.18      12.82 f
+  chip_core/transformer_module/U3921/Y (INVX1)            1.51      14.33 r
+  chip_core/transformer_module/U9845/Y (NAND2X1)          0.88      15.21 f
+  chip_core/transformer_module/U3922/Y (INVX1)            1.49      16.70 r
+  chip_core/transformer_module/U1037/Y (CLKINVX3)         2.26      18.95 f
+  chip_core/transformer_module/U3920/Y (OAI21XL)          1.86      20.81 r
+  chip_core/transformer_module/U941/Y (OAI21X1)           0.65      21.46 f
+  chip_core/transformer_module/U9837/Y (OAI211X1)         1.62      23.08 r
+  chip_core/transformer_module/U9836/Y (INVX1)            1.78      24.86 f
+  chip_core/transformer_module/U1014/Y (INVX1)            1.57      26.42 r
+  chip_core/transformer_module/U3907/Y (AND2X2)           0.77      27.20 r
+  chip_core/transformer_module/U9835/Y (NAND2X1)          1.63      28.83 f
+  chip_core/transformer_module/U3911/Y (INVX1)            2.40      31.23 r
+  chip_core/transformer_module/U1016/Y (INVX1)            1.85      33.08 f
+  chip_core/transformer_module/U631/Y (INVX1)             2.29      35.37 r
+  chip_core/transformer_module/U630/Y (INVX1)             1.86      37.24 f
+  chip_core/transformer_module/U610/Y (INVX1)             2.30      39.54 r
+  chip_core/transformer_module/U11767/Y (AOI32X1)         0.90      40.44 f
+  chip_core/transformer_module/U11765/Y (OAI221XL)        0.84      41.28 r
+  chip_core/transformer_module/state_block_reg[124]/D (DFFHQX1)
+                                                          0.00      41.28 r
+  data arrival time                                                 41.28
+
+  clock clk (rise edge)                                  40.00      40.00
+  clock network delay (ideal)                             3.00      43.00
+  clock uncertainty                                      -1.30      41.70
+  chip_core/transformer_module/state_block_reg[124]/CK (DFFHQX1)
+                                                          0.00      41.70 r
+  library setup time                                     -0.23      41.47
+  data required time                                                41.47
+  --------------------------------------------------------------------------
+  data required time                                                41.47
+  data arrival time                                                -41.28
+  --------------------------------------------------------------------------
+  slack (MET)                                                        0.19
+
+
+  Startpoint: chip_core/transformer_module/i_reg[1]
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: chip_core/transformer_module/state_block_reg[126]
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  TOP_PAD_opt        smic18_wl50           slow
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             3.00       3.00
+  chip_core/transformer_module/i_reg[1]/CK (DFFHQX1)      0.00 #     3.00 r
+  chip_core/transformer_module/i_reg[1]/Q (DFFHQX1)       2.11       5.11 r
+  chip_core/transformer_module/U273/Y (OR3XL)             1.37       6.48 r
+  chip_core/transformer_module/U9848/Y (INVX1)            0.87       7.35 f
+  chip_core/transformer_module/U3923/Y (INVX1)            1.02       8.37 r
+  chip_core/transformer_module/U1039/Y (CLKINVX3)         1.61       9.99 f
+  chip_core/transformer_module/U14882/Y (NAND2X1)         1.65      11.64 r
+  chip_core/transformer_module/U9846/Y (NAND2X1)          1.18      12.82 f
+  chip_core/transformer_module/U3921/Y (INVX1)            1.51      14.33 r
+  chip_core/transformer_module/U9845/Y (NAND2X1)          0.88      15.21 f
+  chip_core/transformer_module/U3922/Y (INVX1)            1.49      16.70 r
+  chip_core/transformer_module/U1037/Y (CLKINVX3)         2.26      18.95 f
+  chip_core/transformer_module/U3920/Y (OAI21XL)          1.86      20.81 r
+  chip_core/transformer_module/U941/Y (OAI21X1)           0.65      21.46 f
+  chip_core/transformer_module/U9837/Y (OAI211X1)         1.62      23.08 r
+  chip_core/transformer_module/U9836/Y (INVX1)            1.78      24.86 f
+  chip_core/transformer_module/U1014/Y (INVX1)            1.57      26.42 r
+  chip_core/transformer_module/U3907/Y (AND2X2)           0.77      27.20 r
+  chip_core/transformer_module/U9835/Y (NAND2X1)          1.63      28.83 f
+  chip_core/transformer_module/U3911/Y (INVX1)            2.40      31.23 r
+  chip_core/transformer_module/U1016/Y (INVX1)            1.85      33.08 f
+  chip_core/transformer_module/U631/Y (INVX1)             2.29      35.37 r
+  chip_core/transformer_module/U630/Y (INVX1)             1.86      37.24 f
+  chip_core/transformer_module/U608/Y (INVX1)             2.30      39.54 r
+  chip_core/transformer_module/U11763/Y (AOI32X1)         0.90      40.44 f
+  chip_core/transformer_module/U11761/Y (OAI221XL)        0.84      41.28 r
+  chip_core/transformer_module/state_block_reg[126]/D (DFFX2)
+                                                          0.00      41.28 r
+  data arrival time                                                 41.28
+
+  clock clk (rise edge)                                  40.00      40.00
+  clock network delay (ideal)                             3.00      43.00
+  clock uncertainty                                      -1.30      41.70
+  chip_core/transformer_module/state_block_reg[126]/CK (DFFX2)
+                                                          0.00      41.70 r
+  library setup time                                     -0.21      41.49
+  data required time                                                41.49
+  --------------------------------------------------------------------------
+  data required time                                                41.49
+  data arrival time                                                -41.28
+  --------------------------------------------------------------------------
+  slack (MET)                                                        0.21
+
+
+  Startpoint: chip_core/transformer_module/i_reg[1]
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: chip_core/transformer_module/state_block_reg[125]
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  TOP_PAD_opt        smic18_wl50           slow
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             3.00       3.00
+  chip_core/transformer_module/i_reg[1]/CK (DFFHQX1)      0.00 #     3.00 r
+  chip_core/transformer_module/i_reg[1]/Q (DFFHQX1)       2.11       5.11 r
+  chip_core/transformer_module/U273/Y (OR3XL)             1.37       6.48 r
+  chip_core/transformer_module/U9848/Y (INVX1)            0.87       7.35 f
+  chip_core/transformer_module/U3923/Y (INVX1)            1.02       8.37 r
+  chip_core/transformer_module/U1039/Y (CLKINVX3)         1.61       9.99 f
+  chip_core/transformer_module/U14882/Y (NAND2X1)         1.65      11.64 r
+  chip_core/transformer_module/U9846/Y (NAND2X1)          1.18      12.82 f
+  chip_core/transformer_module/U3921/Y (INVX1)            1.51      14.33 r
+  chip_core/transformer_module/U9845/Y (NAND2X1)          0.88      15.21 f
+  chip_core/transformer_module/U3922/Y (INVX1)            1.49      16.70 r
+  chip_core/transformer_module/U1037/Y (CLKINVX3)         2.26      18.95 f
+  chip_core/transformer_module/U3920/Y (OAI21XL)          1.86      20.81 r
+  chip_core/transformer_module/U941/Y (OAI21X1)           0.65      21.46 f
+  chip_core/transformer_module/U9837/Y (OAI211X1)         1.62      23.08 r
+  chip_core/transformer_module/U9836/Y (INVX1)            1.78      24.86 f
+  chip_core/transformer_module/U1014/Y (INVX1)            1.57      26.42 r
+  chip_core/transformer_module/U3907/Y (AND2X2)           0.77      27.20 r
+  chip_core/transformer_module/U9835/Y (NAND2X1)          1.63      28.83 f
+  chip_core/transformer_module/U3911/Y (INVX1)            2.40      31.23 r
+  chip_core/transformer_module/U1016/Y (INVX1)            1.85      33.08 f
+  chip_core/transformer_module/U631/Y (INVX1)             2.29      35.37 r
+  chip_core/transformer_module/U630/Y (INVX1)             1.86      37.24 f
+  chip_core/transformer_module/U610/Y (INVX1)             2.30      39.54 r
+  chip_core/transformer_module/U11775/Y (AOI32X1)         0.90      40.44 f
+  chip_core/transformer_module/U11773/Y (OAI221XL)        0.83      41.28 r
+  chip_core/transformer_module/state_block_reg[125]/D (DFFX1)
+                                                          0.00      41.28 r
+  data arrival time                                                 41.28
+
+  clock clk (rise edge)                                  40.00      40.00
+  clock network delay (ideal)                             3.00      43.00
+  clock uncertainty                                      -1.30      41.70
+  chip_core/transformer_module/state_block_reg[125]/CK (DFFX1)
+                                                          0.00      41.70 r
+  library setup time                                     -0.20      41.50
+  data required time                                                41.50
+  --------------------------------------------------------------------------
+  data required time                                                41.50
+  data arrival time                                                -41.28
+  --------------------------------------------------------------------------
+  slack (MET)                                                        0.22
+
+
+  Startpoint: chip_core/transformer_module/i_reg[1]
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: chip_core/transformer_module/state_block_reg[127]
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  TOP_PAD_opt        smic18_wl50           slow
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             3.00       3.00
+  chip_core/transformer_module/i_reg[1]/CK (DFFHQX1)      0.00 #     3.00 r
+  chip_core/transformer_module/i_reg[1]/Q (DFFHQX1)       2.11       5.11 r
+  chip_core/transformer_module/U273/Y (OR3XL)             1.37       6.48 r
+  chip_core/transformer_module/U9848/Y (INVX1)            0.87       7.35 f
+  chip_core/transformer_module/U3923/Y (INVX1)            1.02       8.37 r
+  chip_core/transformer_module/U1039/Y (CLKINVX3)         1.61       9.99 f
+  chip_core/transformer_module/U14882/Y (NAND2X1)         1.65      11.64 r
+  chip_core/transformer_module/U9846/Y (NAND2X1)          1.18      12.82 f
+  chip_core/transformer_module/U3921/Y (INVX1)            1.51      14.33 r
+  chip_core/transformer_module/U9845/Y (NAND2X1)          0.88      15.21 f
+  chip_core/transformer_module/U3922/Y (INVX1)            1.49      16.70 r
+  chip_core/transformer_module/U1037/Y (CLKINVX3)         2.26      18.95 f
+  chip_core/transformer_module/U3920/Y (OAI21XL)          1.86      20.81 r
+  chip_core/transformer_module/U941/Y (OAI21X1)           0.65      21.46 f
+  chip_core/transformer_module/U9837/Y (OAI211X1)         1.62      23.08 r
+  chip_core/transformer_module/U9836/Y (INVX1)            1.78      24.86 f
+  chip_core/transformer_module/U1014/Y (INVX1)            1.57      26.42 r
+  chip_core/transformer_module/U3907/Y (AND2X2)           0.77      27.20 r
+  chip_core/transformer_module/U9835/Y (NAND2X1)          1.63      28.83 f
+  chip_core/transformer_module/U3911/Y (INVX1)            2.40      31.23 r
+  chip_core/transformer_module/U1016/Y (INVX1)            1.85      33.08 f
+  chip_core/transformer_module/U631/Y (INVX1)             2.29      35.37 r
+  chip_core/transformer_module/U630/Y (INVX1)             1.86      37.24 f
+  chip_core/transformer_module/U608/Y (INVX1)             2.30      39.54 r
+  chip_core/transformer_module/U11759/Y (AOI32X1)         0.90      40.44 f
+  chip_core/transformer_module/U11757/Y (OAI221XL)        0.83      41.28 r
+  chip_core/transformer_module/state_block_reg[127]/D (DFFX1)
+                                                          0.00      41.28 r
+  data arrival time                                                 41.28
+
+  clock clk (rise edge)                                  40.00      40.00
+  clock network delay (ideal)                             3.00      43.00
+  clock uncertainty                                      -1.30      41.70
+  chip_core/transformer_module/state_block_reg[127]/CK (DFFX1)
+                                                          0.00      41.70 r
+  library setup time                                     -0.20      41.50
+  data required time                                                41.50
+  --------------------------------------------------------------------------
+  data required time                                                41.50
+  data arrival time                                                -41.28
+  --------------------------------------------------------------------------
+  slack (MET)                                                        0.22
+
+
+  Startpoint: chip_core/transformer_module/i_reg[1]
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: chip_core/transformer_module/state_block_reg[122]
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  TOP_PAD_opt        smic18_wl50           slow
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             3.00       3.00
+  chip_core/transformer_module/i_reg[1]/CK (DFFHQX1)      0.00 #     3.00 r
+  chip_core/transformer_module/i_reg[1]/Q (DFFHQX1)       2.11       5.11 r
+  chip_core/transformer_module/U273/Y (OR3XL)             1.37       6.48 r
+  chip_core/transformer_module/U9848/Y (INVX1)            0.87       7.35 f
+  chip_core/transformer_module/U3923/Y (INVX1)            1.02       8.37 r
+  chip_core/transformer_module/U1039/Y (CLKINVX3)         1.61       9.99 f
+  chip_core/transformer_module/U14882/Y (NAND2X1)         1.65      11.64 r
+  chip_core/transformer_module/U9846/Y (NAND2X1)          1.18      12.82 f
+  chip_core/transformer_module/U3921/Y (INVX1)            1.51      14.33 r
+  chip_core/transformer_module/U9845/Y (NAND2X1)          0.88      15.21 f
+  chip_core/transformer_module/U3922/Y (INVX1)            1.49      16.70 r
+  chip_core/transformer_module/U1037/Y (CLKINVX3)         2.26      18.95 f
+  chip_core/transformer_module/U3920/Y (OAI21XL)          1.86      20.81 r
+  chip_core/transformer_module/U941/Y (OAI21X1)           0.65      21.46 f
+  chip_core/transformer_module/U9837/Y (OAI211X1)         1.62      23.08 r
+  chip_core/transformer_module/U9836/Y (INVX1)            1.78      24.86 f
+  chip_core/transformer_module/U1014/Y (INVX1)            1.57      26.42 r
+  chip_core/transformer_module/U3907/Y (AND2X2)           0.77      27.20 r
+  chip_core/transformer_module/U9835/Y (NAND2X1)          1.63      28.83 f
+  chip_core/transformer_module/U3911/Y (INVX1)            2.40      31.23 r
+  chip_core/transformer_module/U1016/Y (INVX1)            1.85      33.08 f
+  chip_core/transformer_module/U631/Y (INVX1)             2.29      35.37 r
+  chip_core/transformer_module/U630/Y (INVX1)             1.86      37.24 f
+  chip_core/transformer_module/U609/Y (INVX1)             2.30      39.54 r
+  chip_core/transformer_module/U11755/Y (AOI32X1)         0.90      40.44 f
+  chip_core/transformer_module/U11753/Y (OAI221XL)        0.83      41.28 r
+  chip_core/transformer_module/state_block_reg[122]/D (DFFX1)
+                                                          0.00      41.28 r
+  data arrival time                                                 41.28
+
+  clock clk (rise edge)                                  40.00      40.00
+  clock network delay (ideal)                             3.00      43.00
+  clock uncertainty                                      -1.30      41.70
+  chip_core/transformer_module/state_block_reg[122]/CK (DFFX1)
+                                                          0.00      41.70 r
+  library setup time                                     -0.20      41.50
+  data required time                                                41.50
+  --------------------------------------------------------------------------
+  data required time                                                41.50
+  data arrival time                                                -41.28
+  --------------------------------------------------------------------------
+  slack (MET)                                                        0.22
+
+
+  Startpoint: chip_core/transformer_module/i_reg[1]
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: chip_core/transformer_module/state_block_reg[58]
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  TOP_PAD_opt        smic18_wl50           slow
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             3.00       3.00
+  chip_core/transformer_module/i_reg[1]/CK (DFFHQX1)      0.00 #     3.00 r
+  chip_core/transformer_module/i_reg[1]/Q (DFFHQX1)       2.11       5.11 r
+  chip_core/transformer_module/U273/Y (OR3XL)             1.37       6.48 r
+  chip_core/transformer_module/U9848/Y (INVX1)            0.87       7.35 f
+  chip_core/transformer_module/U3923/Y (INVX1)            1.02       8.37 r
+  chip_core/transformer_module/U1039/Y (CLKINVX3)         1.61       9.99 f
+  chip_core/transformer_module/U14882/Y (NAND2X1)         1.65      11.64 r
+  chip_core/transformer_module/U9846/Y (NAND2X1)          1.18      12.82 f
+  chip_core/transformer_module/U3921/Y (INVX1)            1.51      14.33 r
+  chip_core/transformer_module/U9845/Y (NAND2X1)          0.88      15.21 f
+  chip_core/transformer_module/U3922/Y (INVX1)            1.49      16.70 r
+  chip_core/transformer_module/U1037/Y (CLKINVX3)         2.26      18.95 f
+  chip_core/transformer_module/U3920/Y (OAI21XL)          1.86      20.81 r
+  chip_core/transformer_module/U941/Y (OAI21X1)           0.65      21.46 f
+  chip_core/transformer_module/U9837/Y (OAI211X1)         1.62      23.08 r
+  chip_core/transformer_module/U9836/Y (INVX1)            1.78      24.86 f
+  chip_core/transformer_module/U1014/Y (INVX1)            1.57      26.42 r
+  chip_core/transformer_module/U3907/Y (AND2X2)           0.77      27.20 r
+  chip_core/transformer_module/U9835/Y (NAND2X1)          1.63      28.83 f
+  chip_core/transformer_module/U3911/Y (INVX1)            2.40      31.23 r
+  chip_core/transformer_module/U1016/Y (INVX1)            1.85      33.08 f
+  chip_core/transformer_module/U631/Y (INVX1)             2.29      35.37 r
+  chip_core/transformer_module/U630/Y (INVX1)             1.86      37.24 f
+  chip_core/transformer_module/U608/Y (INVX1)             2.30      39.54 r
+  chip_core/transformer_module/U11711/Y (AOI32X1)         0.90      40.44 f
+  chip_core/transformer_module/U11709/Y (OAI221XL)        0.83      41.28 r
+  chip_core/transformer_module/state_block_reg[58]/D (DFFX1)
+                                                          0.00      41.28 r
+  data arrival time                                                 41.28
+
+  clock clk (rise edge)                                  40.00      40.00
+  clock network delay (ideal)                             3.00      43.00
+  clock uncertainty                                      -1.30      41.70
+  chip_core/transformer_module/state_block_reg[58]/CK (DFFX1)
+                                                          0.00      41.70 r
+  library setup time                                     -0.20      41.50
+  data required time                                                41.50
+  --------------------------------------------------------------------------
+  data required time                                                41.50
+  data arrival time                                                -41.28
+  --------------------------------------------------------------------------
+  slack (MET)                                                        0.22
+
+
+  Startpoint: chip_core/transformer_module/i_reg[1]
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: chip_core/transformer_module/state_block_reg[31]
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  TOP_PAD_opt        smic18_wl50           slow
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             3.00       3.00
+  chip_core/transformer_module/i_reg[1]/CK (DFFHQX1)      0.00 #     3.00 r
+  chip_core/transformer_module/i_reg[1]/Q (DFFHQX1)       2.11       5.11 r
+  chip_core/transformer_module/U273/Y (OR3XL)             1.37       6.48 r
+  chip_core/transformer_module/U9848/Y (INVX1)            0.87       7.35 f
+  chip_core/transformer_module/U3923/Y (INVX1)            1.02       8.37 r
+  chip_core/transformer_module/U1039/Y (CLKINVX3)         1.61       9.99 f
+  chip_core/transformer_module/U14882/Y (NAND2X1)         1.65      11.64 r
+  chip_core/transformer_module/U9846/Y (NAND2X1)          1.18      12.82 f
+  chip_core/transformer_module/U3921/Y (INVX1)            1.51      14.33 r
+  chip_core/transformer_module/U9845/Y (NAND2X1)          0.88      15.21 f
+  chip_core/transformer_module/U3922/Y (INVX1)            1.49      16.70 r
+  chip_core/transformer_module/U1037/Y (CLKINVX3)         2.26      18.95 f
+  chip_core/transformer_module/U3920/Y (OAI21XL)          1.86      20.81 r
+  chip_core/transformer_module/U941/Y (OAI21X1)           0.65      21.46 f
+  chip_core/transformer_module/U9837/Y (OAI211X1)         1.62      23.08 r
+  chip_core/transformer_module/U9836/Y (INVX1)            1.78      24.86 f
+  chip_core/transformer_module/U1014/Y (INVX1)            1.57      26.42 r
+  chip_core/transformer_module/U3907/Y (AND2X2)           0.77      27.20 r
+  chip_core/transformer_module/U9835/Y (NAND2X1)          1.63      28.83 f
+  chip_core/transformer_module/U3911/Y (INVX1)            2.40      31.23 r
+  chip_core/transformer_module/U1016/Y (INVX1)            1.85      33.08 f
+  chip_core/transformer_module/U631/Y (INVX1)             2.29      35.37 r
+  chip_core/transformer_module/U603/Y (INVX1)             1.86      37.23 f
+  chip_core/transformer_module/U579/Y (INVX1)             2.30      39.54 r
+  chip_core/transformer_module/U11739/Y (AOI32X1)         0.90      40.44 f
+  chip_core/transformer_module/U11737/Y (OAI221XL)        0.83      41.28 r
+  chip_core/transformer_module/state_block_reg[31]/D (DFFX1)
+                                                          0.00      41.28 r
+  data arrival time                                                 41.28
+
+  clock clk (rise edge)                                  40.00      40.00
+  clock network delay (ideal)                             3.00      43.00
+  clock uncertainty                                      -1.30      41.70
+  chip_core/transformer_module/state_block_reg[31]/CK (DFFX1)
+                                                          0.00      41.70 r
+  library setup time                                     -0.20      41.50
+  data required time                                                41.50
+  --------------------------------------------------------------------------
+  data required time                                                41.50
+  data arrival time                                                -41.28
+  --------------------------------------------------------------------------
+  slack (MET)                                                        0.23
+
+
+  Startpoint: chip_core/transformer_module/i_reg[1]
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: chip_core/transformer_module/state_block_reg[56]
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  TOP_PAD_opt        smic18_wl50           slow
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             3.00       3.00
+  chip_core/transformer_module/i_reg[1]/CK (DFFHQX1)      0.00 #     3.00 r
+  chip_core/transformer_module/i_reg[1]/Q (DFFHQX1)       2.11       5.11 r
+  chip_core/transformer_module/U273/Y (OR3XL)             1.37       6.48 r
+  chip_core/transformer_module/U9848/Y (INVX1)            0.87       7.35 f
+  chip_core/transformer_module/U3923/Y (INVX1)            1.02       8.37 r
+  chip_core/transformer_module/U1039/Y (CLKINVX3)         1.61       9.99 f
+  chip_core/transformer_module/U14882/Y (NAND2X1)         1.65      11.64 r
+  chip_core/transformer_module/U9846/Y (NAND2X1)          1.18      12.82 f
+  chip_core/transformer_module/U3921/Y (INVX1)            1.51      14.33 r
+  chip_core/transformer_module/U9845/Y (NAND2X1)          0.88      15.21 f
+  chip_core/transformer_module/U3922/Y (INVX1)            1.49      16.70 r
+  chip_core/transformer_module/U1037/Y (CLKINVX3)         2.26      18.95 f
+  chip_core/transformer_module/U3920/Y (OAI21XL)          1.86      20.81 r
+  chip_core/transformer_module/U941/Y (OAI21X1)           0.65      21.46 f
+  chip_core/transformer_module/U9837/Y (OAI211X1)         1.62      23.08 r
+  chip_core/transformer_module/U9836/Y (INVX1)            1.78      24.86 f
+  chip_core/transformer_module/U1014/Y (INVX1)            1.57      26.42 r
+  chip_core/transformer_module/U3907/Y (AND2X2)           0.77      27.20 r
+  chip_core/transformer_module/U9835/Y (NAND2X1)          1.63      28.83 f
+  chip_core/transformer_module/U3911/Y (INVX1)            2.40      31.23 r
+  chip_core/transformer_module/U1016/Y (INVX1)            1.85      33.08 f
+  chip_core/transformer_module/U632/Y (INVX1)             2.27      35.35 r
+  chip_core/transformer_module/U596/Y (INVX1)             1.85      37.20 f
+  chip_core/transformer_module/U565/Y (INVX1)             2.30      39.50 r
+  chip_core/transformer_module/U11695/Y (AOI32X1)         0.90      40.41 f
+  chip_core/transformer_module/U11693/Y (OAI221XL)        0.84      41.24 r
+  chip_core/transformer_module/state_block_reg[56]/D (DFFHQX1)
+                                                          0.00      41.24 r
+  data arrival time                                                 41.24
+
+  clock clk (rise edge)                                  40.00      40.00
+  clock network delay (ideal)                             3.00      43.00
+  clock uncertainty                                      -1.30      41.70
+  chip_core/transformer_module/state_block_reg[56]/CK (DFFHQX1)
+                                                          0.00      41.70 r
+  library setup time                                     -0.23      41.47
+  data required time                                                41.47
+  --------------------------------------------------------------------------
+  data required time                                                41.47
+  data arrival time                                                -41.24
+  --------------------------------------------------------------------------
+  slack (MET)                                                        0.23
+
+
+1

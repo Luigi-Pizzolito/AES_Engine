@@ -1,0 +1,59 @@
+Loading db file '/opt/tech_lib/smic180/digital/io/synopsys/SP018N_V1p0_typ.db'
+Loading db file '/opt/tech_lib/smic180/digital/sc/synopsys/slow.db'
+Information: Propagating switching activity (low effort zero delay simulation). (PWR-6)
+Warning: Design has unannotated primary inputs. (PWR-414)
+Warning: Design has unannotated sequential cell outputs. (PWR-415)
+ 
+****************************************
+Report : power
+        -analysis_effort low
+Design : TOP_PAD_opt
+Version: O-2018.06-SP1
+Date   : Fri Apr  5 01:05:08 2024
+****************************************
+
+
+Library(s) Used:
+
+    slow (File: /opt/tech_lib/smic180/digital/sc/synopsys/slow.db)
+    SP018N_V1p0_typ (File: /opt/tech_lib/smic180/digital/io/synopsys/SP018N_V1p0_typ.db)
+
+
+Operating Conditions: slow   Library: slow
+Wire Load Model Mode: top
+
+Design        Wire Load Model            Library
+------------------------------------------------
+TOP_PAD_opt            smic18_wl50       slow
+
+
+Global Operating Voltage = 1.62 
+Power-specific unit information :
+    Voltage Units = 1V
+    Capacitance Units = 1.000000pf
+    Time Units = 1ns
+    Dynamic Power Units = 1mW    (derived from V,C,T units)
+    Leakage Power Units = 1pW
+
+
+  Cell Internal Power  =   7.1791 mW   (89%)
+  Net Switching Power  = 854.4008 uW   (11%)
+                         ---------
+Total Dynamic Power    =   8.0335 mW  (100%)
+
+Cell Leakage Power     = 284.6701 uW
+
+
+                 Internal         Switching           Leakage            Total
+Power Group      Power            Power               Power              Power   (   %    )  Attrs
+--------------------------------------------------------------------------------------------------
+io_pad             0.4715        3.8898e-02        2.5608e+08            0.7665  (   9.21%)
+memory             0.0000            0.0000            0.0000            0.0000  (   0.00%)
+black_box          0.0000            0.0000            0.0000            0.0000  (   0.00%)
+clock_network      0.0000            0.0000            0.0000            0.0000  (   0.00%)
+register           6.6889        2.5616e-02        8.9904e+06            6.7236  (  80.83%)
+sequential         0.0000            0.0000            0.0000            0.0000  (   0.00%)
+combinational  1.8541e-02            0.7899        1.9600e+07            0.8280  (   9.95%)
+--------------------------------------------------------------------------------------------------
+Total              7.1790 mW         0.8544 mW     2.8467e+08 pW         8.3181 mW
+1

@@ -1,0 +1,856 @@
+
+                           Design Compiler Graphical 
+                                 DC Ultra (TM)
+                                  DFTMAX (TM)
+                              Power Compiler (TM)
+                                 DesignWare (R)
+                                 DC Expert (TM)
+                               Design Vision (TM)
+                               HDL Compiler (TM)
+                               VHDL Compiler (TM)
+                                  DFT Compiler
+                               Design Compiler(R)
+
+               Version O-2018.06-SP1 for linux64 - Jul 19, 2018 
+
+                    Copyright (c) 1988 - 2018 Synopsys, Inc.
+   This software and the associated documentation are proprietary to Synopsys,
+ Inc. This software may only be used in accordance with the terms and conditions
+ of a written license agreement with Synopsys, Inc. All other use, reproduction,
+            or distribution of this software is strictly prohibited.
+Initializing...
+Initializing gui preferences from file  /home/ime_ic/.synopsys_dv_prefs.tcl
+#import design
+remove_design -all
+1
+#read_ddc ./unmapped/TOP_PAD.ddc
+read_verilog {input_interface.v output_interface.v engine_key_generator.v engine_round_transformer.v aes_engine.v AES_PAD.v}
+Loading db file '/opt/tech_lib/smic180/digital/sc/synopsys/slow.db'
+Loading db file '/opt/tech_lib/smic180/digital/io/synopsys/SP018N_V1p0_typ.db'
+Loading db file '/opt/synopsys/syn_vO-2018.06-SP1/libraries/syn/gtech.db'
+Loading db file '/opt/synopsys/syn_vO-2018.06-SP1/libraries/syn/standard.sldb'
+  Loading link library 'slow'
+  Loading link library 'SP018N_V1p0_typ'
+  Loading link library 'gtech'
+Loading verilog files: '/home/ime_ic/Desktop/work/rtl_ref/input_interface.v' '/home/ime_ic/Desktop/work/rtl_ref/output_interface.v' '/home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v' '/home/ime_ic/Desktop/work/rtl_ref/engine_round_transformer.v' '/home/ime_ic/Desktop/work/rtl_ref/aes_engine.v' '/home/ime_ic/Desktop/work/rtl_ref/AES_PAD.v' 
+Detecting input file type automatically (-rtl or -netlist).
+Reading with Presto HDL Compiler (equivalent to -rtl option).
+Running PRESTO HDLC
+Compiling source file /home/ime_ic/Desktop/work/rtl_ref/input_interface.v
+Compiling source file /home/ime_ic/Desktop/work/rtl_ref/output_interface.v
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/input_interface.v:24: The statements in initial blocks are ignored. (VER-281)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/input_interface.v:27: The statements in initial blocks are ignored. (VER-281)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/input_interface.v:28: The statements in initial blocks are ignored. (VER-281)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/input_interface.v:33: The statements in initial blocks are ignored. (VER-281)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/input_interface.v:34: The statements in initial blocks are ignored. (VER-281)
+Compiling source file /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/output_interface.v:16: The statements in initial blocks are ignored. (VER-281)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/output_interface.v:19: The statements in initial blocks are ignored. (VER-281)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/output_interface.v:23: The statements in initial blocks are ignored. (VER-281)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/output_interface.v:26: The statements in initial blocks are ignored. (VER-281)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/output_interface.v:30: The statements in initial blocks are ignored. (VER-281)
+Compiling source file /home/ime_ic/Desktop/work/rtl_ref/engine_round_transformer.v
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:85: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:109: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:109: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:109: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:109: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:110: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:110: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:110: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:110: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:111: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:111: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:111: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:111: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:112: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:112: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:112: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:112: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:143: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:145: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:145: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:145: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:145: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:146: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:146: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:146: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:146: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:147: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:147: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:147: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:147: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:148: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:148: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:148: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:148: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:25: The statements in initial blocks are ignored. (VER-281)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:47: The statements in initial blocks are ignored. (VER-281)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:50: The statements in initial blocks are ignored. (VER-281)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:57: The statements in initial blocks are ignored. (VER-281)
+Compiling source file /home/ime_ic/Desktop/work/rtl_ref/aes_engine.v
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_round_transformer.v:135: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_round_transformer.v:211: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_round_transformer.v:211: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_round_transformer.v:211: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_round_transformer.v:211: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_round_transformer.v:212: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_round_transformer.v:212: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_round_transformer.v:212: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_round_transformer.v:212: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_round_transformer.v:213: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_round_transformer.v:213: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_round_transformer.v:213: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_round_transformer.v:213: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_round_transformer.v:214: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_round_transformer.v:214: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_round_transformer.v:214: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_round_transformer.v:214: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_round_transformer.v:30: The statements in initial blocks are ignored. (VER-281)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_round_transformer.v:34: The statements in initial blocks are ignored. (VER-281)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_round_transformer.v:37: The statements in initial blocks are ignored. (VER-281)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_round_transformer.v:40: The statements in initial blocks are ignored. (VER-281)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_round_transformer.v:43: The statements in initial blocks are ignored. (VER-281)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_round_transformer.v:46: The statements in initial blocks are ignored. (VER-281)
+Compiling source file /home/ime_ic/Desktop/work/rtl_ref/AES_PAD.v
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/aes_engine.v:113: The statements in initial blocks are ignored. (VER-281)
+
+Statistics for case statements in always block at line 56 in file
+	'/home/ime_ic/Desktop/work/rtl_ref/input_interface.v'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|            65            |    auto/auto     |
+===============================================
+
+Inferred memory devices in process
+	in routine input_interface line 55 in file
+		'/home/ime_ic/Desktop/work/rtl_ref/input_interface.v'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|      state_reg      | Flip-flop |   2   |  Y  | N  | N  | N  | N  | N  | N  |
+===============================================================================
+
+Inferred memory devices in process
+	in routine input_interface line 56 in file
+		'/home/ime_ic/Desktop/work/rtl_ref/input_interface.v'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|       k_i_reg       | Flip-flop |   4   |  Y  | N  | N  | N  | N  | N  | N  |
+|       key_reg       | Flip-flop |  128  |  Y  | N  | N  | N  | N  | N  | N  |
+|      plain_reg      | Flip-flop |  128  |  Y  | N  | N  | N  | N  | N  | N  |
+|       p_i_reg       | Flip-flop |   4   |  Y  | N  | N  | N  | N  | N  | N  |
+|   next_state_reg    | Flip-flop |   2   |  Y  | N  | N  | N  | N  | N  | N  |
+===============================================================================
+
+Inferred memory devices in process
+	in routine output_interface line 33 in file
+		'/home/ime_ic/Desktop/work/rtl_ref/output_interface.v'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|   output_port_reg   | Flip-flop |   8   |  Y  | N  | N  | N  | N  | N  | N  |
+|        i_reg        | Flip-flop |   5   |  Y  | N  | N  | N  | N  | N  | N  |
+|  output_read_r_reg  | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+|    data_ok_r_reg    | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+|   output_hold_reg   | Flip-flop |  128  |  Y  | N  | N  | N  | N  | N  | N  |
+===============================================================================
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:85: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:109: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:109: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:109: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:109: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:110: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:110: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:110: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:110: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:111: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:111: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:111: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:111: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:112: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:112: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:112: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:112: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:143: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:145: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:145: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:145: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:145: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:146: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:146: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:146: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:146: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:147: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:147: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:147: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:147: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:148: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:148: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:148: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:148: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v:204: signed to unsigned part selection occurs. (VER-318)
+$display output: ----------------
+$display output: Same key requested, skipping computation.
+$display output: ----------------
+$display output: Generating round keys for key 
+????$display output: Pre-Round Key:
+$display output:    
+????$display output:    
+????$display output:    
+????$display output:    
+????$display output: Round ? Key:$display output: 
+$display output:    
+????$display output:    
+????$display output:    
+????$display output:    
+????$display output: ----------------
+
+Statistics for case statements in always block at line 59 in file
+	'/home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|           241            |    user/user     |
+|           204            |    auto/auto     |
+===============================================
+
+Inferred memory devices in process
+	in routine engine_key_generator line 59 in file
+		'/home/ime_ic/Desktop/work/rtl_ref/engine_key_generator.v'.
+===================================================================================
+|      Register Name      |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===================================================================================
+|         i_i_reg         | Flip-flop |   2   |  Y  | N  | N  | N  | N  | N  | N  |
+|     round_keys_reg      | Flip-flop | 1408  |  Y  | N  | N  | N  | N  | N  | N  |
+|      tempword_reg       | Flip-flop |  32   |  Y  | N  | N  | N  | N  | N  | N  |
+|          w_reg          | Flip-flop | 1408  |  Y  | N  | N  | N  | N  | N  | N  |
+| edgedetect_keystart_reg | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+|          i_reg          | Flip-flop |   6   |  Y  | N  | N  | N  | N  | N  | N  |
+| transformer_start_r_reg | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+===================================================================================
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_round_transformer.v:135: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_round_transformer.v:211: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_round_transformer.v:211: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_round_transformer.v:211: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_round_transformer.v:211: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_round_transformer.v:212: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_round_transformer.v:212: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_round_transformer.v:212: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_round_transformer.v:212: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_round_transformer.v:213: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_round_transformer.v:213: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_round_transformer.v:213: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_round_transformer.v:213: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_round_transformer.v:214: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_round_transformer.v:214: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_round_transformer.v:214: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+Warning:  /home/ime_ic/Desktop/work/rtl_ref/engine_round_transformer.v:214: Invalid escape sequence '\0' in call to '$write'. (VER-941)
+$display output: Plaintext:
+$display output:    
+????$display output:    
+????$display output:    
+????$display output:    
+????$display output: Pre-Round State:
+$display output:    
+????$display output:    
+????$display output:    
+????$display output:    
+????$display output: Round ? State:$display output: 
+$display output:    
+????$display output:    
+????$display output:    
+????$display output:    
+????$display output: Round 10 State / Ciphertext:
+$display output:    
+????$display output:    
+????$display output:    
+????$display output:    
+????
+Statistics for case statements in always block at line 50 in file
+	'/home/ime_ic/Desktop/work/rtl_ref/engine_round_transformer.v'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|           617            |    user/user     |
+|           352            |    user/user     |
+===============================================
+
+Inferred memory devices in process
+	in routine engine_round_transformer line 50 in file
+		'/home/ime_ic/Desktop/work/rtl_ref/engine_round_transformer.v'.
+==================================================================================
+|     Register Name      |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+==================================================================================
+|     round_keys_reg     | Flip-flop | 1408  |  Y  | N  | N  | N  | N  | N  | N  |
+|        i_i_reg         | Flip-flop |   2   |  Y  | N  | N  | N  | N  | N  | N  |
+|    state_block_reg     | Flip-flop |  128  |  Y  | N  | N  | N  | N  | N  | N  |
+| transformer_done_r_reg | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+|    ciphertext_r_reg    | Flip-flop |  128  |  Y  | N  | N  | N  | N  | N  | N  |
+|         i_reg          | Flip-flop |   4   |  Y  | N  | N  | N  | N  | N  | N  |
+==================================================================================
+Presto compilation completed successfully.
+Current design is now '/home/ime_ic/Desktop/work/rtl_ref/input_interface.db:input_interface'
+Loaded 6 designs.
+Current design is 'input_interface'.
+input_interface output_interface engine_key_generator engine_round_transformer aes_engine TOP_PAD_opt
+current_design TOP_PAD_opt
+Current design is 'TOP_PAD_opt'.
+{TOP_PAD_opt}
+#set constraints
+reset_design
+1
+source -e ./top_level.con
+#timing constraints
+####define clock
+create_clock -period 40.0 -name clk [get_ports "CLK"]
+set_dont_touch_network [get_clocks clk]
+set_ideal_network       [get_ports "CLK"]
+set_clock_uncertainty   1.3 [all_clocks]
+set_clock_latency -source 1  [all_clocks]
+set_clock_latency -max 2 [all_clocks]
+set_clock_transition    0.5 [get_clocks clk]
+####define IOs' delay
+set all_in_ex_clk [remove_from_collection [all_inputs] [get_ports "CLK"]]
+set_input_delay 6 -clock clk -max  $all_in_ex_clk
+set_output_delay 6 -clock clk -max [all_outputs]
+set_input_delay 4 -clock clk -min [get_ports "DIN* CMD* RST_"]
+set_output_delay 4 -clock clk -min [all_outputs]
+#environment constraints
+set_load 10 [all_outputs]
+set_input_transition 0.5 [all_inputs]
+set_wire_load_model -name smic18_wl50
+set_wire_load_mode top
+#area constraint
+set_max_area 0
+#remove assign
+set_fix_multiple_port_nets -all -buffer_constants
+1
+set_operating_conditions slow
+Using operating conditions 'slow' found in library 'slow'.
+1
+set_ideal_network [get_ports RST_]
+1
+set_dont_touch [get_cells P*]
+1
+#compile
+compile -map_effort high
+Information: Evaluating DesignWare library utilization. (UISN-27)
+
+============================================================================
+| DesignWare Building Block Library  |         Version         | Available |
+============================================================================
+| Basic DW Building Blocks           | O-2018.06-DWBB_201806.1 |     *     |
+| Licensed DW Building Blocks        |                         |           |
+============================================================================
+
+
+Information: There are 21 potential problems in your design. Please run 'check_design' for more information. (LINT-99)
+
+
+Warning: The trip points for the library named SP018N_V1p0_typ differ from those in the library named slow. (TIM-164)
+
+  Beginning Pass 1 Mapping
+  ------------------------
+  Processing 'output_interface'
+  Processing 'engine_round_transformer'
+  Processing 'engine_key_generator'
+  Processing 'input_interface'
+  Processing 'aes_engine'
+  Processing 'TOP_PAD_opt'
+Warning: The design named TOP_PAD_opt has 22 out of 23 cells marked size-only, which may limit optimization. (OPT-301)
+
+  Updating timing information
+Information: Updating design information... (UID-85)
+
+  Beginning Implementation Selection
+  ----------------------------------
+  Processing 'output_interface_DW01_inc_0'
+  Processing 'output_interface_DW01_cmp2_0'
+  Processing 'output_interface_DW01_cmp2_1'
+  Processing 'engine_key_generator_DW01_sub_0'
+  Processing 'engine_key_generator_DW01_sub_1'
+  Processing 'engine_key_generator_DW01_sub_2'
+  Processing 'engine_key_generator_DW01_add_0'
+  Processing 'engine_key_generator_DW01_cmp6_0'
+  Processing 'engine_key_generator_DW01_dec_0'
+  Processing 'engine_key_generator_DW01_inc_0'
+  Processing 'engine_key_generator_DW01_cmp2_0'
+  Processing 'engine_key_generator_DW01_cmp2_1'
+  Processing 'engine_key_generator_DW01_cmp2_2'
+
+  Beginning Mapping Optimizations  (High effort)
+  -------------------------------
+
+                                  TOTAL                                      
+   ELAPSED            WORST NEG   SETUP    DESIGN                            
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
+  --------- --------- --------- --------- --------- -------------------------
+    0:04:47 1595541.5 1297715.50 1827241472.0 1436521.5                          
+    0:04:47 1595541.5 1297715.50 1827241472.0 1436521.5                          
+    0:04:55 1771168.8      0.00       4.5       2.4                          
+    0:04:55 1771168.8      0.00       4.5       2.4                          
+    0:04:55 1771168.8      0.00       4.5       2.4                          
+    0:04:55 1771168.8      0.00       4.5       2.4                          
+    0:04:56 1771168.8      0.00       4.5       2.4                          
+    0:05:16  899109.8      0.02       5.0       1.0                          
+    0:05:17  898022.1      0.03       5.1       1.0                          
+    0:05:22  898035.4      0.00       4.5       0.8                          
+    0:05:22  898022.1      0.00       4.5       0.8                          
+    0:05:23  898022.1      0.00       4.5       0.8                          
+    0:05:23  898022.1      0.00       4.5       0.8                          
+    0:05:24  898022.1      0.00       4.5       0.8                          
+    0:05:24  898022.1      0.00       4.5       0.8                          
+    0:05:24  898062.0      0.00       4.5       0.0                          
+    0:05:24  898072.0      0.00       4.5       0.0                          
+    0:05:24  898072.0      0.00       4.5       0.0                          
+    0:05:24  898072.0      0.00       4.5       0.0                          
+    0:05:24  898072.0      0.00       4.5       0.0                          
+
+
+
+  Beginning Delay Optimization Phase
+  ----------------------------------
+
+                                  TOTAL                                      
+   ELAPSED            WORST NEG   SETUP    DESIGN                            
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
+  --------- --------- --------- --------- --------- -------------------------
+    0:05:24  898072.0      0.00       4.5       0.0                          
+    0:05:24  898072.0      0.00       4.5       0.0                          
+    0:05:26  893301.9      0.00       4.5     349.6                          
+
+
+  Beginning Design Rule Fixing  (max_transition)  (max_capacitance)
+  ----------------------------
+
+                                  TOTAL                                      
+   ELAPSED            WORST NEG   SETUP    DESIGN                            
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
+  --------- --------- --------- --------- --------- -------------------------
+    0:05:26  893301.9      0.00       4.5     349.6                          
+    0:05:27  893428.3      0.00       4.5     254.6 chip_core/transformer_module/net408581
+    0:05:27  893760.9      0.00       4.5     220.0 chip_core/key_gen_module/w[35][30]
+    0:05:27  894319.8      0.00       4.5     206.9 chip_core/key_gen_module/w[35][5]
+    0:05:28  894725.6      0.00       4.5     178.5 chip_core/transformer_module/net408775
+    0:05:28  895244.5      0.00       4.5     163.7 chip_core/key_gen_module/w[19][21]
+    0:05:28  895696.9      0.00       4.5     150.6 chip_core/key_gen_module/w[27][30]
+    0:05:29  895976.3      0.00       4.5     138.1 chip_core/key_gen_module/w[27][5]
+    0:05:29  896295.7      0.00       4.5     120.1 chip_core/key_gen_module/w[7][26]
+    0:05:29  896575.1      0.00       4.5     108.2 chip_core/key_gen_module/w[7][14]
+    0:05:29  896854.5      0.00       4.5      96.7 chip_core/key_gen_module/w[15][8]
+    0:05:30  897133.9      0.00       4.5      85.3 chip_core/key_gen_module/w[43][26]
+    0:05:30  897413.3      0.00       4.5      74.3 chip_core/key_gen_module/w[43][14]
+    0:05:30  897493.2      0.00       4.5      63.3 chip_core/key_gen_module/w[39][8]
+    0:05:30  897599.6      0.00       4.5      51.5 chip_core/transformer_module/state_block[26]
+    0:05:30  897879.0      0.00       4.5      40.8 chip_core/key_gen_module/w[31][18]
+    0:05:30  898038.7      0.00       4.5      30.3 chip_core/key_gen_module/w[23][24]
+    0:05:31  898038.7      0.00       4.5      19.9 chip_core/key_gen_module/w[23][9]
+    0:05:31  898264.9      0.00       4.5       9.6 chip_core/key_gen_module/w[11][22]
+    0:05:31  898464.5      0.00       4.5       1.0 chip_core/transformer_module/state_block[63]
+    0:05:31  898464.5      0.00       4.5       0.0                          
+
+
+  Beginning Area-Recovery Phase  (max_area 0)
+  -----------------------------
+
+                                  TOTAL                                      
+   ELAPSED            WORST NEG   SETUP    DESIGN                            
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
+  --------- --------- --------- --------- --------- -------------------------
+    0:05:31  898464.5      0.00       4.5       0.0                          
+    0:05:31  898464.5      0.00       4.5       0.0                          
+    0:05:35  894146.8      0.00       4.5       0.0                          
+    0:05:36  891825.0      0.00       4.5       0.0                          
+    0:05:37  890451.2      0.00       4.5       0.0                          
+    0:05:38  889712.7      0.00       4.5       0.0                          
+    0:05:39  889167.2      0.00       4.5       0.0                          
+    0:05:40  888684.9      0.00       4.5       0.0                          
+    0:05:40  888245.8      0.00       4.5       0.0                          
+    0:05:41  887926.4      0.00       4.5       0.0                          
+    0:05:41  887643.7      0.00       4.5       0.0                          
+    0:05:42  887394.2      0.00       4.5       0.0                          
+    0:05:43  887241.2      0.00       4.5       0.0                          
+    0:05:43  887151.4      0.00       4.5       0.0                          
+    0:05:43  887078.2      0.00       4.5       0.0                          
+    0:05:43  887028.3      0.00       4.5       0.0                          
+    0:05:44  886988.4      0.00       4.5       0.0                          
+    0:05:44  886945.1      0.00       4.5       0.0                          
+    0:05:44  886945.1      0.00       4.5       0.0                          
+    0:05:44  886945.1      0.00       4.5       0.0                          
+    0:05:45  886928.5      0.00       4.5       0.0                          
+    0:05:45  886928.5      0.00       4.5       0.0                          
+    0:05:45  886928.5      0.00       4.5       0.0                          
+    0:05:45  886928.5      0.00       4.5       0.0                          
+    0:05:45  886928.5      0.00       4.5       0.0                          
+    0:05:45  886928.5      0.00       4.5       0.0                          
+    0:05:46  886915.2      0.00       4.5       0.0                          
+    0:05:46  886595.9      0.00       4.5       0.0                          
+    0:05:49  885627.9      0.00       4.5       0.0                          
+    0:05:50  885361.8      0.00       4.5       0.0                          
+    0:05:51  885089.0      0.00       4.5       0.0                          
+    0:05:52  885075.7      0.00       4.5       0.0                          
+    0:05:54  885005.9      0.00       4.5       0.0                          
+    0:06:02  884985.9      0.00       4.5       0.0                          
+    0:06:02  884985.9      0.00       4.5       0.0                          
+    0:06:02  884985.9      0.00       4.5       0.0                          
+    0:06:02  884985.9      0.00       4.5       0.0                          
+    0:06:02  884985.9      0.00       4.5       0.0                          
+    0:06:02  884985.9      0.00       4.5       0.0                          
+    0:06:03  884985.9      0.00       4.5       0.0                          
+    0:06:41  884882.8      0.14       8.0       0.0                          
+    0:06:56  884689.8      0.14       8.0       0.0                          
+    0:07:06  884400.4      0.14       8.0       0.0                          
+    0:07:13  884184.2      0.14       7.7       0.0                          
+    0:07:18  884014.6      0.14       7.7       0.0                          
+    0:07:21  883901.5      0.14       7.7       0.0                          
+    0:07:22  883795.0      0.14       7.7       0.0                          
+    0:07:24  883785.1      0.14       7.7       0.0                          
+    0:07:26  883811.7      0.14       7.7       0.0                          
+    0:07:26  883831.6      0.14       7.7       0.0                          
+    0:07:27  883874.9      0.14       7.7       0.0                          
+    0:07:27  883951.4      0.14       7.7       0.0                          
+    0:07:28  883974.7      0.14       7.7       0.0                          
+    0:07:28  884041.2      0.14       7.7       0.0                          
+    0:07:28  884084.4      0.14       7.7       0.0                          
+    0:07:29  884160.9      0.14       7.7       0.0                          
+    0:07:29  884160.9      0.14       7.7       0.0                          
+    0:07:29  884160.9      0.14       7.7       0.0                          
+    0:07:29  884157.6      0.14       7.7       0.0                          
+    0:07:29  884157.6      0.14       7.7       0.0                          
+    0:07:29  884157.6      0.14       7.7       0.0                          
+    0:07:29  884157.6      0.14       7.7       0.0                          
+    0:07:29  884157.6      0.14       7.7       0.0                          
+    0:07:29  884157.6      0.14       7.7       0.0                          
+    0:07:30  884164.3      0.00       4.5       0.0                          
+Loading db file '/opt/tech_lib/smic180/digital/sc/synopsys/slow.db'
+Loading db file '/opt/tech_lib/smic180/digital/io/synopsys/SP018N_V1p0_typ.db'
+
+
+Note: Symbol # after min delay cost means estimated hold TNS across all active scenarios 
+
+
+  Optimization Complete
+  ---------------------
+Warning: Design 'TOP_PAD_opt' contains 1 high-fanout nets. A fanout number of 1000 will be used for delay calculations involving these nets. (TIM-134)
+     Net 'chip_core/output_module/clk': 4940 load(s), 1 driver(s)
+1
+compile -incr -map high 
+
+Information: There are 7 potential problems in your design. Please run 'check_design' for more information. (LINT-99)
+
+
+
+  Beginning Pass 1 Mapping  (Incremental)
+  ------------------------
+
+  Updating timing information
+Information: Updating design information... (UID-85)
+
+  Beginning Mapping Optimizations  (High effort)  (Incremental)
+  -------------------------------
+
+  Beginning Incremental Implementation Selection
+  ----------------------------------------------
+
+                                  TOTAL                                      
+   ELAPSED            WORST NEG   SETUP    DESIGN                            
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
+  --------- --------- --------- --------- --------- -------------------------
+    0:00:12  884164.3      0.00       0.0       0.0                          
+    0:00:12  884164.3      0.00       0.0       0.0                          
+    0:00:12  884164.3      0.00       0.0       0.0                          
+    0:00:12  884164.3      0.00       0.0       0.0                          
+    0:00:13  884164.3      0.00       0.0       0.0                          
+    0:00:13  884157.6      0.14       3.3       0.0                          
+    0:00:13  884157.6      0.14       3.3       0.0                          
+    0:00:13  884157.6      0.14       3.3       0.0                          
+    0:00:13  884157.6      0.14       3.3       0.0                          
+    0:00:13  884157.6      0.14       3.3       0.0                          
+    0:00:13  884157.6      0.14       3.3       0.0                          
+    0:00:13  884157.6      0.14       3.3       0.0                          
+    0:00:13  884157.6      0.14       3.3       0.0                          
+    0:00:13  884164.3      0.00       0.0       0.0                          
+
+
+
+  Beginning Delay Optimization Phase
+  ----------------------------------
+
+                                  TOTAL                                      
+   ELAPSED            WORST NEG   SETUP    DESIGN                            
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
+  --------- --------- --------- --------- --------- -------------------------
+    0:00:13  884164.3      0.00       0.0       0.0                          
+    0:00:13  884164.3      0.00       0.0       0.0                          
+    0:00:15  881094.0      0.00       0.0     268.9                          
+
+
+  Beginning Design Rule Fixing  (max_transition)  (max_capacitance)
+  ----------------------------
+
+                                  TOTAL                                      
+   ELAPSED            WORST NEG   SETUP    DESIGN                            
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
+  --------- --------- --------- --------- --------- -------------------------
+    0:00:15  881094.0      0.00       0.0     268.9                          
+    0:00:15  881160.5      0.00       0.0     180.3 chip_core/transformer_module/n16053
+    0:00:16  881413.3      0.00       0.0     131.0 chip_core/transformer_module/n16046
+    0:00:16  881839.1      0.00       0.0     115.6 chip_core/key_gen_module/w[35][21]
+    0:00:16  882371.3      0.00       0.0      94.2 chip_core/transformer_module/state_block[18]
+    0:00:16  882870.3      0.00       0.0      80.0 chip_core/key_gen_module/w[19][24]
+    0:00:17  883362.6      0.00       0.0      68.3 chip_core/key_gen_module/w[15][30]
+    0:00:17  883469.1      0.00       0.0      53.1 chip_core/key_gen_module/w[43][16]
+    0:00:17  883615.4      0.00       0.0      42.1 chip_core/key_gen_module/w[7][4]
+    0:00:17  883881.5      0.00       0.0      30.8 chip_core/key_gen_module/w[27][28]
+    0:00:17  884041.2      0.00       0.0      20.1 chip_core/key_gen_module/w[15][21]
+    0:00:17  883961.4      0.00       0.0      11.6 chip_core/key_gen_module/w[15][4]
+    0:00:18  884011.3      0.00       0.0       0.0                          
+
+
+  Beginning Area-Recovery Phase  (max_area 0)
+  -----------------------------
+
+                                  TOTAL                                      
+   ELAPSED            WORST NEG   SETUP    DESIGN                            
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
+  --------- --------- --------- --------- --------- -------------------------
+    0:00:18  884011.3      0.00       0.0       0.0                          
+    0:00:18  884011.3      0.00       0.0       0.0                          
+    0:00:24  883978.0      0.02       0.1       0.0                          
+    0:00:24  883978.0      0.02       0.1       0.0                          
+    0:00:24  883978.0      0.02       0.1       0.0                          
+    0:00:24  883978.0      0.02       0.1       0.0                          
+    0:00:38  883981.3      0.00       0.0       0.0                          
+    0:01:58  883971.3      0.00       0.0       0.0                          
+    0:02:07  884007.9      0.00       0.0       0.0                          
+    0:02:08  884067.8      0.00       0.0       0.0                          
+    0:02:09  884104.4      0.00       0.0       0.0                          
+    0:02:09  884144.3      0.00       0.0       0.0                          
+    0:02:09  884180.9      0.00       0.0       0.0                          
+    0:02:09  884217.5      0.00       0.0       0.0                          
+    0:02:09  884254.1      0.00       0.0       0.0                          
+    0:02:10  884267.4      0.00       0.0       0.0                          
+    0:02:10  884280.7      0.00       0.0       0.0                          
+    0:02:10  884294.0      0.00       0.0       0.0                          
+    0:02:10  884307.3      0.00       0.0       0.0                          
+    0:02:10  884320.6      0.00       0.0       0.0                          
+    0:02:10  884333.9      0.00       0.0       0.0                          
+    0:02:10  884333.9      0.00       0.0       0.0                          
+    0:02:10  884333.9      0.00       0.0       0.0                          
+    0:02:11  884327.3      0.16       4.0       0.0                          
+    0:02:11  884327.3      0.16       4.0       0.0                          
+    0:02:11  884327.3      0.16       4.0       0.0                          
+    0:02:11  884327.3      0.16       4.0       0.0                          
+    0:02:11  884327.3      0.16       4.0       0.0                          
+    0:02:11  884327.3      0.16       4.0       0.0                          
+    0:02:12  884333.9      0.00       0.0       0.0                          
+Loading db file '/opt/tech_lib/smic180/digital/sc/synopsys/slow.db'
+Loading db file '/opt/tech_lib/smic180/digital/io/synopsys/SP018N_V1p0_typ.db'
+
+
+Note: Symbol # after min delay cost means estimated hold TNS across all active scenarios 
+
+
+  Optimization Complete
+  ---------------------
+Warning: Design 'TOP_PAD_opt' contains 1 high-fanout nets. A fanout number of 1000 will be used for delay calculations involving these nets. (TIM-134)
+     Net 'chip_core/output_module/clk': 4940 load(s), 1 driver(s)
+1
+sh mkdir ./result
+write -format ddc -h -o ./result/TOP_PAD.ddc
+Writing ddc file './result/TOP_PAD.ddc'.
+1
+report_constraint
+Information: Updating design information... (UID-85)
+Warning: Design 'TOP_PAD_opt' contains 1 high-fanout nets. A fanout number of 1000 will be used for delay calculations involving these nets. (TIM-134)
+ 
+****************************************
+Report : constraint
+Design : TOP_PAD_opt
+Version: O-2018.06-SP1
+Date   : Fri Apr  5 01:05:04 2024
+****************************************
+
+
+                                                   Weighted
+    Group (max_delay/setup)      Cost     Weight     Cost
+    -----------------------------------------------------
+    clk                          0.00      1.00      0.00
+    default                      0.00      1.00      0.00
+    -----------------------------------------------------
+    max_delay/setup                                  0.00
+
+                              Total Neg  Critical
+    Group (critical_range)      Slack    Endpoints   Cost
+    -----------------------------------------------------
+    clk                          0.00         0      0.00
+    default                      0.00         0      0.00
+    -----------------------------------------------------
+    critical_range                                   0.00
+
+                                                   Weighted
+    Group (min_delay/hold)       Cost     Weight     Cost
+    -----------------------------------------------------
+    clk (no fix_hold)            0.00      1.00      0.00
+    default                      0.00      1.00      0.00
+    -----------------------------------------------------
+    min_delay/hold                                   0.00
+
+
+    Constraint                                       Cost
+    -----------------------------------------------------
+    multiport_net                                    0.00 (MET)
+    max_transition                                   0.00 (MET)
+    max_fanout                                       0.00 (MET)
+    max_capacitance                                  0.00 (MET)
+    max_delay/setup                                  0.00 (MET)
+    sequential_clock_pulse_width                     0.00 (MET)
+    critical_range                                   0.00 (MET)
+    max_area                                     22045680.00
+                                                          (VIOLATED)
+
+
+1
+sh mkdir ./rpt
+report_timing -nworst 10 > ./rpt/timing.rpt
+report_area > ./rpt/area.rpt
+report_power > ./rpt/power.rpt
+# fix hold
+set_fix_hold clk
+1
+compile -incr -only_design_rule
+
+Information: There are 7 potential problems in your design. Please run 'check_design' for more information. (LINT-99)
+
+
+
+  Beginning Pass 1 Mapping  (Incremental)
+  ------------------------
+
+  Updating timing information
+Information: Updating design information... (UID-85)
+Loading db file '/opt/tech_lib/smic180/digital/sc/synopsys/slow.db'
+Loading db file '/opt/tech_lib/smic180/digital/io/synopsys/SP018N_V1p0_typ.db'
+
+
+Note: Symbol # after min delay cost means estimated hold TNS across all active scenarios 
+
+
+  Optimization Complete
+  ---------------------
+Warning: Design 'TOP_PAD_opt' contains 1 high-fanout nets. A fanout number of 1000 will be used for delay calculations involving these nets. (TIM-134)
+     Net 'chip_core/output_module/clk': 4940 load(s), 1 driver(s)
+1
+remove_attribute [current_design] max_area
+Current design is 'TOP_PAD_opt'.
+TOP_PAD_opt
+report_constraint -all
+Information: Updating design information... (UID-85)
+Warning: Design 'TOP_PAD_opt' contains 1 high-fanout nets. A fanout number of 1000 will be used for delay calculations involving these nets. (TIM-134)
+ 
+****************************************
+Report : constraint
+        -all_violators
+Design : TOP_PAD_opt
+Version: O-2018.06-SP1
+Date   : Fri Apr  5 01:05:18 2024
+****************************************
+
+This design has no violated constraints.
+
+1
+# finishing and save
+set verilogout_no_tri true
+true
+change_names -rules verilog -hierarchy
+Warning: The specified replacement character (_) is conflicting with the specified allowed or restricted character.   (UCN-4)
+1
+remove_unconnected_ports [get_cells -hier {*}]
+Removing port 'TC' from design 'engine_key_generator_DW01_cmp6_0'
+Removing port 'LT' from design 'engine_key_generator_DW01_cmp6_0'
+Removing port 'GT' from design 'engine_key_generator_DW01_cmp6_0'
+Removing port 'LE' from design 'engine_key_generator_DW01_cmp6_0'
+Removing port 'GE' from design 'engine_key_generator_DW01_cmp6_0'
+Removing port 'NE' from design 'engine_key_generator_DW01_cmp6_0'
+1
+write -f ddc -hierarchy -output ./result/TOP_PAD.ddc
+Writing ddc file './result/TOP_PAD.ddc'.
+1
+write -f verilog -hierarchy -output ./result/TOP_PAD.v
+Writing verilog file '/home/ime_ic/Desktop/work/syn_ref/result/TOP_PAD.v'.
+1
+# Write out the constraints-only sdc file
+write_sdc ./result/TOP_PAD.sdc
+1
+write_sdf ./result/TOP_PAD.sdf
+Information: Annotated 'cell' delays are assumed to include load delay. (UID-282)
+Information: Writing timing information to file '/home/ime_ic/Desktop/work/syn_ref/result/TOP_PAD.sdf'. (WT-3)
+Information: Updating design information... (UID-85)
+Warning: Design 'TOP_PAD_opt' contains 1 high-fanout nets. A fanout number of 1000 will be used for delay calculations involving these nets. (TIM-134)
+1
+1
+dc_shell> link
+
+  Linking design 'TOP_PAD_opt'
+  Using the following designs and libraries:
+  --------------------------------------------------------------------------
+  TOP_PAD_opt                 /home/ime_ic/Desktop/work/rtl_ref/TOP_PAD_opt.db
+  slow (library)              /opt/tech_lib/smic180/digital/sc/synopsys/slow.db
+  * (6 designs)               /home/ime_ic/Desktop/work/rtl_ref/input_interface.db, etc
+  SP018N_V1p0_typ (library)   /opt/tech_lib/smic180/digital/io/synopsys/SP018N_V1p0_typ.db
+
+1
+dc_shell> design[K[K[K[K[K[Kde[K[Kcheck_design
+ 
+****************************************
+check_design summary:
+Version:     O-2018.06-SP1
+Date:        Fri Apr  5 01:05:39 2024
+****************************************
+
+                   Name                                            Total
+--------------------------------------------------------------------------------
+Nets                                                                1
+    Unloaded nets (LINT-2)                                          1
+--------------------------------------------------------------------------------
+
+Warning: In design 'TOP_PAD_opt', net 'chip_core/key_gen_module/n5' driven by pin 'chip_core/key_gen_module/U12/**logic_0**' has no loads. (LINT-2)
+1
+dc_shell> start_gui
+dc_shell> Current design is 'TOP_PAD_opt'.
+4.1
+Current design is 'TOP_PAD_opt'.
+dc_shell> Loading db file '/opt/tech_lib/smic180/digital/sc/synopsys/smic18.sdb'
+Loading db file '/opt/synopsys/syn_vO-2018.06-SP1/libraries/syn/generic.sdb'
+load_upf /tmp/qt_temp.H25529
+
+
+Loading UPF file /tmp/qt_temp.H25529 ...
+
+End loading UPF file /tmp/qt_temp.H25529
+dc_shell> dc_shell> load_upf /tmp/qt_temp.H25529[11Gstart_gui[K
+dc_shell> Current design is 'TOP_PAD_opt'.
+Current design is 'TOP_PAD_opt'.
+dc_shell> uplevel #0 check_design
+ 
+****************************************
+check_design summary:
+Version:     O-2018.06-SP1
+Date:        Fri Apr  5 01:39:41 2024
+****************************************
+
+                   Name                                            Total
+--------------------------------------------------------------------------------
+Nets                                                                1
+    Unloaded nets (LINT-2)                                          1
+--------------------------------------------------------------------------------
+
+Warning: In design 'TOP_PAD_opt', net 'chip_core/key_gen_module/n5' driven by pin 'chip_core/key_gen_module/U12/**logic_0**' has no loads. (LINT-2)
+dc_shell> gui_set_pref_value -category schematic -key traceHighlight  -value [is_false [gui_get_pref_value -category schematic -key traceHighlight]]
+Error: Invalid value passed to is_false
+	Use error_info for more info. (CMD-013)
+dc_shell> gui_set_highlight_options -current_color green
+dc_shell> 
